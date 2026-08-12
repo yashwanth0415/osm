@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSM Design Engineering Consultancy | Architecture & Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #062A5C;
+            --navy-dark: #041c3d;
+            --blue: #0B5CAD;
+            --blue-light: #EAF4FF;
+            --bg-light: #F5F9FD;
+            --white: #FFFFFF;
+            --text: #071A33;
+            --text-light: #3a5070;
+            --accent: #1a8cff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--navy) var(--bg-light);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--navy);
+            border-radius: 3px;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            perspective: 1000px;
+        }
+
+        /* GLOBAL 3D PARTICLES CANVAS */
+        #globalParticlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        /* NAVIGATION */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.5s var(--transition);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(6, 42, 92, 0.08);
+            padding: 12px 40px;
+        }
+
+        .nav.scrolled .nav-logo-text {
+            color: var(--navy);
+        }
+        .nav.scrolled .nav-link {
+            color: var(--text);
+        }
+        .nav.scrolled .nav-cta {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .nav.scrolled .nav-cta:hover {
+            background: var(--navy);
+            color: #fff;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .nav-logo-mark {
+            width: 44px;
+            height: 44px;
+            background: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: -0.5px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            animation: logoFloat3D 6s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat3D {
+            0%,
+            100% {
+                transform: translateZ(0) rotateY(0deg);
+            }
+            25% {
+                transform: translateZ(8px) rotateY(5deg);
+            }
+            75% {
+                transform: translateZ(4px) rotateY(-3deg);
+            }
+        }
+
+        .nav-logo-mark::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+            animation: logoShimmer 3s infinite;
+        }
+
+        @keyframes logoShimmer {
+            0%,
+            100% {
+                transform: translate(-30%, -30%) rotate(45deg);
+            }
+            50% {
+                transform: translate(30%, 30%) rotate(45deg);
+            }
+        }
+
+        .nav-logo-text {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fff;
+            transition: color 0.5s;
+            line-height: 1.2;
+        }
+        .nav-logo-text span {
+            display: block;
+            font-weight: 400;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            opacity: 0.75;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--blue);
+            transition: width 0.3s var(--transition);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 10px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+            white-space: nowrap;
+        }
+        .nav-cta:hover {
+            background: #fff;
+            color: var(--navy);
+            border-color: #fff;
+            transform: translateZ(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .nav-mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .nav.scrolled .nav-mobile-toggle span {
+            background: var(--navy);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100svh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                    rgba(6, 42, 92, 0.3) 0%,
+                    rgba(6, 42, 92, 0.15) 25%,
+                    rgba(6, 42, 92, 0.25) 50%,
+                    rgba(6, 42, 92, 0.55) 80%,
+                    rgba(6, 42, 92, 0.7) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 750px;
+            padding: 0 6%;
+            padding-bottom: clamp(60px, 10vh, 120px);
+            padding-top: 120px;
+            width: 100%;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-left: 2px solid rgba(255, 255, 255, 0.6);
+            padding-left: 14px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-heading {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
+        }
+        .hero-heading .line2 {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 300;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 10px;
+            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.35s both;
+        }
+
+        .hero-credibility {
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+            font-weight: 500;
+            animation: fadeInUp 1s ease-out 0.45s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            pointer-events: all;
+            animation: fadeInUp 1s ease-out 0.55s both;
+        }
+
+        .btn-primary {
+            padding: 14px 32px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+            transform-style: preserve-3d;
+        }
+        .btn-primary:hover {
+            background: #083d7a;
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 20px 50px rgba(6, 42, 92, 0.5);
+        }
+
+        .btn-outline {
+            padding: 14px 32px;
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+            transform-style: preserve-3d;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #fff;
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            animation: scrollPulse 2s infinite;
+        }
+        @keyframes scrollPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(1.4);
+            }
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 100px 40px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .section-white {
+            background: var(--white);
+        }
+        .section-light {
+            background: var(--bg-light);
+        }
+        .section-navy {
+            background: var(--navy);
+            color: #fff;
+        }
+
+        .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .section-navy .section-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .section-heading {
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.08;
+            margin-bottom: 24px;
+        }
+
+        .section-text {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+        .section-navy .section-text {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 3D BACKGROUND ELEMENTS PER SECTION */
+        .section-3d-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Floating geometric shapes */
+        .geo-shape {
+            position: absolute;
+            border-radius: 4px;
+            opacity: 0.04;
+            pointer-events: none;
+            animation: floatShape 12s ease-in-out infinite;
+        }
+        .geo-shape.cube {
+            width: 80px;
+            height: 80px;
+            background: var(--navy);
+            border-radius: 8px;
+        }
+        .geo-shape.circle {
+            width: 60px;
+            height: 60px;
+            background: var(--blue);
+            border-radius: 50%;
+        }
+        .geo-shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 70px solid var(--navy);
+            background: transparent;
+            border-radius: 0;
+        }
+        .geo-shape.line-h {
+            width: 120px;
+            height: 2px;
+            background: var(--blue);
+            border-radius: 1px;
+        }
+        .geo-shape.line-v {
+            width: 2px;
+            height: 100px;
+            background: var(--navy);
+            border-radius: 1px;
+        }
+
+        @keyframes floatShape {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg) translateZ(0);
+            }
+            25% {
+                transform: translateY(-30px) rotate(5deg) translateZ(15px);
+            }
+            50% {
+                transform: translateY(-15px) rotate(-3deg) translateZ(8px);
+            }
+            75% {
+                transform: translateY(-40px) rotate(2deg) translateZ(20px);
+            }
+        }
+
+        /* 3D Grid overlay */
+        .grid-overlay-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background-image:
+                linear-gradient(rgba(11, 92, 173, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 92, 173, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(800px) rotateX(60deg) translateY(-20%);
+            transform-origin: top center;
+            animation: gridDrift 20s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 50px;
+            }
+        }
+
+        /* Blueprint overlay */
+        .blueprint-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.025;
+            background-image:
+                radial-gradient(circle at 30% 40%, #062A5C 1px, transparent 1px),
+                radial-gradient(circle at 70% 60%, #0B5CAD 1px, transparent 1px),
+                radial-gradient(circle at 50% 20%, #062A5C 1px, transparent 1px);
+            background-size: 80px 80px, 100px 100px, 60px 60px;
+            animation: blueprintPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes blueprintPulse {
+            0%,
+            100% {
+                opacity: 0.02;
+            }
+            50% {
+                opacity: 0.04;
+            }
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--bg-light);
+            transform-style: preserve-3d;
+            transition: transform 0.6s var(--transition);
+        }
+        .about-image-wrap:hover {
+            transform: rotateY(-5deg) rotateX(3deg);
+            box-shadow: -20px 20px 60px rgba(6, 42, 92, 0.15);
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e8eef5 0%, #d4dfed 30%, #c5d5e8 60%, #b8cde4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-3d-rotating-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            transform-style: preserve-3d;
+            animation: rotateCube3D 15s linear infinite;
+            top: 20%;
+            right: 15%;
+            opacity: 0.5;
+        }
+        .cube-face {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--navy);
+            background: rgba(6, 42, 92, 0.08);
+            border-radius: 4px;
+        }
+        .cube-face.front {
+            transform: translateZ(30px);
+        }
+        .cube-face.back {
+            transform: rotateY(180deg) translateZ(30px);
+        }
+        .cube-face.right {
+            transform: rotateY(90deg) translateZ(30px);
+        }
+        .cube-face.left {
+            transform: rotateY(-90deg) translateZ(30px);
+        }
+        .cube-face.top {
+            transform: rotateX(90deg) translateZ(30px);
+        }
+        .cube-face.bottom {
+            transform: rotateX(-90deg) translateZ(30px);
+        }
+
+        @keyframes rotateCube3D {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        .about-stats-number {
+            font-size: clamp(5rem, 10vw, 10rem);
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+        .about-stats-label {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .about-countries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+        .about-country-tag {
+            padding: 8px 18px;
+            border: 1px solid #d0d8e4;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.3s;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+        .about-country-tag:hover {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+            transform: translateZ(8px);
+            box-shadow: 0 8px 25px rgba(6, 42, 92, 0.25);
+        }
+
+        /* SERVICES */
+        .service-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+        }
+        .service-block:last-child {
+            border-bottom: none;
+        }
+
+        .service-number {
+            font-size: clamp(6rem, 12vw, 12rem);
+            font-weight: 800;
+            line-height: 0.8;
+            letter-spacing: -4px;
+            color: var(--navy);
+            opacity: 0.06;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            pointer-events: none;
+        }
+
+        .service-content {
+            position: relative;
+        }
+        .service-content h3 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .service-content p {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .service-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .service-list li {
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            background: var(--blue-light);
+            border-radius: 50px;
+            color: var(--navy);
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: default;
+        }
+        .service-list li:hover {
+            background: var(--navy);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 42, 92, 0.2);
+        }
+
+        .service-visual {
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s var(--transition);
+        }
+        .service-visual:hover {
+            transform: rotateY(3deg) rotateX(-2deg);
+            box-shadow: 15px 15px 50px rgba(6, 42, 92, 0.2);
+        }
+
+        .service-visual-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sv-arch {
+            background: linear-gradient(160deg, #dce8f5 0%, #c5d8ed 40%, #a8c5e3 100%);
+        }
+        .sv-struct {
+            background: linear-gradient(160deg, #1a3a60 0%, #0d2b4a 40%, #062040 100%);
+        }
+        .sv-mep {
+            background: linear-gradient(160deg, #e8f0f8 0%, #d0e0f0 40%, #b8d0e8 100%);
+        }
+        .sv-interior {
+            background: linear-gradient(160deg, #f0ede8 0%, #e8e2d8 40%, #ddd6c8 100%);
+        }
+
+        /* Service blueprint lines */
+        .service-blueprint-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.3;
+        }
+        .bp-line {
+            position: absolute;
+            background: var(--navy);
+            animation: bpLineDraw 3s ease-in-out infinite;
+        }
+        @keyframes bpLineDraw {
+            0% {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scaleX(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.5s var(--transition);
+            box-shadow: 0 4px 20px rgba(6, 42, 92, 0.08);
+        }
+        .project-card:hover {
+            transform: rotateY(-4deg) rotateX(3deg) translateZ(20px);
+            box-shadow: -15px 20px 50px rgba(6, 42, 92, 0.25);
+            z-index: 10;
+        }
+
+        .project-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card-bg {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s var(--transition);
+        }
+        .project-card:hover .project-card-bg {
+            transform: scale(1.06);
+        }
+        .project-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(6, 42, 92, 0.85));
+            color: #fff;
+            transform: translateZ(10px);
+        }
+        .project-card-overlay h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0px;
+            margin-bottom: 4px;
+        }
+        .project-card-overlay span {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .pc1 {
+            background: linear-gradient(180deg, #b8cfe4 0%, #8aadcc 50%, #5c8bb5 100%);
+        }
+        .pc2 {
+            background: linear-gradient(180deg, #d0dce8 0%, #a8bed4 50%, #7a9fc0 100%);
+        }
+        .pc3 {
+            background: linear-gradient(180deg, #c5d5e6 0%, #9ab5d0 50%, #6e95ba 100%);
+        }
+        .pc4 {
+            background: linear-gradient(180deg, #e0e8f2 0%, #c0d0e4 50%, #90b0cc 100%);
+        }
+        .pc5 {
+            background: linear-gradient(180deg, #d8e4f0 0%, #b5c8dc 50%, #88a8c4 100%);
+        }
+        .pc6 {
+            background: linear-gradient(180deg, #c8d8e8 0%, #a0bcd4 50%, #789ec0 100%);
+        }
+
+        /* COUNTRIES MAP */
+        .countries-visual {
+            position: relative;
+            height: 400px;
+            margin-top: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .map-dots {
+            position: relative;
+            width: 80%;
+            height: 70%;
+            transform-style: preserve-3d;
+        }
+        .map-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transition: all 0.4s;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+        .map-dot.active {
+            background: #fff;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 60px rgba(168, 212, 255, 0.5);
+            width: 14px;
+            height: 14px;
+            transform: translateZ(10px);
+        }
+        .map-dot:hover {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            transform: translateZ(8px) scale(1.5);
+            width: 12px;
+            height: 12px;
+        }
+        .map-dot-label {
+            position: absolute;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+            transform: translate(-50%, -100%);
+            margin-top: -14px;
+        }
+        .map-dot.active+.map-dot-label {
+            color: #fff;
+            font-weight: 600;
+        }
+        .map-connection {
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            transform-origin: left center;
+            pointer-events: none;
+            animation: connectionGlow 3s ease-in-out infinite;
+        }
+        @keyframes connectionGlow {
+            0%,
+            100% {
+                opacity: 0.15;
+            }
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .stat-item {
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.4s;
+        }
+        .stat-item:hover {
+            transform: translateZ(15px);
+        }
+        .stat-number {
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* TECH */
+        .tech-orbit {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            transform-style: preserve-3d;
+        }
+        .tech-center {
+            width: 80px;
+            height: 80px;
+            background: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            z-index: 2;
+            position: relative;
+            box-shadow: 0 0 40px rgba(6, 42, 92, 0.4);
+            animation: techPulse 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+        @keyframes techPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 30px rgba(6, 42, 92, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(11, 92, 173, 0.6), 0 0 100px rgba(11, 92, 173, 0.3);
+            }
+        }
+        .tech-orbiter {
+            position: absolute;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            color: var(--text-light);
+            padding: 8px 16px;
+            background: var(--white);
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+            cursor: default;
+            white-space: nowrap;
+            transform-style: preserve-3d;
+        }
+        .tech-orbiter:hover {
+            background: var(--navy);
+            color: #fff;
+            box-shadow: 0 12px 40px rgba(6, 42, 92, 0.35);
+            transform: translateZ(20px) scale(1.1);
+        }
+
+        /* PROCESS */
+        .process-timeline {
+            display: flex;
+            gap: 0;
+            margin-top: 50px;
+            position: relative;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+        .process-step {
+            flex: 1;
+            min-width: 160px;
+            text-align: center;
+            position: relative;
+            padding: 20px 15px;
+            transform-style: preserve-3d;
+            transition: transform 0.4s;
+        }
+        .process-step:hover {
+            transform: translateZ(12px);
+        }
+        .process-step-num {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s;
+            box-shadow: 0 8px 25px rgba(6, 42, 92, 0.2);
+        }
+        .process-step:hover .process-step-num {
+            background: var(--blue);
+            transform: scale(1.2) translateZ(8px);
+            box-shadow: 0 15px 40px rgba(11, 92, 173, 0.5);
+        }
+        .process-step h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .process-step p {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+        .process-connector {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            width: 100%;
+            height: 1px;
+            background: #d0d8e4;
+            z-index: 1;
+        }
+
+        /* COMMITMENT */
+        .commitment-section {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .commitment-grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.04;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            transform: perspective(600px) rotateX(55deg);
+            transform-origin: top center;
+            animation: commitGridMove 15s linear infinite;
+        }
+        @keyframes commitGridMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 80px;
+            }
+        }
+
+        /* 3D Floating rings in commitment */
+        .commitment-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .commitment-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: ringExpand 8s ease-in-out infinite;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes ringExpand {
+            0% {
+                width: 100px;
+                height: 100px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+            }
+        }
+
+        /* CTA */
+        .cta-section {
+            position: relative;
+            overflow: hidden;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+        }
+        .cta-bg-building {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%) perspective(800px) rotateY(-10deg);
+            width: 45%;
+            height: 80%;
+            background: linear-gradient(180deg, #e0eaf5 0%, #c8d8ec 30%, #a8c4e0 60%, #8aafd4 100%);
+            border-radius: 16px;
+            opacity: 0.5;
+            pointer-events: none;
+            box-shadow: -20px 20px 60px rgba(6, 42, 92, 0.1);
+            transition: transform 0.8s var(--transition);
+        }
+        .cta-section:hover .cta-bg-building {
+            transform: translateY(-50%) perspective(800px) rotateY(-5deg) translateZ(20px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--navy-dark);
+            color: #fff;
+            padding: 60px 40px 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .footer-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0px;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        .footer h5 {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        /* MOBILE NAV */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(6, 42, 92, 0.97);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .mobile-menu-links a:hover {
+            color: var(--blue-light);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .service-block {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-mobile-toggle {
+                display: flex;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .hero-content {
+                padding-left: 5%;
+                padding-right: 5%;
+                padding-bottom: 60px;
+                max-width: 100%;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-primary,
+            .btn-outline {
+                text-align: center;
+                width: 100%;
+            }
+            .cta-bg-building {
+                width: 60%;
+                right: -20%;
+                opacity: 0.3;
+            }
+            .geo-shape {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .process-timeline {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            .process-step {
+                min-width: 130px;
+                flex-shrink: 0;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .nav {
+                padding: 14px 16px;
+            }
+            .nav.scrolled {
+                padding: 10px 16px;
+            }
+            .hero-heading {
+                font-size: clamp(1.8rem, 7vw, 2.6rem);
+            }
+            .about-stats-number {
+                font-size: 4rem;
+            }
+            .section-heading {
+                font-size: clamp(1.6rem, 6vw, 2.8rem);
+            }
+            .hero-content {
+                padding-bottom: 40px;
+                padding-top: 100px;
+            }
+            .hero-scroll-indicator {
+                right: 16px;
+                bottom: 20px;
+            }
+            .cta-bg-building {
+                display: none;
+            }
+            .about-3d-rotating-cube {
+                display: none;
+            }
+            .commitment-ring {
+                display: none;
+            }
+            .grid-overlay-3d {
+                background-size: 30px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GLOBAL 3D PARTICLES -->
+    <canvas id="globalParticlesCanvas"></canvas>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-mark">OSM</div>
+            <div class="nav-logo-text">OSM Design<span>Engineering Consultancy</span></div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#services" class="nav-link">Services</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#process" class="nav-link">Process</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+        <div class="nav-mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+            <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="#process" onclick="closeMobileMenu()">Process</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tag">OSM Design Engineering Consultancy</p>
+            <h1 class="hero-heading">ENGINEERING<br>BETTER SPACES.<br><span class="line2">DESIGNING SMARTER FUTURES.</span></h1>
+            <p class="hero-subtitle">Architecture | Structural Engineering | MEP Design | Interior Design</p>
+            <p class="hero-credibility">10+ Years of Excellence in Design Engineering</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">Get Free Consultation</a>
+                <a href="#contact" class="btn-outline">Request a Quote</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="hero-scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section section-white" id="about">
+        <div class="section-3d-bg">
+            <div class="grid-overlay-3d"></div>
+            <div class="about-3d-rotating-cube">
+                <div class="cube-face front"></div><div class="cube-face back"></div>
+                <div class="cube-face right"></div><div class="cube-face left"></div>
+                <div class="cube-face top"></div><div class="cube-face bottom"></div>
+            </div>
+            <div class="geo-shape cube" style="top:15%;left:5%;animation-delay:0s;"></div>
+            <div class="geo-shape circle" style="top:60%;right:8%;animation-delay:3s;"></div>
+            <div class="geo-shape line-h" style="top:25%;right:15%;animation-delay:5s;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">About OSM</span>
+            <div class="about-grid">
+                <div class="about-image-wrap">
+                    <div class="about-image-placeholder" id="aboutVisual">
+                        <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="bldgGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#062A5C" stop-opacity="0.9"/>
+                                    <stop offset="100%" stop-color="#0B5CAD" stop-opacity="0.5"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="60" y="100" width="180" height="160" rx="2" fill="url(#bldgGrad)" stroke="#062A5C" stroke-width="1.5"/>
+                            <rect x="80" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
+                            <rect x="130" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
+                            <rect x="180" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
+                            <rect x="80" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
+                            <rect x="130" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
+                            <rect x="180" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
+                            <rect x="80" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="130" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="180" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="60" y="250" width="180" height="12" rx="1" fill="#062A5C" opacity="0.8"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="section-heading">ENGINEERING<br>WITH PURPOSE.</h2>
+                    <p class="section-text">OSM Design Engineering Consultancy is a multidisciplinary design firm delivering innovative, sustainable, and technically precise engineering solutions for residential, commercial, institutional, and industrial projects across India and the Gulf region.</p>
+                    <div style="margin-top:30px;">
+                        <div class="about-stats-number">10+</div>
+                        <div class="about-stats-label">Years of Design Excellence</div>
+                    </div>
+                    <div class="about-countries">
+                        <span class="about-country-tag">India</span>
+                        <span class="about-country-tag">UAE</span>
+                        <span class="about-country-tag">Oman</span>
+                        <span class="about-country-tag">Kuwait</span>
+                        <span class="about-country-tag">Qatar</span>
+                        <span class="about-country-tag">Saudi Arabia</span>
+                        <span class="about-country-tag">Bahrain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section section-light" id="services">
+        <div class="section-3d-bg">
+            <div class="blueprint-overlay"></div>
+            <div class="geo-shape line-v" style="top:10%;left:20%;animation-delay:1s;"></div>
+            <div class="geo-shape line-v" style="top:40%;right:15%;animation-delay:4s;"></div>
+            <div class="geo-shape circle" style="bottom:20%;left:10%;animation-delay:2s;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Our Services</span>
+            <h2 class="section-heading">FOUR CORE<br>DISCIPLINES.</h2>
+
+            <div class="service-block">
+                <div class="service-content">
+                    <div class="service-number">01</div>
+                    <h3>Architectural Design</h3>
+                    <p>Creating iconic structures that blend form, function, and cultural context — from luxury villas to commercial towers.</p>
+                    <ul class="service-list">
+                        <li>Concept Design</li><li>Floor Plans</li><li>Elevation Design</li>
+                        <li>3D Visualization</li><li>Building Planning</li><li>Working Drawings</li>
+                        <li>Construction Drawings</li><li>Approval Drawings</li>
+                    </ul>
+                </div>
+                <div class="service-visual">
+                    <div class="service-visual-inner sv-arch">
+                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="80" y="60" width="240" height="210" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
+                            <rect x="100" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
+                            <rect x="220" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
+                            <rect x="100" y="160" width="50" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
+                            <rect x="220" y="160" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
+                            <rect x="100" y="200" width="170" height="50" fill="rgba(6,42,92,0.1)" rx="2"/>
+                            <line x1="80" y1="270" x2="320" y2="270" stroke="#062A5C" stroke-width="4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-content">
+                    <div class="service-number">02</div>
+                    <h3>Structural Engineering</h3>
+                    <p>The backbone of every great building — precision structural systems engineered for safety, durability, and efficiency.</p>
+                    <ul class="service-list">
+                        <li>RCC Structure Design</li><li>Steel Structure Design</li><li>Foundation Design</li>
+                        <li>Structural Analysis</li><li>Seismic Design</li><li>Wind Load Analysis</li>
+                        <li>Structural Detailing</li><li>BOQ Preparation</li>
+                    </ul>
+                </div>
+                <div class="service-visual">
+                    <div class="service-visual-inner sv-struct">
+                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="60" y="30" width="280" height="240" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" rx="2"/>
+                            <line x1="100" y1="30" x2="100" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="200" y1="30" x2="200" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="300" y1="30" x2="300" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="60" y1="80" x2="340" y2="80" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                            <line x1="60" y1="150" x2="340" y2="150" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                            <line x1="60" y1="220" x2="340" y2="220" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-content">
+                    <div class="service-number">03</div>
+                    <h3>MEP Design</h3>
+                    <p>Intelligent mechanical, electrical, and plumbing systems that deliver seamless performance and energy efficiency.</p>
+                    <ul class="service-list">
+                        <li>HVAC Design</li><li>Electrical Systems</li><li>Plumbing Design</li>
+                        <li>Fire Fighting</li><li>Fire Alarm</li><li>Water Supply</li>
+                        <li>Drainage Systems</li><li>BIM Coordination</li>
+                    </ul>
+                </div>
+                <div class="service-visual">
+                    <div class="service-visual-inner sv-mep">
+                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="80" y="70" width="240" height="190" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
+                            <path d="M120 120 L280 120" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
+                            <path d="M120 150 L280 150" stroke="#062A5C" stroke-width="2" stroke-dasharray="5,5"/>
+                            <path d="M120 180 L280 180" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
+                            <circle cx="120" cy="120" r="6" fill="#0B5CAD"/>
+                            <circle cx="280" cy="120" r="6" fill="#0B5CAD"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-content">
+                    <div class="service-number">04</div>
+                    <h3>Interior Design</h3>
+                    <p>Spaces that inspire — luxury interiors crafted with meticulous attention to detail, materiality, and human experience.</p>
+                    <ul class="service-list">
+                        <li>Space Planning</li><li>Luxury Residential</li><li>Commercial Interiors</li>
+                        <li>Hospitality Design</li><li>Material Selection</li><li>Furniture Design</li>
+                        <li>Lighting Design</li><li>Turnkey Solutions</li>
+                    </ul>
+                </div>
+                <div class="service-visual">
+                    <div class="service-visual-inner sv-interior">
+                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="50" width="300" height="220" fill="none" stroke="#5c4a3a" stroke-width="1.5" rx="6"/>
+                            <rect x="70" y="160" width="120" height="8" rx="2" fill="#8a7a6a" opacity="0.5"/>
+                            <rect x="220" y="100" width="80" height="100" rx="3" fill="rgba(90,70,50,0.25)"/>
+                            <circle cx="300" cy="70" r="20" fill="rgba(200,180,150,0.4)"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section section-white" id="projects">
+        <div class="section-3d-bg">
+            <div class="grid-overlay-3d" style="opacity:0.5;"></div>
+            <div class="geo-shape cube" style="top:10%;right:5%;animation-delay:6s;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Selected Projects</span>
+            <h2 class="section-heading">OUR<br>PORTFOLIO.</h2>
+            <div class="projects-grid">
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc1"></div><div class="project-card-overlay"><h4>Luxury Villa</h4><span>Dubai / UAE</span></div></div></div>
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc2"></div><div class="project-card-overlay"><h4>Residential Development</h4><span>Hyderabad / India</span></div></div></div>
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc3"></div><div class="project-card-overlay"><h4>Commercial Office</h4><span>Doha / Qatar</span></div></div></div>
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc4"></div><div class="project-card-overlay"><h4>Hospital Project</h4><span>Riyadh / Saudi Arabia</span></div></div></div>
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc5"></div><div class="project-card-overlay"><h4>Industrial Facility</h4><span>Oman</span></div></div></div>
+                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc6"></div><div class="project-card-overlay"><h4>Restaurant & Hospitality</h4><span>UAE</span></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTRIES -->
+    <section class="section section-navy">
+        <div class="section-3d-bg">
+            <div class="geo-shape circle" style="top:10%;right:10%;animation-delay:1s;opacity:0.06;background:#fff;"></div>
+            <div class="geo-shape line-h" style="bottom:20%;left:5%;animation-delay:3s;opacity:0.06;background:#fff;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Our Reach</span>
+            <h2 class="section-heading">DESIGNING ACROSS<br>THE REGION.</h2>
+            <div class="countries-visual" id="countriesMap">
+                <div class="map-dots" id="mapDots">
+                    <div class="map-dot active" style="left:20%;top:45%;" data-country="UAE"></div>
+                    <div class="map-dot-label" style="left:20%;top:35%;">UAE</div>
+                    <div class="map-dot" style="left:35%;top:38%;" data-country="Qatar"></div>
+                    <div class="map-dot-label" style="left:35%;top:28%;">Qatar</div>
+                    <div class="map-dot" style="left:28%;top:52%;" data-country="Saudi Arabia"></div>
+                    <div class="map-dot-label" style="left:28%;top:42%;">Saudi Arabia</div>
+                    <div class="map-dot" style="left:44%;top:48%;" data-country="Oman"></div>
+                    <div class="map-dot-label" style="left:44%;top:38%;">Oman</div>
+                    <div class="map-dot" style="left:15%;top:50%;" data-country="Kuwait"></div>
+                    <div class="map-dot-label" style="left:15%;top:40%;">Kuwait</div>
+                    <div class="map-dot" style="left:22%;top:55%;" data-country="Bahrain"></div>
+                    <div class="map-dot-label" style="left:22%;top:48%;">Bahrain</div>
+                    <div class="map-dot active" style="left:62%;top:42%;" data-country="India"></div>
+                    <div class="map-dot-label" style="left:62%;top:32%;">India</div>
+                    <div class="map-connection" style="left:20%;top:45%;width:42%;transform:rotate(-5deg);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY OSM -->
+    <section class="section section-white">
+        <div class="section-3d-bg">
+            <div class="blueprint-overlay"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Why OSM</span>
+            <h2 class="section-heading">WHY<br>OSM?</h2>
+            <div class="stats-row">
+                <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Years of Experience</div></div>
+                <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">Countries</div></div>
+                <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Core Disciplines</div></div>
+                <div class="stat-item"><div class="stat-number">E2E</div><div class="stat-label">End-to-End Consultancy</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGY -->
+    <section class="section section-light">
+        <div class="section-3d-bg">
+            <div class="grid-overlay-3d" style="opacity:0.4;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Technology</span>
+            <h2 class="section-heading">DESIGNED WITH<br>PRECISION.</h2>
+            <div class="tech-orbit" id="techOrbit">
+                <div class="tech-center">BIM</div>
+                <span class="tech-orbiter" style="top:5%;left:15%;">AutoCAD</span>
+                <span class="tech-orbiter" style="top:10%;right:10%;">Revit</span>
+                <span class="tech-orbiter" style="top:45%;right:2%;">SketchUp</span>
+                <span class="tech-orbiter" style="bottom:10%;right:15%;">Lumion</span>
+                <span class="tech-orbiter" style="bottom:5%;left:20%;">ETABS</span>
+                <span class="tech-orbiter" style="bottom:25%;left:3%;">STAAD.Pro</span>
+                <span class="tech-orbiter" style="top:30%;left:5%;">SAFE</span>
+                <span class="tech-orbiter" style="top:50%;left:10%;">D5 Render</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section section-white" id="process">
+        <div class="section-3d-bg">
+            <div class="geo-shape line-h" style="top:30%;left:10%;animation-delay:0s;"></div>
+            <div class="geo-shape line-h" style="bottom:30%;right:8%;animation-delay:4s;"></div>
+        </div>
+        <div class="section-inner">
+            <span class="section-label">Our Process</span>
+            <h2 class="section-heading">HOW WE<br>BUILD.</h2>
+            <div class="process-timeline">
+                <div class="process-step"><div class="process-step-num">01</div><h4>Project Discussion</h4><p>Understanding vision & requirements</p><div class="process-connector"></div></div>
+                <div class="process-step"><div class="process-step-num">02</div><h4>Concept Design</h4><p>Architectural concept & planning</p><div class="process-connector"></div></div>
+                <div class="process-step"><div class="process-step-num">03</div><h4>Detailed Engineering</h4><p>Structure, MEP & systems design</p><div class="process-connector"></div></div>
+                <div class="process-step"><div class="process-step-num">04</div><h4>3D Visualization</h4><p>Photorealistic renders & walkthroughs</p><div class="process-connector"></div></div>
+                <div class="process-step"><div class="process-step-num">05</div><h4>Construction Docs</h4><p>Complete documentation package</p><div class="process-connector"></div></div>
+                <div class="process-step"><div class="process-step-num">06</div><h4>Project Support</h4><p>On-site coordination & delivery</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMITMENT -->
+    <section class="section section-navy commitment-section">
+        <div class="commitment-grid-bg"></div>
+        <div class="commitment-rings">
+            <div class="commitment-ring" style="animation-delay:0s;"></div>
+            <div class="commitment-ring" style="animation-delay:2.5s;"></div>
+            <div class="commitment-ring" style="animation-delay:5s;"></div>
+        </div>
+        <div class="section-inner" style="position:relative;z-index:2;text-align:center;">
+            <h2 class="section-heading" style="font-size:clamp(1.8rem,4vw,3.5rem);">WE DON'T SIMPLY<br>DESIGN BUILDINGS.</h2>
+            <p class="section-text" style="max-width:700px;margin:24px auto 0;font-size:1.1rem;">We engineer spaces that are safe, sustainable, efficient, and built to perform for decades.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section-white cta-section" id="contact">
+        <div class="cta-bg-building"></div>
+        <div class="section-3d-bg">
+            <div class="geo-shape cube" style="top:20%;left:5%;animation-delay:2s;"></div>
+        </div>
+        <div class="section-inner" style="position:relative;z-index:2;">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-heading">READY TO BUILD<br>YOUR VISION?</h2>
+            <p class="section-text" style="max-width:550px;">Whether you're building your dream villa, developing a commercial complex, planning a hospital, or designing an industrial warehouse, our experienced design team is ready to assist.</p>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:30px;">
+                <a href="#" class="btn-primary" style="background:var(--navy);">Request Free Consultation</a>
+                <a href="#" class="btn-outline" style="color:var(--navy);border-color:var(--navy);">Get a Design Proposal</a>
+                <a href="#" class="btn-outline" style="color:var(--navy);border-color:var(--navy);">Contact Our Experts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">OSM</div>
+                <div style="font-size:0.7rem;letter-spacing:1.5px;opacity:0.6;margin-bottom:16px;">DESIGN ENGINEERING CONSULTANCY</div>
+                <p class="footer-tagline">ENGINEERING BETTER SPACES.<br>DESIGNING SMARTER FUTURES.</p>
+            </div>
+            <div><h5>Navigation</h5><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+            <div><h5>Services</h5><a href="#services">Architecture</a><a href="#services">Structural Engineering</a><a href="#services">MEP Design</a><a href="#services">Interior Design</a></div>
+            <div><h5>Contact</h5><a href="#">info@osmconsultancy.com</a><a href="#">+971 50 000 0000</a><a href="#">Dubai, UAE</a><a href="#">Hyderabad, India</a></div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 OSM Design Engineering Consultancy. All rights reserved.</div>
+    </footer>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        // ============ HERO 3D SCENE ============
+        const heroCanvas = document.getElementById('heroCanvas');
+        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        heroRenderer.setSize(window.innerWidth, window.innerHeight);
+        heroRenderer.shadowMap.enabled = true;
+        heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        heroRenderer.toneMappingExposure = 1.2;
+
+        const heroScene = new THREE.Scene();
+        heroScene.background = new THREE.Color('#062a4a');
+        heroScene.fog = new THREE.Fog('#062a4a', 30, 100);
+
+        const heroCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
+        heroCamera.position.set(18, 8, 22);
+        heroCamera.lookAt(0, 3, 0);
+
+        const ambientLight = new THREE.AmbientLight('#b8d4f0', 2.5);
+        heroScene.add(ambientLight);
+        const sunLight = new THREE.DirectionalLight('#ffffff', 8);
+        sunLight.position.set(30, 25, 10);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 2048;
+        sunLight.shadow.mapSize.height = 2048;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 100;
+        sunLight.shadow.camera.left = -25;
+        sunLight.shadow.camera.right = 25;
+        sunLight.shadow.camera.top = 25;
+        sunLight.shadow.camera.bottom = -25;
+        sunLight.shadow.bias = -0.0001;
+        heroScene.add(sunLight);
+        heroScene.add(new THREE.DirectionalLight('#7eb8e0', 3).position.set(-10, 5, -8));
+        heroScene.add(new THREE.DirectionalLight('#c8e4ff', 2).position.set(0, 3, 20));
+
+        const groundGeo = new THREE.PlaneGeometry(80, 80);
+        const ground = new THREE.Mesh(groundGeo, new THREE.MeshStandardMaterial({ color: '#e8eef5', roughness: 0.6,
+            metalness: 0.05 }));
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -6;
+        ground.receiveShadow = true;
+        heroScene.add(ground);
+
+        const gridHelper = new THREE.PolarGridHelper(30, 48, 24, 128, '#c8d8ec', '#c8d8ec');
+        gridHelper.position.y = -5.98;
+        heroScene.add(gridHelper);
+
+        const buildingGroup = new THREE.Group();
+        buildingGroup.position.set(0, -6, 0);
+        heroScene.add(buildingGroup);
+
+        const concreteMat = new THREE.MeshStandardMaterial({ color: '#f5f5f0', roughness: 0.35, metalness: 0.05 });
+        const glassMat = new THREE.MeshStandardMaterial({ color: '#a8d4f0', roughness: 0.1, metalness: 0.3, transparent: true,
+            opacity: 0.75 });
+        const darkGlassMat = new THREE.MeshStandardMaterial({ color: '#3a7099', roughness: 0.08, metalness: 0.4 });
+        const metalMat = new THREE.MeshStandardMaterial({ color: '#d0d8e0', roughness: 0.2, metalness: 0.7 });
+        const accentMat = new THREE.MeshStandardMaterial({ color: '#062A5C', roughness: 0.25, metalness: 0.3 });
+        const structMat = new THREE.MeshStandardMaterial({ color: '#c8d0d8', roughness: 0.3, metalness: 0.5 });
+
+        const foundation = new THREE.Mesh(new THREE.BoxGeometry(8, 0.6, 6), concreteMat);
+        foundation.position.y = 0.3;
+        foundation.castShadow = foundation.receiveShadow = true;
+        foundation.name = 'foundation';
+        buildingGroup.add(foundation);
+
+        const columnsGroup = new THREE.Group();
+        columnsGroup.name = 'columns';
+        buildingGroup.add(columnsGroup);
+        [
+            [-3.2, 0, -2.2],
+            [3.2, 0, -2.2],
+            [-3.2, 0, 2.2],
+            [3.2, 0, 2.2],
+            [-1.6, 0, -2.2],
+            [1.6, 0, -2.2],
+            [-1.6, 0, 2.2],
+            [1.6, 0, 2.2]
+        ].forEach(([cx, cy, cz]) => {
+            const col = new THREE.Mesh(new THREE.BoxGeometry(0.35, 12, 0.35), structMat);
+            col.position.set(cx, 6.3, cz);
+            col.castShadow = col.receiveShadow = true;
+            columnsGroup.add(col);
+        });
+
+        const slabsGroup = new THREE.Group();
+        slabsGroup.name = 'slabs';
+        buildingGroup.add(slabsGroup);
+        for (let i = 0; i < 8; i++) {
+            const slab = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.25, 5.2), concreteMat);
+            slab.position.y = 1.0 + i * 1.55;
+            slab.castShadow = slab.receiveShadow = true;
+            slabsGroup.add(slab);
+        }
+
+        const facadeGroup = new THREE.Group();
+        facadeGroup.name = 'facade';
+        buildingGroup.add(facadeGroup);
+        for (let floor = 0; floor < 8; floor++) {
+            const yPos = 1.0 + floor * 1.55;
+            for (let px = -3; px <= 3; px += 1.2) {
+                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), floor % 2 === 0 ? glassMat :
+                    darkGlassMat);
+                panel.position.set(px, yPos, 2.55);
+                panel.castShadow = true;
+                facadeGroup.add(panel);
+                const panelB = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), glassMat);
+                panelB.position.set(px, yPos, -2.55);
+                panelB.castShadow = true;
+                facadeGroup.add(panelB);
+            }
+            for (let pz = -1.8; pz <= 1.8; pz += 1.2) {
+                const panelL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
+                panelL.position.set(-3.55, yPos, pz);
+                facadeGroup.add(panelL);
+                const panelR = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
+                panelR.position.set(3.55, yPos, pz);
+                facadeGroup.add(panelR);
+            }
+        }
+
+        const roof = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.3, 5.6), accentMat);
+        roof.position.y = 12.7;
+        roof.castShadow = roof.receiveShadow = true;
+        roof.name = 'roof';
+        buildingGroup.add(roof);
+
+        const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
+        parapetFront.position.set(0, 13.05, 2.75);
+        buildingGroup.add(parapetFront);
+        const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
+        parapetBack.position.set(0, 13.05, -2.75);
+        buildingGroup.add(parapetBack);
+
+        for (let i = 0; i < 5; i++) {
+            const fin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 11.5, 0.25), accentMat);
+            fin.position.set(-2.8 + i * 1.4, 6.5, 2.65);
+            fin.castShadow = true;
+            facadeGroup.add(fin);
+        }
+
+        const landscapeGroup = new THREE.Group();
+        landscapeGroup.name = 'landscape';
+        buildingGroup.add(landscapeGroup);
+        for (let i = 0; i < 6; i++) {
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8), new THREE
+        .MeshStandardMaterial({ color: '#8a7a6a', roughness: 0.7 }));
+            trunk.position.set(-5 + i * 2, 1.25, 3.8);
+            trunk.castShadow = true;
+            landscapeGroup.add(trunk);
+            const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 8), new THREE.MeshStandardMaterial({ color: '#5a8a5a',
+                roughness: 0.6 }));
+            canopy.position.set(-5 + i * 2, 3.0, 3.8);
+            canopy.scale.set(1, 0.7, 1);
+            canopy.castShadow = true;
+            landscapeGroup.add(canopy);
+        }
+
+        const allBuildingParts = [foundation, ...columnsGroup.children, ...slabsGroup.children, ...facadeGroup.children,
+            roof, parapetFront, parapetBack, ...landscapeGroup.children
+        ];
+        allBuildingParts.forEach(part => {
+            part.userData.originalScale = part.scale.clone();
+            part.scale.set(0, 0, 0);
+            part.material = part.material.clone();
+            part.material.transparent = true;
+            part.material.opacity = 0;
+        });
+
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 300;
+        const posArray = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount; i++) { posArray[i * 3] = (Math.random() - 0.5) * 20;
+            posArray[i * 3 + 1] = Math.random() * 18;
+            posArray[i * 3 + 2] = (Math.random() - 0.5) * 14; }
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({ color: '#a8d4ff', size: 0.04, transparent: true, opacity: 0.6,
+            blending: THREE.AdditiveBlending, depthWrite: false });
+        const particles = new THREE.Points(particlesGeo, particlesMat);
+        particles.position.y = 3;
+        heroScene.add(particles);
+
+        let mouseX = 0,
+            mouseY = 0,
+            targetMouseX = 0,
+            targetMouseY = 0;
+        document.addEventListener('mousemove', e => {
+            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        const clock = new THREE.Clock();
+        let assemblyPhase = 0,
+            assemblyTimer = 0;
+        const totalParts = allBuildingParts.length;
+
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            const dt = Math.min(clock.getDelta(), 0.1);
+            assemblyTimer += dt;
+            mouseX += (targetMouseX - mouseX) * 0.03;
+            mouseY += (targetMouseY - mouseY) * 0.03;
+            const time = assemblyTimer;
+            const orbitRadius = 22 + mouseX * 4;
+            const camAngle = time * 0.15 + Math.PI * 0.15;
+            heroCamera.position.lerp(new THREE.Vector3(Math.cos(camAngle) * orbitRadius, 7 + mouseY * 3, Math.sin(camAngle) *
+                orbitRadius), 0.02);
+            heroCamera.lookAt(0, 4.5, 0);
+
+            if (assemblyPhase < totalParts && assemblyTimer > 0.6 + assemblyPhase * 0.15) {
+                const part = allBuildingParts[assemblyPhase];
+                if (part) {
+                    const startT = performance.now();
+                    const animIn = () => {
+                        const t = Math.min((performance.now() - startT) / 800, 1);
+                        const ease = 1 - Math.pow(1 - t, 3);
+                        part.scale.lerp(part.userData.originalScale, ease);
+                        part.material.opacity = Math.min(part.material.opacity + 0.05, 1);
+                        if (t < 1) requestAnimationFrame(animIn);
+                        else { part.scale.copy(part.userData.originalScale);
+                            part.material.opacity = 1; }
+                    };
+                    animIn();
+                }
+                assemblyPhase++;
+            }
+            if (assemblyPhase >= totalParts && assemblyTimer > 14) {
+                assemblyTimer = 0;
+                assemblyPhase = 0;
+                allBuildingParts.forEach(p => { p.scale.set(0, 0, 0);
+                    p.material.opacity = 0; });
+            }
+            particles.rotation.y += dt * 0.08;
+            particles.position.y = 3 + Math.sin(time * 0.5) * 1.5;
+            particlesMat.opacity = 0.3 + Math.sin(time * 0.7) * 0.2;
+            heroRenderer.render(heroScene, heroCamera);
+        }
+        animateHero();
+
+        window.addEventListener('resize', () => {
+            heroRenderer.setSize(window.innerWidth, window.innerHeight);
+            heroCamera.aspect = window.innerWidth / window.innerHeight;
+            heroCamera.updateProjectionMatrix();
+        });
+
+        // ============ GLOBAL PARTICLES BACKGROUND ============
+        const globalCanvas = document.getElementById('globalParticlesCanvas');
+        const globalCtx = globalCanvas.getContext('2d');
+        globalCanvas.width = window.innerWidth;
+        globalCanvas.height = window.innerHeight;
+
+        const globalParticlesArr = [];
+        for (let i = 0; i < 50; i++) {
+            globalParticlesArr.push({
+                x: Math.random() * globalCanvas.width,
+                y: Math.random() * globalCanvas.height,
+                r: Math.random() * 1.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.4 + 0.1,
+            });
+        }
+
+        function animateGlobalParticles() {
+            globalCtx.clearRect(0, 0, globalCanvas.width, globalCanvas.height);
+            globalParticlesArr.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = globalCanvas.width;
+                if (p.x > globalCanvas.width) p.x = 0;
+                if (p.y < 0) p.y = globalCanvas.height;
+                if (p.y > globalCanvas.height) p.y = 0;
+                globalCtx.beginPath();
+                globalCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                globalCtx.fillStyle = `rgba(6,42,92,${p.opacity})`;
+                globalCtx.fill();
+            });
+            // Draw subtle connection lines
+            for (let i = 0; i < globalParticlesArr.length; i++) {
+                for (let j = i + 1; j < globalParticlesArr.length; j++) {
+                    const dx = globalParticlesArr[i].x - globalParticlesArr[j].x;
+                    const dy = globalParticlesArr[i].y - globalParticlesArr[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        globalCtx.beginPath();
+                        globalCtx.moveTo(globalParticlesArr[i].x, globalParticlesArr[i].y);
+                        globalCtx.lineTo(globalParticlesArr[j].x, globalParticlesArr[j].y);
+                        globalCtx.strokeStyle = `rgba(11,92,173,${0.04 * (1 - dist/120)})`;
+                        globalCtx.lineWidth = 0.5;
+                        globalCtx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateGlobalParticles);
+        }
+        animateGlobalParticles();
+
+        window.addEventListener('resize', () => {
+            globalCanvas.width = window.innerWidth;
+            globalCanvas.height = window.innerHeight;
+        });
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+    </script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const nav = document.getElementById('nav');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 80);
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            if (mobileMenu.classList.contains('open')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px,6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px,-6px)';
+            } else {
+                spans[0].style.transform = spans[1].style.opacity = spans[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            spans[0].style.transform = spans[1].style.opacity = spans[2].style.transform = '';
+        }
+
+        // GSAP Scroll Animations
+        gsap.from('.about-image-wrap', { scrollTrigger: { trigger: '#about', start: 'top 70%' }, x: -60, opacity: 0,
+            duration: 1, ease: 'power3.out' });
+        gsap.from('#about .section-heading', { scrollTrigger: { trigger: '#about', start: 'top 70%' }, y: 40, opacity: 0,
+            duration: 0.8, delay: 0.2, ease: 'power3.out' });
+        gsap.from('.about-stats-number', { scrollTrigger: { trigger: '#about', start: 'top 65%' }, scale: 0.5, opacity: 0,
+            duration: 0.9, delay: 0.4, ease: 'back.out(1.7)' });
+
+        document.querySelectorAll('.service-block').forEach((block, i) => {
+            gsap.from(block.querySelector('.service-content'), { scrollTrigger: { trigger: block, start: 'top 75%' },
+                x: i % 2 === 0 ? -50 : 50, opacity: 0, duration: 0.9, ease: 'power3.out' });
+            gsap.from(block.querySelector('.service-visual'), { scrollTrigger: { trigger: block, start: 'top 75%' },
+                x: i % 2 === 0 ? 50 : -50, opacity: 0, duration: 0.9, delay: 0.15, ease: 'power3.out' });
+        });
+
+        gsap.from('.project-card', { scrollTrigger: { trigger: '#projects', start: 'top 70%' }, y: 60, opacity: 0,
+            stagger: 0.1, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.stat-item', { scrollTrigger: { trigger: '.stats-row', start: 'top 80%' }, y: 40, opacity: 0,
+            stagger: 0.15, duration: 0.7, ease: 'power3.out' });
+        gsap.from('.process-step', { scrollTrigger: { trigger: '#process', start: 'top 75%' }, y: 50, opacity: 0,
+            stagger: 0.12, duration: 0.7, ease: 'power3.out' });
+        gsap.from('.tech-orbiter', { scrollTrigger: { trigger: '#techOrbit', start: 'top 80%' }, scale: 0, opacity: 0,
+            stagger: 0.08, duration: 0.6, ease: 'back.out(1.5)' });
+        gsap.from('.commitment-section .section-heading', { scrollTrigger: { trigger: '.commitment-section',
+                start: 'top 75%' }, y: 50, opacity: 0, duration: 1, ease: 'power3.out' });
+
+        document.querySelectorAll('.map-dot').forEach(dot => {
+            dot.addEventListener('mouseenter', () => dot.classList.add('active'));
+            dot.addEventListener('mouseleave', () => { if (!dot.dataset.permanent) dot.classList.remove(
+                    'active'); });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                closeMobileMenu();
+            });
+        });
+
+        console.log('OSM Design Engineering Consultancy — Premium 3D Website Initialized');
+        console.log('Engineering Better Spaces. Designing Smarter Futures.');
+    </script>
+</body>
+</html>
