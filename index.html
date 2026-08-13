@@ -110,9 +110,6 @@
             padding: 12px 40px;
         }
 
-        .nav.scrolled .nav-logo-text {
-            color: var(--navy);
-        }
         .nav.scrolled .nav-link {
             color: var(--text);
         }
@@ -136,59 +133,33 @@
             z-index: 1001;
         }
 
-        .nav-logo-mark {
-            width: 44px;
-            height: 44px;
-            background: var(--navy);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #fff;
-            letter-spacing: -0.5px;
-            position: relative;
-            overflow: hidden;
+        /* --- UPDATED LOGO IMAGE STYLES --- */
+        .nav-logo-mark-img {
+            padding-right: -30px;
+            width:180px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px; /* Ensures the square logo has rounded corners like your design */
+        }
+        .nav-logo-text-img {
+            padding-left: -30px;
+            padding-top: 10px;
+            height: 60px; /* Matches the square logo height */
+            object-fit: contain;
         }
 
-        .nav-logo-mark::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
-            animation: logoShimmer 3s infinite;
-        }
-
-        @keyframes logoShimmer {
-            0%,
-            100% {
-                transform: translate(-30%, -30%) rotate(45deg);
+        /* Mobile adjustments for logo images */
+        @media (max-width: 640px) {
+            .nav-logo-mark-img {
+                width: 36px;
+                height: 36px;
             }
-            50% {
-                transform: translate(30%, 30%) rotate(45deg);
+            .nav-logo-text-img {
+                height: 36px;
             }
         }
 
-        .nav-logo-text {
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #fff;
-            transition: color 0.5s;
-            line-height: 1.2;
-        }
-        .nav-logo-text span {
-            display: block;
-            font-weight: 400;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            opacity: 0.75;
-        }
+        /* Removed obsolete .nav-logo-mark, .nav-logo-mark::after, .nav-logo-text, and @keyframes logoShimmer */
 
         .nav-links {
             display: flex;
@@ -1291,8 +1262,9 @@
     <!-- NAVIGATION -->
     <nav class="nav" id="nav">
         <a href="#" class="nav-logo">
-            <div class="nav-logo-mark">OSM</div>
-            <div class="nav-logo-text">OSM Design<span>Engineering Consultancy</span></div>
+            <!-- REPLACED WITH NEW LOGO IMAGES -->
+            <img src="assets/img/logo1.png" alt="OSM Logo Mark" class="nav-logo-mark-img">
+            <img src="assets/img/logo2.png" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
         </a>
         <ul class="nav-links">
             <li><a href="#home" class="nav-link">Home</a></li>
@@ -2493,6 +2465,9 @@
 
         console.log('OSM Design Engineering Consultancy — Premium Website Initialized');
         console.log('Engineering Better Spaces. Designing Smarter Futures.');
+    </script>
+</body>
+</html>nsole.log('Engineering Better Spaces. Designing Smarter Futures.');
     </script>
 </body>
 </html>
