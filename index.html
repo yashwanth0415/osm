@@ -133,16 +133,14 @@
             z-index: 1001;
         }
 
-        /* --- UPDATED LOGO IMAGE STYLES --- */
+        /* --- LOGO IMAGE STYLES --- */
         .nav-logo-mark-img {
-            padding-right: -30px;
-            width:180px;
+            width: 180px;
             height: 70px;
             object-fit: contain;
             border-radius: 8px; /* Ensures the square logo has rounded corners like your design */
         }
         .nav-logo-text-img {
-            padding-left: -30px;
             padding-top: 10px;
             height: 60px; /* Matches the square logo height */
             object-fit: contain;
@@ -158,8 +156,6 @@
                 height: 36px;
             }
         }
-
-        /* Removed obsolete .nav-logo-mark, .nav-logo-mark::after, .nav-logo-text, and @keyframes logoShimmer */
 
         .nav-links {
             display: flex;
@@ -237,12 +233,13 @@
             background: #000;
         }
 
-        .hero-canvas {
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
             z-index: 1;
         }
 
@@ -491,33 +488,6 @@
             box-shadow: 0 20px 60px rgba(6, 42, 92, 0.1);
         }
 
-        .about-image-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #e8eef5 0%, #d4dfed 30%, #c5d5e8 60%, #b8cde4 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-3d-building {
-            width: 70%;
-            height: 70%;
-            position: relative;
-        }
-
-        .about-building-block {
-            position: absolute;
-            background: var(--navy);
-            border-radius: 2px;
-        }
-        .about-building-block.glass {
-            background: rgba(11, 92, 173, 0.4);
-            border: 1px solid rgba(11, 92, 173, 0.6);
-        }
-
         .about-stats-number {
             font-size: clamp(5rem, 10vw, 10rem);
             font-weight: 800;
@@ -635,40 +605,6 @@
             box-shadow: 0 10px 30px rgba(6, 42, 92, 0.08);
         }
 
-        .service-visual-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sv-arch {
-            background: linear-gradient(160deg, #dce8f5 0%, #c5d8ed 40%, #a8c5e3 100%);
-        }
-        .sv-struct {
-            background: linear-gradient(160deg, #1a3a60 0%, #0d2b4a 40%, #062040 100%);
-        }
-        .sv-mep {
-            background: linear-gradient(160deg, #e8f0f8 0%, #d0e0f0 40%, #b8d0e8 100%);
-        }
-        .sv-interior {
-            background: linear-gradient(160deg, #f0ede8 0%, #e8e2d8 40%, #ddd6c8 100%);
-        }
-
-        .wireframe-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .wireframe-line {
-            position: absolute;
-            background: rgba(11, 92, 173, 0.25);
-        }
-
         /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
@@ -681,7 +617,7 @@
 
         .project-card {
             position: relative;
-            border-radius: 12px;
+            border-radius: px;
             overflow: hidden;
             aspect-ratio: 3/4;
             cursor: pointer;
@@ -729,25 +665,26 @@
             opacity: 0.8;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
+        .project-card-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
 
-        .pc1 {
-            background: linear-gradient(180deg, #b8cfe4 0%, #8aadcc 50%, #5c8bb5 100%);
-        }
-        .pc2 {
-            background: linear-gradient(180deg, #d0dce8 0%, #a8bed4 50%, #7a9fc0 100%);
-        }
-        .pc3 {
-            background: linear-gradient(180deg, #c5d5e6 0%, #9ab5d0 50%, #6e95ba 100%);
-        }
-        .pc4 {
-            background: linear-gradient(180deg, #e0e8f2 0%, #c0d0e4 50%, #90b0cc 100%);
-        }
-        .pc5 {
-            background: linear-gradient(180deg, #d8e4f0 0%, #b5c8dc 50%, #88a8c4 100%);
-        }
-        .pc6 {
-            background: linear-gradient(180deg, #c8d8e8 0%, #a0bcd4 50%, #789ec0 100%);
-        }
+.project-card-bg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.6s ease;
+}
+
+.project-card:hover .project-card-bg img {
+    transform: scale(1.06);
+    filter: brightness(0.85);
+}
 
         /* ===== COUNTRIES ===== */
         .countries-visual {
@@ -945,16 +882,6 @@
             font-size: 1rem;
             color: var(--navy);
             letter-spacing: -0.3px;
-        }
-        /* Removed infinite float animation to prevent GSAP conflict */
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
         }
 
         /* ===== PROCESS ===== */
@@ -1262,9 +1189,9 @@
     <!-- NAVIGATION -->
     <nav class="nav" id="nav">
         <a href="#" class="nav-logo">
-            <!-- REPLACED WITH NEW LOGO IMAGES -->
-            <img src="assets/img/logo1.png" alt="OSM Logo Mark" class="nav-logo-mark-img">
-            <img src="assets/img/logo2.png" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
+            <!-- Added IDs to easily target them with JS -->
+            <img src="assets/img/logo1.png" id="logoMark" alt="OSM Logo Mark" class="nav-logo-mark-img">
+            <img src="assets/img/logo2.png" id="logoText" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
         </a>
         <ul class="nav-links">
             <li><a href="#home" class="nav-link">Home</a></li>
@@ -1294,7 +1221,10 @@
 
     <!-- HERO -->
     <section class="hero" id="home">
-        <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        <!-- REPLACED CANVAS WITH VIDEO -->
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/videos/hero.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-tag">OSM Design Engineering Consultancy</p>
@@ -1312,30 +1242,8 @@
             <span class="section-label">About OSM</span>
             <div class="about-grid">
                 <div class="about-image-wrap">
-                    <div class="about-image-placeholder" id="aboutVisual">
-                        <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="bldgGrad" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="#062A5C" stop-opacity="0.9"/>
-                                    <stop offset="100%" stop-color="#0B5CAD" stop-opacity="0.5"/>
-                                </linearGradient>
-                            </defs>
-                            <rect x="60" y="100" width="180" height="160" rx="2" fill="url(#bldgGrad)" stroke="#062A5C" stroke-width="1.5"/>
-                            <rect x="80" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
-                            <rect x="130" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
-                            <rect x="180" y="120" width="40" height="25" rx="1" fill="rgba(255,255,255,0.25)"/>
-                            <rect x="80" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
-                            <rect x="130" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
-                            <rect x="180" y="155" width="40" height="25" rx="1" fill="rgba(255,255,255,0.2)"/>
-                            <rect x="80" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
-                            <rect x="130" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
-                            <rect x="180" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
-                            <rect x="60" y="250" width="180" height="12" rx="1" fill="#062A5C" opacity="0.8"/>
-                            <line x1="60" y1="100" x2="60" y2="60" stroke="#062A5C" stroke-width="2"/>
-                            <line x1="240" y1="100" x2="240" y2="60" stroke="#062A5C" stroke-width="2"/>
-                            <line x1="150" y1="100" x2="150" y2="40" stroke="#062A5C" stroke-width="1.5" opacity="0.6"/>
-                        </svg>
-                    </div>
+                    <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="Modern Architecture Firm" class="w-full h-full object-cover">
                 </div>
                 <div>
                     <h2 class="section-heading">ENGINEERING<br>WITH PURPOSE.</h2>
@@ -1378,39 +1286,16 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-arch" id="svArch">
-                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="80" y="60" width="240" height="210" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
-                            <rect x="100" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
-                            <rect x="160" y="80" width="50" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
-                            <rect x="220" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
-                            <rect x="100" y="120" width="50" height="30" fill="rgba(6,42,92,0.15)" rx="2"/>
-                            <rect x="160" y="120" width="110" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
-                            <rect x="100" y="160" width="50" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
-                            <rect x="160" y="160" width="50" height="30" fill="rgba(6,42,92,0.15)" rx="2"/>
-                            <rect x="220" y="160" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
-                            <rect x="100" y="200" width="170" height="50" fill="rgba(6,42,92,0.1)" rx="2"/>
-                            <line x1="80" y1="270" x2="320" y2="270" stroke="#062A5C" stroke-width="4"/>
-                        </svg>
-                    </div>
+                    <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="Architectural Design" class="w-full h-full object-cover">
                 </div>
             </div>
 
             <!-- Structural -->
             <div class="service-block">
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-struct" id="svStruct">
-                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="60" y="30" width="280" height="240" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" rx="2"/>
-                            <line x1="100" y1="30" x2="100" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                            <line x1="200" y1="30" x2="200" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                            <line x1="300" y1="30" x2="300" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                            <line x1="60" y1="80" x2="340" y2="80" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-                            <line x1="60" y1="150" x2="340" y2="150" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-                            <line x1="60" y1="220" x2="340" y2="220" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-                            <rect x="60" y="260" width="280" height="15" fill="rgba(255,255,255,0.3)" rx="2"/>
-                        </svg>
-                    </div>
+                    <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1503708928676-1cb796a0891e?w=800&q=80" alt="Structural Engineering" class="w-full h-full object-cover">
                 </div>
                 <div class="service-content">
                     <div class="service-number">02</div>
@@ -1437,34 +1322,16 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-mep" id="svMep">
-                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="80" y="70" width="240" height="190" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
-                            <path d="M120 120 L280 120" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
-                            <path d="M120 150 L280 150" stroke="#062A5C" stroke-width="2" stroke-dasharray="5,5"/>
-                            <path d="M120 180 L280 180" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
-                            <circle cx="120" cy="120" r="6" fill="#0B5CAD"/>
-                            <circle cx="280" cy="120" r="6" fill="#0B5CAD"/>
-                            <circle cx="200" cy="150" r="8" fill="#062A5C"/>
-                            <rect x="150" y="200" width="100" height="30" rx="4" fill="rgba(6,42,92,0.2)"/>
-                        </svg>
-                    </div>
+                    <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80" alt="MEP Engineering" class="w-full h-full object-cover">
                 </div>
             </div>
 
             <!-- Interior -->
             <div class="service-block">
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-interior" id="svInterior">
-                        <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="50" y="50" width="300" height="220" fill="none" stroke="#5c4a3a" stroke-width="1.5" rx="6"/>
-                            <rect x="70" y="160" width="120" height="8" rx="2" fill="#8a7a6a" opacity="0.5"/>
-                            <rect x="220" y="100" width="80" height="100" rx="3" fill="rgba(90,70,50,0.25)"/>
-                            <circle cx="300" cy="70" r="20" fill="rgba(200,180,150,0.4)"/>
-                            <rect x="70" y="70" width="60" height="40" rx="3" fill="rgba(140,120,100,0.35)"/>
-                            <rect x="150" y="180" width="160" height="3" rx="1" fill="#8a7a6a" opacity="0.4"/>
-                        </svg>
-                    </div>
+                    <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" alt="Interior Design" class="w-full h-full object-cover">
                 </div>
                 <div class="service-content">
                     <div class="service-number">04</div>
@@ -1482,62 +1349,152 @@
 
     <!-- PROJECTS -->
     <section class="section section-blue section-transition-blue" id="projects">
-        <canvas class="section-canvas-3d faint" id="projectsCanvas"></canvas>
-        <div class="section-inner">
-            <span class="section-label">Selected Projects</span>
-            <h2 class="section-heading">OUR<br>PORTFOLIO.</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc1"></div>
-                        <div class="project-card-overlay">
-                            <h4>Luxury Villa</h4><span>Dubai / UAE</span>
-                        </div>
+    <canvas class="section-canvas-3d faint" id="projectsCanvas"></canvas>
+
+    <div class="section-inner">
+
+        <span class="section-label">Selected Projects</span>
+
+        <h2 class="section-heading">
+            OUR<br>PORTFOLIO.
+        </h2>
+
+        <div class="projects-grid">
+
+            <!-- Luxury Villa -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1400&q=85"
+                            alt="Luxury modern villa architecture"
+                            loading="lazy"
+                            decoding="async"
+                        >
                     </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc2"></div>
-                        <div class="project-card-overlay">
-                            <h4>Residential Development</h4><span>Hyderabad / India</span>
-                        </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Luxury Villa</h4>
+                        <span>Dubai / UAE</span>
                     </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc3"></div>
-                        <div class="project-card-overlay">
-                            <h4>Commercial Office</h4><span>Doha / Qatar</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc4"></div>
-                        <div class="project-card-overlay">
-                            <h4>Hospital Project</h4><span>Riyadh / Saudi Arabia</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc5"></div>
-                        <div class="project-card-overlay">
-                            <h4>Industrial Facility</h4><span>Oman</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-card-inner">
-                        <div class="project-card-bg pc6"></div>
-                        <div class="project-card-overlay">
-                            <h4>Restaurant & Hospitality</h4><span>UAE</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
+
+
+            <!-- Residential Development -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&q=85"
+                            alt="Modern residential development"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Residential Development</h4>
+                        <span>Hyderabad / India</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Commercial Office -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1400&q=85"
+                            alt="Modern commercial office architecture"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Commercial Office</h4>
+                        <span>Doha / Qatar</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Hospital Project -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1400&q=85"
+                            alt="Modern hospital architecture"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Hospital Project</h4>
+                        <span>Riyadh / Saudi Arabia</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Industrial Facility -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1400&q=85"
+                            alt="Industrial construction facility"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Industrial Facility</h4>
+                        <span>Oman</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Restaurant & Hospitality -->
+            <div class="project-card">
+                <div class="project-card-inner">
+
+                    <div class="project-card-bg">
+                        <img
+                            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=85"
+                            alt="Luxury hospitality architecture"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+
+                    <div class="project-card-overlay">
+                        <h4>Restaurant & Hospitality</h4>
+                        <span>UAE</span>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- COUNTRIES -->
     <section class="section section-navy section-transition-navy">
@@ -1831,269 +1788,8 @@
             }
         }
     </script>
-
-    <!-- HERO 3D SCENE -->
+    
     <script type="module">
-        import * as THREE from 'three';
-
-        // ===== HERO SCENE =====
-        const heroCanvas = document.getElementById('heroCanvas');
-        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
-        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        heroRenderer.setSize(window.innerWidth, window.innerHeight);
-        heroRenderer.shadowMap.enabled = true;
-        heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-        heroRenderer.toneMappingExposure = 1.2;
-
-        const heroScene = new THREE.Scene();
-        heroScene.background = new THREE.Color('#062a4a');
-        heroScene.fog = new THREE.Fog('#062a4a', 30, 100);
-
-        const heroCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
-        heroCamera.position.set(18, 8, 22);
-        heroCamera.lookAt(0, 3, 0);
-
-        // Lighting
-        const hAmbient = new THREE.AmbientLight('#b8d4f0', 2.5);
-        heroScene.add(hAmbient);
-        const hSun = new THREE.DirectionalLight('#ffffff', 8);
-        hSun.position.set(30, 25, 10);
-        hSun.castShadow = true;
-        hSun.shadow.mapSize.width = 2048;
-        hSun.shadow.mapSize.height = 2048;
-        hSun.shadow.camera.near = 0.5;
-        hSun.shadow.camera.far = 100;
-        hSun.shadow.camera.left = -25;
-        hSun.shadow.camera.right = 25;
-        hSun.shadow.camera.top = 25;
-        hSun.shadow.camera.bottom = -25;
-        hSun.shadow.bias = -0.0001;
-        heroScene.add(hSun);
-        const hFill = new THREE.DirectionalLight('#7eb8e0', 3);
-        hFill.position.set(-10, 5, -8);
-        heroScene.add(hFill);
-        const hRim = new THREE.DirectionalLight('#c8e4ff', 2);
-        hRim.position.set(0, 3, 20);
-        heroScene.add(hRim);
-
-        // Ground
-        const hGround = new THREE.Mesh(
-            new THREE.PlaneGeometry(80, 80),
-            new THREE.MeshStandardMaterial({ color: '#e8eef5', roughness: 0.6, metalness: 0.05 })
-        );
-        hGround.rotation.x = -Math.PI / 2;
-        hGround.position.y = -6;
-        hGround.receiveShadow = true;
-        heroScene.add(hGround);
-
-        const hGrid = new THREE.PolarGridHelper(30, 48, 24, 128, '#c8d8ec', '#c8d8ec');
-        hGrid.position.y = -5.98;
-        heroScene.add(hGrid);
-
-        // Building group
-        const buildingGroup = new THREE.Group();
-        heroScene.add(buildingGroup);
-        buildingGroup.position.set(0, -6, 0);
-
-        const concreteMat = new THREE.MeshStandardMaterial({ color: '#f5f5f0', roughness: 0.35, metalness: 0.05 });
-        const glassMat = new THREE.MeshStandardMaterial({ color: '#a8d4f0', roughness: 0.1, metalness: 0.3, transparent: true,
-            opacity: 0.75 });
-        const darkGlassMat = new THREE.MeshStandardMaterial({ color: '#3a7099', roughness: 0.08, metalness: 0.4 });
-        const metalMat = new THREE.MeshStandardMaterial({ color: '#d0d8e0', roughness: 0.2, metalness: 0.7 });
-        const accentMat = new THREE.MeshStandardMaterial({ color: '#062A5C', roughness: 0.25, metalness: 0.3 });
-        const structMat = new THREE.MeshStandardMaterial({ color: '#c8d0d8', roughness: 0.3, metalness: 0.5 });
-
-        const foundation = new THREE.Mesh(new THREE.BoxGeometry(8, 0.6, 6), concreteMat);
-        foundation.position.y = 0.3;
-        foundation.castShadow = true;
-        foundation.receiveShadow = true;
-        buildingGroup.add(foundation);
-
-        const columnsGroup = new THREE.Group();
-        buildingGroup.add(columnsGroup);
-        const colPositions = [
-            [-3.2, 0, -2.2],
-            [3.2, 0, -2.2],
-            [-3.2, 0, 2.2],
-            [3.2, 0, 2.2],
-            [-1.6, 0, -2.2],
-            [1.6, 0, -2.2],
-            [-1.6, 0, 2.2],
-            [1.6, 0, 2.2],
-        ];
-        colPositions.forEach(([cx, cy, cz]) => {
-            const col = new THREE.Mesh(new THREE.BoxGeometry(0.35, 12, 0.35), structMat);
-            col.position.set(cx, 6.3, cz);
-            col.castShadow = true;
-            col.receiveShadow = true;
-            columnsGroup.add(col);
-        });
-
-        const slabsGroup = new THREE.Group();
-        buildingGroup.add(slabsGroup);
-        for (let i = 0; i < 8; i++) {
-            const slab = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.25, 5.2), concreteMat);
-            slab.position.y = 1.0 + i * 1.55;
-            slab.castShadow = true;
-            slab.receiveShadow = true;
-            slabsGroup.add(slab);
-        }
-
-        const facadeGroup = new THREE.Group();
-        buildingGroup.add(facadeGroup);
-        for (let floor = 0; floor < 8; floor++) {
-            const yPos = 1.0 + floor * 1.55;
-            for (let px = -3; px <= 3; px += 1.2) {
-                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), floor % 2 === 0 ? glassMat :
-                    darkGlassMat);
-                panel.position.set(px, yPos, 2.55);
-                panel.castShadow = true;
-                facadeGroup.add(panel);
-            }
-            for (let px = -3; px <= 3; px += 1.2) {
-                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), glassMat);
-                panel.position.set(px, yPos, -2.55);
-                panel.castShadow = true;
-                facadeGroup.add(panel);
-            }
-            for (let pz = -1.8; pz <= 1.8; pz += 1.2) {
-                const panelL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
-                panelL.position.set(-3.55, yPos, pz);
-                facadeGroup.add(panelL);
-                const panelR = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
-                panelR.position.set(3.55, yPos, pz);
-                facadeGroup.add(panelR);
-            }
-        }
-
-        const roof = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.3, 5.6), accentMat);
-        roof.position.y = 12.7;
-        roof.castShadow = true;
-        roof.receiveShadow = true;
-        buildingGroup.add(roof);
-
-        const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
-        parapetFront.position.set(0, 13.05, 2.75);
-        buildingGroup.add(parapetFront);
-        const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
-        parapetBack.position.set(0, 13.05, -2.75);
-        buildingGroup.add(parapetBack);
-
-        for (let i = 0; i < 5; i++) {
-            const fin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 11.5, 0.25), accentMat);
-            fin.position.set(-2.8 + i * 1.4, 6.5, 2.65);
-            fin.castShadow = true;
-            facadeGroup.add(fin);
-        }
-
-        const landscapeGroup = new THREE.Group();
-        buildingGroup.add(landscapeGroup);
-        for (let i = 0; i < 6; i++) {
-            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8),
-                new THREE.MeshStandardMaterial({ color: '#8a7a6a', roughness: 0.7 }));
-            trunk.position.set(-5 + i * 2, 1.25, 3.8);
-            trunk.castShadow = true;
-            landscapeGroup.add(trunk);
-            const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 8),
-                new THREE.MeshStandardMaterial({ color: '#5a8a5a', roughness: 0.6 }));
-            canopy.position.set(-5 + i * 2, 3.0, 3.8);
-            canopy.scale.set(1, 0.7, 1);
-            canopy.castShadow = true;
-            landscapeGroup.add(canopy);
-        }
-
-        const allBuildingParts = [
-            foundation,
-            ...columnsGroup.children,
-            ...slabsGroup.children,
-            ...facadeGroup.children,
-            roof,
-            parapetFront,
-            parapetBack,
-            ...landscapeGroup.children,
-        ];
-
-        allBuildingParts.forEach(part => {
-            part.userData.originalY = part.position.y;
-            part.userData.originalScale = part.scale.clone();
-            part.scale.set(0, 0, 0);
-            part.material = part.material.clone();
-            part.material.transparent = true;
-            part.material.opacity = 0;
-        });
-
-        let assemblyPhase = 0;
-        let assemblyTimer = 0;
-        let heroMouseX = 0,
-            heroMouseY = 0,
-            targetHeroMouseX = 0,
-            targetHeroMouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            targetHeroMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            targetHeroMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        });
-
-        const heroClock = new THREE.Clock();
-
-        function animateHero() {
-            requestAnimationFrame(animateHero);
-            const dt = Math.min(heroClock.getDelta(), 0.1);
-            assemblyTimer += dt;
-            heroMouseX += (targetHeroMouseX - heroMouseX) * 0.03;
-            heroMouseY += (targetHeroMouseY - heroMouseY) * 0.03;
-
-            const time = assemblyTimer;
-            const orbitRadius = 22 + heroMouseX * 4;
-            const camAngle = time * 0.15 + Math.PI * 0.15;
-            heroCamera.position.lerp(
-                new THREE.Vector3(Math.cos(camAngle) * orbitRadius, 7 + heroMouseY * 3, Math.sin(camAngle) * orbitRadius),
-                0.02
-            );
-            heroCamera.lookAt(0, 4.5, 0);
-
-            if (assemblyPhase < allBuildingParts.length && assemblyTimer > 0.6 + assemblyPhase * 0.15) {
-                const part = allBuildingParts[assemblyPhase];
-                if (part) {
-                    const startTime = performance.now();
-                    const animateIn = () => {
-                        const elapsed = (performance.now() - startTime) / 1000;
-                        const t = Math.min(elapsed / 0.8, 1);
-                        const ease = 1 - Math.pow(1 - t, 3);
-                        part.scale.lerp(part.userData.originalScale, ease);
-                        part.material.opacity = Math.min(part.material.opacity + 0.05, 1);
-                        if (t < 1) {
-                            requestAnimationFrame(animateIn);
-                        } else {
-                            part.scale.copy(part.userData.originalScale);
-                            part.material.opacity = 1;
-                        }
-                    };
-                    animateIn();
-                }
-                assemblyPhase++;
-            }
-
-            if (assemblyPhase >= allBuildingParts.length && assemblyTimer > 14) {
-                assemblyTimer = 0;
-                assemblyPhase = 0;
-                allBuildingParts.forEach(part => {
-                    part.scale.set(0, 0, 0);
-                    part.material.opacity = 0;
-                });
-            }
-
-            heroRenderer.render(heroScene, heroCamera);
-        }
-        animateHero();
-
-        window.addEventListener('resize', () => {
-            heroRenderer.setSize(window.innerWidth, window.innerHeight);
-            heroCamera.aspect = window.innerWidth / window.innerHeight;
-            heroCamera.updateProjectionMatrix();
-        });
-
         // ===== SECTION 3D BACKGROUNDS =====
         class SectionBackground {
             constructor(canvasId, config) {
@@ -2324,12 +2020,22 @@
         const nav = document.getElementById('nav');
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
+        
+        // LOGO SWAP LOGIC
+        const logoMark = document.getElementById('logoMark');
+        const logoText = document.getElementById('logoText');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 80) {
                 nav.classList.add('scrolled');
+                // Swap to light/transparent logos
+                logoMark.src = 'assets/img/logo3.png';
+                logoText.src = 'assets/img/logo4.png';
             } else {
                 nav.classList.remove('scrolled');
+                // Swap back to original logos
+                logoMark.src = 'assets/img/logo1.png';
+                logoText.src = 'assets/img/logo2.png';
             }
         });
 
@@ -2425,10 +2131,6 @@
             clearProps: 'opacity,transform'
         });
 
-        // These two animations were causing conflicts; removed to ensure content visibility
-        // gsap.from('.feature-card', { ... });
-        // gsap.from('.tech-card', { ... });
-
         gsap.from('.process-step', {
             scrollTrigger: { trigger: '#process', start: 'top 75%' },
             y: 50,
@@ -2465,9 +2167,6 @@
 
         console.log('OSM Design Engineering Consultancy — Premium Website Initialized');
         console.log('Engineering Better Spaces. Designing Smarter Futures.');
-    </script>
-</body>
-</html>nsole.log('Engineering Better Spaces. Designing Smarter Futures.');
     </script>
 </body>
 </html>
