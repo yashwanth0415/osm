@@ -56,7 +56,52 @@
             line-height: 1.6;
         }
 
-        /* NAVIGATION */
+        /* ===== FADING SHADOW TRANSITIONS ===== */
+        .section-transition {
+            position: relative;
+        }
+        .section-transition::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            z-index: 5;
+            pointer-events: none;
+            background: linear-gradient(to bottom, transparent, var(--bg-light));
+        }
+        .section-transition-light::before {
+            background: linear-gradient(to bottom, transparent, var(--bg-light));
+        }
+        .section-transition-navy::before {
+            background: linear-gradient(to bottom, transparent, var(--navy));
+        }
+        .section-transition-blue::before {
+            background: linear-gradient(to bottom, transparent, #E8F1FA);
+        }
+
+        /* Hero fade-out shadow - made more transparent and blending */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 160px;
+            z-index: 4;
+            pointer-events: none;
+            background: linear-gradient(to bottom,
+                    rgba(6, 42, 92, 0) 0%,
+                    rgba(6, 42, 92, 0.1) 25%,
+                    rgba(6, 42, 92, 0.2) 50%,
+                    rgba(6, 42, 92, 0.35) 75%,
+                    rgba(232, 241, 250, 0.7) 100%);
+            transition: opacity 0.6s ease;
+            opacity: 0.7;
+        }
+
+        /* ===== NAVIGATION ===== */
         .nav {
             position: fixed;
             top: 0;
@@ -73,7 +118,7 @@
         }
 
         .nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 2px 30px rgba(6, 42, 92, 0.08);
@@ -93,6 +138,9 @@
         .nav.scrolled .nav-cta:hover {
             background: var(--navy);
             color: #fff;
+        }
+        .nav.scrolled .nav-mobile-toggle span {
+            background: var(--navy);
         }
 
         .nav-logo {
@@ -223,11 +271,8 @@
             border-radius: 2px;
             transition: all 0.3s;
         }
-        .nav.scrolled .nav-mobile-toggle span {
-            background: var(--navy);
-        }
 
-        /* HERO */
+        /* ===== HERO ===== */
         .hero {
             position: relative;
             width: 100%;
@@ -365,7 +410,7 @@
             position: absolute;
             bottom: 30px;
             right: 40px;
-            z-index: 3;
+            z-index: 5;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -393,11 +438,12 @@
             }
         }
 
-        /* SECTIONS */
+        /* ===== SECTIONS ===== */
         .section {
             padding: 100px 40px;
             position: relative;
             overflow: hidden;
+            isolation: isolate;
         }
 
         .section-white {
@@ -410,10 +456,29 @@
             background: var(--navy);
             color: #fff;
         }
+        .section-blue {
+            background: #E8F1FA;
+        }
 
         .section-inner {
             max-width: 1300px;
             margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+
+        .section-canvas-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .section-canvas-3d.faint {
+            opacity: 0.35;
         }
 
         .section-label {
@@ -424,9 +489,11 @@
             font-weight: 600;
             margin-bottom: 16px;
             display: block;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
         }
         .section-navy .section-label {
             color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .section-heading {
@@ -435,6 +502,7 @@
             letter-spacing: -1px;
             line-height: 1.08;
             margin-bottom: 24px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
         .section-text {
@@ -442,12 +510,14 @@
             color: var(--text-light);
             max-width: 600px;
             line-height: 1.7;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
         }
         .section-navy .section-text {
             color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
-        /* ABOUT */
+        /* ===== ABOUT ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -461,6 +531,8 @@
             overflow: hidden;
             aspect-ratio: 4/3;
             background: var(--bg-light);
+            z-index: 2;
+            box-shadow: 0 20px 60px rgba(6, 42, 92, 0.1);
         }
 
         .about-image-placeholder {
@@ -496,6 +568,7 @@
             color: var(--navy);
             line-height: 1;
             letter-spacing: -3px;
+            text-shadow: 0 4px 20px rgba(6, 42, 92, 0.2);
         }
         .about-stats-label {
             font-size: 1rem;
@@ -504,6 +577,7 @@
             color: var(--text-light);
             font-weight: 600;
             margin-top: 4px;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
         }
 
         .about-countries {
@@ -521,6 +595,8 @@
             font-weight: 500;
             color: var(--text);
             transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
         }
         .about-country-tag:hover {
             background: var(--navy);
@@ -528,7 +604,7 @@
             border-color: var(--navy);
         }
 
-        /* SERVICES */
+        /* ===== SERVICES ===== */
         .service-block {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -536,6 +612,7 @@
             align-items: center;
             padding: 60px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
         }
         .service-block:last-child {
             border-bottom: none;
@@ -556,6 +633,7 @@
 
         .service-content {
             position: relative;
+            z-index: 2;
         }
         .service-content h3 {
             font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -564,12 +642,14 @@
             margin-bottom: 12px;
             position: relative;
             z-index: 1;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
         .service-content p {
             color: var(--text-light);
             margin-bottom: 16px;
             position: relative;
             z-index: 1;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
         }
         .service-list {
             list-style: none;
@@ -587,6 +667,7 @@
             border-radius: 50px;
             color: var(--navy);
             font-weight: 500;
+            backdrop-filter: blur(4px);
         }
 
         .service-visual {
@@ -594,6 +675,8 @@
             border-radius: 12px;
             overflow: hidden;
             position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(6, 42, 92, 0.08);
         }
 
         .service-visual-inner {
@@ -630,12 +713,14 @@
             background: rgba(11, 92, 173, 0.25);
         }
 
-        /* PROJECTS */
+        /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-top: 40px;
+            position: relative;
+            z-index: 2;
         }
 
         .project-card {
@@ -644,7 +729,11 @@
             overflow: hidden;
             aspect-ratio: 3/4;
             cursor: pointer;
-            group: true;
+            box-shadow: 0 10px 30px rgba(6, 42, 92, 0.12);
+            transition: box-shadow 0.4s;
+        }
+        .project-card:hover {
+            box-shadow: 0 20px 50px rgba(6, 42, 92, 0.25);
         }
 
         .project-card-inner {
@@ -675,12 +764,14 @@
             font-weight: 700;
             letter-spacing: 0px;
             margin-bottom: 4px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
         }
         .project-card-overlay span {
             font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             opacity: 0.8;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .pc1 {
@@ -702,7 +793,7 @@
             background: linear-gradient(180deg, #c8d8e8 0%, #a0bcd4 50%, #789ec0 100%);
         }
 
-        /* COUNTRIES MAP */
+        /* ===== COUNTRIES ===== */
         .countries-visual {
             position: relative;
             height: 400px;
@@ -713,12 +804,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2;
         }
 
         .map-dots {
             position: relative;
             width: 80%;
             height: 70%;
+            z-index: 2;
         }
         .map-dot {
             position: absolute;
@@ -745,6 +838,7 @@
             white-space: nowrap;
             transform: translate(-50%, -100%);
             margin-top: -14px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         .map-dot.active+.map-dot-label {
             color: #fff;
@@ -758,15 +852,86 @@
             pointer-events: none;
         }
 
-        /* STATS */
+        /* ===== WHY OSM (Enhanced & Redesigned) ===== */
+        .why-section {
+            position: relative;
+            z-index: 2;
+        }
+        .why-intro {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+        .why-intro p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--blue);
+        }
+        .feature-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+            color: var(--navy);
+        }
+        .feature-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
         .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 50px;
         }
         .stat-item {
             text-align: center;
+            padding: 30px 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 15px 45px rgba(6, 42, 92, 0.15);
+            transform: translateY(-6px);
         }
         .stat-number {
             font-size: clamp(3rem, 5vw, 5rem);
@@ -774,62 +939,70 @@
             color: var(--navy);
             letter-spacing: -2px;
             line-height: 1;
+            text-shadow: 0 4px 20px rgba(6, 42, 92, 0.15);
+            margin-bottom: 8px;
         }
         .stat-label {
             font-size: 0.8rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--text-light);
-            margin-top: 8px;
             font-weight: 500;
         }
 
-        /* TECH */
-        .tech-orbit {
-            position: relative;
-            height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* ===== TECHNOLOGY (Redesigned with 3D logo grid) ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
             margin-top: 40px;
-        }
-        .tech-center {
-            width: 80px;
-            height: 80px;
-            background: var(--navy);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
             z-index: 2;
             position: relative;
         }
-        .tech-orbiter {
-            position: absolute;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            font-weight: 500;
-            color: var(--text-light);
-            padding: 8px 16px;
-            background: var(--white);
-            border-radius: 50px;
-            box-shadow: 0 4px 20px rgba(6, 42, 92, 0.08);
+        .tech-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             transition: all 0.4s;
-            cursor: default;
-            white-space: nowrap;
+            transform-style: preserve-3d;
+            perspective: 800px;
+            animation: float 4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+            cursor: pointer;
         }
-        .tech-orbiter:hover {
-            background: var(--navy);
-            color: #fff;
-            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.25);
-            transform: scale(1.08);
+        .tech-card:hover {
+            transform: translateY(-10px) rotateX(10deg) rotateY(5deg);
+            box-shadow: 0 20px 50px rgba(6, 42, 92, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .tech-logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--blue);
+            filter: drop-shadow(0 4px 8px rgba(6, 42, 92, 0.2));
+        }
+        .tech-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--navy);
+            letter-spacing: -0.3px;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
-        /* PROCESS */
+        /* ===== PROCESS ===== */
         .process-timeline {
             display: flex;
             gap: 0;
@@ -837,6 +1010,7 @@
             position: relative;
             overflow-x: auto;
             padding-bottom: 20px;
+            z-index: 2;
         }
         .process-step {
             flex: 1;
@@ -860,6 +1034,7 @@
             position: relative;
             z-index: 2;
             transition: all 0.4s;
+            box-shadow: 0 4px 15px rgba(6, 42, 92, 0.25);
         }
         .process-step:hover .process-step-num {
             background: var(--blue);
@@ -871,11 +1046,13 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             margin-bottom: 6px;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
         }
         .process-step p {
             font-size: 0.7rem;
             color: var(--text-light);
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
         }
         .process-connector {
             position: absolute;
@@ -887,7 +1064,7 @@
             z-index: 1;
         }
 
-        /* COMMITMENT */
+        /* ===== COMMITMENT ===== */
         .commitment-section {
             min-height: 60vh;
             display: flex;
@@ -909,9 +1086,10 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
+            z-index: 1;
         }
 
-        /* CTA */
+        /* ===== CTA ===== */
         .cta-section {
             position: relative;
             overflow: hidden;
@@ -930,13 +1108,16 @@
             border-radius: 16px;
             opacity: 0.5;
             pointer-events: none;
+            z-index: 1;
         }
 
-        /* FOOTER */
+        /* ===== FOOTER ===== */
         .footer {
             background: var(--navy-dark);
             color: #fff;
             padding: 60px 40px 30px;
+            position: relative;
+            overflow: hidden;
         }
         .footer-grid {
             display: grid;
@@ -944,6 +1125,8 @@
             gap: 40px;
             max-width: 1300px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         .footer-logo {
             font-weight: 800;
@@ -985,9 +1168,53 @@
             letter-spacing: 1px;
             opacity: 0.5;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
-        /* RESPONSIVE */
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(6, 42, 92, 0.97);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .mobile-menu-links a:hover {
+            color: var(--blue-light);
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .about-grid,
             .service-block {
@@ -998,6 +1225,9 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .footer-grid {
@@ -1036,6 +1266,12 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 20px;
             }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .process-timeline {
                 flex-wrap: nowrap;
                 overflow-x: auto;
@@ -1063,47 +1299,6 @@
             .section-heading {
                 font-size: clamp(1.6rem, 6vw, 2.8rem);
             }
-        }
-
-        /* MOBILE NAV */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(6, 42, 92, 0.97);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        .mobile-menu.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .mobile-menu-links {
-            list-style: none;
-            text-align: center;
-        }
-        .mobile-menu-links li {
-            margin: 20px 0;
-        }
-        .mobile-menu-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .mobile-menu-links a:hover {
-            color: var(--blue-light);
         }
     </style>
 </head>
@@ -1147,13 +1342,6 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-tag">OSM Design Engineering Consultancy</p>
-            <!-- <h1 class="hero-heading">ENGINEERING<br>BETTER SPACES.<br><span class="line2">DESIGNING SMARTER FUTURES.</span></h1> -->
-            <!-- <p class="hero-subtitle">Architecture | Structural Engineering | MEP Design | Interior Design</p>
-            <p class="hero-credibility">10+ Years of Excellence in Design Engineering</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn-primary">Get Free Consultation</a>
-                <a href="#contact" class="btn-outline">Request a Quote</a>
- -->            </div>
         </div>
         <div class="hero-scroll-indicator">
             <span>Scroll</span>
@@ -1162,7 +1350,8 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="section section-white" id="about">
+    <section class="section section-blue section-transition-blue" id="about">
+        <canvas class="section-canvas-3d" id="aboutCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">About OSM</span>
             <div class="about-grid">
@@ -1214,7 +1403,8 @@
     </section>
 
     <!-- SERVICES -->
-    <section class="section section-light" id="services">
+    <section class="section section-light section-transition-light" id="services">
+        <canvas class="section-canvas-3d faint" id="servicesCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Our Services</span>
             <h2 class="section-heading">FOUR CORE<br>DISCIPLINES.</h2>
@@ -1252,17 +1442,7 @@
 
             <!-- Structural -->
             <div class="service-block">
-                <div class="service-content">
-                    <div class="service-number">02</div>
-                    <h3>Structural Engineering</h3>
-                    <p>The backbone of every great building — precision structural systems engineered for safety, durability, and efficiency.</p>
-                    <ul class="service-list">
-                        <li>RCC Structure Design</li><li>Steel Structure Design</li><li>Foundation Design</li>
-                        <li>Structural Analysis</li><li>Seismic Design</li><li>Wind Load Analysis</li>
-                        <li>Structural Detailing</li><li>BOQ Preparation</li>
-                    </ul>
-                </div>
-                <div class="service-visual">
+                 <div class="service-visual">
                     <div class="service-visual-inner sv-struct" id="svStruct">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="60" y="30" width="280" height="240" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" rx="2"/>
@@ -1276,6 +1456,17 @@
                         </svg>
                     </div>
                 </div>
+                <div class="service-content">
+                    <div class="service-number">02</div>
+                    <h3>Structural Engineering</h3>
+                    <p>The backbone of every great building — precision structural systems engineered for safety, durability, and efficiency.</p>
+                    <ul class="service-list">
+                        <li>RCC Structure Design</li><li>Steel Structure Design</li><li>Foundation Design</li>
+                        <li>Structural Analysis</li><li>Seismic Design</li><li>Wind Load Analysis</li>
+                        <li>Structural Detailing</li><li>BOQ Preparation</li>
+                    </ul>
+                </div>
+               
             </div>
 
             <!-- MEP -->
@@ -1308,16 +1499,6 @@
 
             <!-- Interior -->
             <div class="service-block">
-                <div class="service-content">
-                    <div class="service-number">04</div>
-                    <h3>Interior Design</h3>
-                    <p>Spaces that inspire — luxury interiors crafted with meticulous attention to detail, materiality, and human experience.</p>
-                    <ul class="service-list">
-                        <li>Space Planning</li><li>Luxury Residential</li><li>Commercial Interiors</li>
-                        <li>Hospitality Design</li><li>Material Selection</li><li>Furniture Design</li>
-                        <li>Lighting Design</li><li>Turnkey Solutions</li>
-                    </ul>
-                </div>
                 <div class="service-visual">
                     <div class="service-visual-inner sv-interior" id="svInterior">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
@@ -1330,12 +1511,24 @@
                         </svg>
                     </div>
                 </div>
+                <div class="service-content">
+                    <div class="service-number">04</div>
+                    <h3>Interior Design</h3>
+                    <p>Spaces that inspire — luxury interiors crafted with meticulous attention to detail, materiality, and human experience.</p>
+                    <ul class="service-list">
+                        <li>Space Planning</li><li>Luxury Residential</li><li>Commercial Interiors</li>
+                        <li>Hospitality Design</li><li>Material Selection</li><li>Furniture Design</li>
+                        <li>Lighting Design</li><li>Turnkey Solutions</li>
+                    </ul>
+                </div>
+                
             </div>
         </div>
     </section>
 
     <!-- PROJECTS -->
-    <section class="section section-white" id="projects">
+    <section class="section section-blue section-transition-blue" id="projects">
+        <canvas class="section-canvas-3d faint" id="projectsCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Selected Projects</span>
             <h2 class="section-heading">OUR<br>PORTFOLIO.</h2>
@@ -1393,13 +1586,13 @@
     </section>
 
     <!-- COUNTRIES -->
-    <section class="section section-navy">
+    <section class="section section-navy section-transition-navy">
+        <canvas class="section-canvas-3d" id="countriesCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Our Reach</span>
             <h2 class="section-heading">DESIGNING ACROSS<br>THE REGION.</h2>
             <div class="countries-visual" id="countriesMap">
                 <div class="map-dots" id="mapDots">
-                    <!-- Dots positioned roughly on a Middle East + India map area -->
                     <div class="map-dot active" style="left:20%;top:45%;" data-country="UAE"></div>
                     <div class="map-dot-label" style="left:20%;top:35%;">UAE</div>
 
@@ -1421,29 +1614,95 @@
                     <div class="map-dot active" style="left:62%;top:42%;" data-country="India"></div>
                     <div class="map-dot-label" style="left:62%;top:32%;">India</div>
 
-                    <!-- Connection lines -->
                     <div class="map-connection" style="left:20%;top:45%;width:42%;transform:rotate(-5deg);"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHY OSM -->
-    <section class="section section-white">
+    <!-- WHY OSM (Redesigned with provided info) -->
+    <section class="section section-blue section-transition-blue why-section">
+        <canvas class="section-canvas-3d" id="whyCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Why OSM</span>
             <h2 class="section-heading">WHY<br>OSM?</h2>
+            <div class="why-intro">
+                <p>Choosing the right design consultancy can significantly influence the success of your project. Here's why clients continue to trust us:</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🏗️</span>
+                    <div class="feature-title">Over 10 Years of Industry Experience</div>
+                    <div class="feature-desc">Proven track record across diverse sectors.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📐</span>
+                    <div class="feature-title">Multidisciplinary Engineering Expertise</div>
+                    <div class="feature-desc">Architecture, structural, MEP, and interiors under one roof.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <div class="feature-title">International Project Experience</div>
+                    <div class="feature-desc">Successfully delivered projects in India and the Gulf region.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✏️</span>
+                    <div class="feature-title">Customized Design Solutions</div>
+                    <div class="feature-desc">Tailored designs that meet specific client needs and site conditions.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📄</span>
+                    <div class="feature-title">Construction-Ready Documentation</div>
+                    <div class="feature-desc">Detailed drawings and specifications for seamless execution.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✅</span>
+                    <div class="feature-title">Strong Quality Control Process</div>
+                    <div class="feature-desc">Rigorous checks at every stage to ensure accuracy.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💰</span>
+                    <div class="feature-title">Cost-Effective Engineering Solutions</div>
+                    <div class="feature-desc">Optimized designs that save money without compromising quality.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🖥️</span>
+                    <div class="feature-title">Advanced BIM & Design Technologies</div>
+                    <div class="feature-desc">Leveraging the latest software for coordination and visualization.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⏱️</span>
+                    <div class="feature-title">Timely Project Delivery</div>
+                    <div class="feature-desc">Commitment to schedules and milestones.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💬</span>
+                    <div class="feature-title">Responsive Client Communication</div>
+                    <div class="feature-desc">Clear and regular updates throughout the project lifecycle.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔧</span>
+                    <div class="feature-title">Dedicated Technical Support</div>
+                    <div class="feature-desc">Experienced engineers ready to assist at every phase.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🏢</span>
+                    <div class="feature-title">Long-Term Value</div>
+                    <div class="feature-desc">Spaces designed to perform for decades.</div>
+                </div>
+            </div>
+            <!-- Stats Row -->
             <div class="stats-row">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="10">10+</div>
+                    <div class="stat-number">10+</div>
                     <div class="stat-label">Years of Experience</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" data-count="7">7</div>
+                    <div class="stat-number">7</div>
                     <div class="stat-label">Countries</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" data-count="4">4</div>
+                    <div class="stat-number">4</div>
                     <div class="stat-label">Core Disciplines</div>
                 </div>
                 <div class="stat-item">
@@ -1454,27 +1713,62 @@
         </div>
     </section>
 
-    <!-- TECHNOLOGY -->
-    <section class="section section-light">
+    <!-- TECHNOLOGY (Redesigned with 3D logos) -->
+    <section class="section section-light section-transition-light">
+        <canvas class="section-canvas-3d" id="techCanvas" style="opacity:0.8;"></canvas>
         <div class="section-inner">
             <span class="section-label">Technology</span>
             <h2 class="section-heading">DESIGNED WITH<br>PRECISION.</h2>
-            <div class="tech-orbit" id="techOrbit">
-                <div class="tech-center">BIM</div>
-                <span class="tech-orbiter" style="top:5%;left:15%;">AutoCAD</span>
-                <span class="tech-orbiter" style="top:10%;right:10%;">Revit</span>
-                <span class="tech-orbiter" style="top:45%;right:2%;">SketchUp</span>
-                <span class="tech-orbiter" style="bottom:10%;right:15%;">Lumion</span>
-                <span class="tech-orbiter" style="bottom:5%;left:20%;">ETABS</span>
-                <span class="tech-orbiter" style="bottom:25%;left:3%;">STAAD.Pro</span>
-                <span class="tech-orbiter" style="top:30%;left:5%;">SAFE</span>
-                <span class="tech-orbiter" style="top:50%;left:10%;">D5 Render</span>
+            <p class="section-text" style="max-width:700px;margin-bottom:20px;">Modern engineering demands modern tools. At OSM Design Engineering Consultancy, we leverage industry-leading software to improve design accuracy, coordination, visualization, and project efficiency. Our technology stack includes:</p>
+            <div class="tech-grid">
+                <div class="tech-card" style="--i:0;">
+                    <span class="tech-logo">🅰️</span>
+                    <div class="tech-name">AutoCAD</div>
+                </div>
+                <div class="tech-card" style="--i:1;">
+                    <span class="tech-logo">🏗️</span>
+                    <div class="tech-name">Autodesk Revit (BIM)</div>
+                </div>
+                <div class="tech-card" style="--i:2;">
+                    <span class="tech-logo">✏️</span>
+                    <div class="tech-name">SketchUp</div>
+                </div>
+                <div class="tech-card" style="--i:3;">
+                    <span class="tech-logo">🌅</span>
+                    <div class="tech-name">D5 Render</div>
+                </div>
+                <div class="tech-card" style="--i:4;">
+                    <span class="tech-logo">✨</span>
+                    <div class="tech-name">Lumion</div>
+                </div>
+                <div class="tech-card" style="--i:5;">
+                    <span class="tech-logo">📊</span>
+                    <div class="tech-name">ETABS</div>
+                </div>
+                <div class="tech-card" style="--i:6;">
+                    <span class="tech-logo">🧮</span>
+                    <div class="tech-name">STAAD.Pro</div>
+                </div>
+                <div class="tech-card" style="--i:7;">
+                    <span class="tech-logo">🔩</span>
+                    <div class="tech-name">SAFE</div>
+                </div>
+                <div class="tech-card" style="--i:8;">
+                    <span class="tech-logo">📅</span>
+                    <div class="tech-name">Microsoft Project</div>
+                </div>
+                <div class="tech-card" style="--i:9;">
+                    <span class="tech-logo">🎨</span>
+                    <div class="tech-name">Adobe Creative Suite</div>
+                </div>
             </div>
+            <p class="section-text" style="max-width:700px;margin-top:20px;">These advanced platforms enable us to produce highly accurate drawings, realistic visualizations, coordinated engineering models, and construction-ready documentation.</p>
         </div>
     </section>
 
     <!-- PROCESS -->
-    <section class="section section-white" id="process">
+    <section class="section section-blue section-transition-blue" id="process">
+        <canvas class="section-canvas-3d faint" id="processCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Our Process</span>
             <h2 class="section-heading">HOW WE<br>BUILD.</h2>
@@ -1519,7 +1813,8 @@
     </section>
 
     <!-- COMMITMENT -->
-    <section class="section section-navy commitment-section">
+    <section class="section section-navy commitment-section section-transition-navy">
+        <canvas class="section-canvas-3d" id="commitmentCanvas"></canvas>
         <div class="commitment-grid-bg"></div>
         <div class="section-inner" style="position:relative;z-index:2;text-align:center;">
             <h2 class="section-heading" style="font-size:clamp(1.8rem,4vw,3.5rem);">WE DON'T SIMPLY<br>DESIGN BUILDINGS.</h2>
@@ -1530,7 +1825,8 @@
     </section>
 
     <!-- CTA -->
-    <section class="section section-white cta-section" id="contact">
+    <section class="section section-blue cta-section section-transition-blue" id="contact">
+        <canvas class="section-canvas-3d faint" id="ctaCanvas"></canvas>
         <div class="cta-bg-building"></div>
         <div class="section-inner" style="position:relative;z-index:2;">
             <span class="section-label">Get In Touch</span>
@@ -1581,124 +1877,87 @@
             }
         }
     </script>
+
+    <!-- HERO 3D SCENE -->
     <script type="module">
         import * as THREE from 'three';
 
-        // HERO 3D SCENE
-        const canvas = document.getElementById('heroCanvas');
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        // ===== HERO SCENE =====
+        const heroCanvas = document.getElementById('heroCanvas');
+        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        heroRenderer.setSize(window.innerWidth, window.innerHeight);
+        heroRenderer.shadowMap.enabled = true;
+        heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        heroRenderer.toneMappingExposure = 1.2;
 
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color('#062a4a');
-        scene.fog = new THREE.Fog('#062a4a', 30, 100);
+        const heroScene = new THREE.Scene();
+        heroScene.background = new THREE.Color('#062a4a');
+        heroScene.fog = new THREE.Fog('#062a4a', 30, 100);
 
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
-        camera.position.set(18, 8, 22);
-        camera.lookAt(0, 3, 0);
+        const heroCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
+        heroCamera.position.set(18, 8, 22);
+        heroCamera.lookAt(0, 3, 0);
 
         // Lighting
-        const ambientLight = new THREE.AmbientLight('#b8d4f0', 2.5);
-        scene.add(ambientLight);
-
-        const sunLight = new THREE.DirectionalLight('#ffffff', 8);
-        sunLight.position.set(30, 25, 10);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.camera.near = 0.5;
-        sunLight.shadow.camera.far = 100;
-        sunLight.shadow.camera.left = -25;
-        sunLight.shadow.camera.right = 25;
-        sunLight.shadow.camera.top = 25;
-        sunLight.shadow.camera.bottom = -25;
-        sunLight.shadow.bias = -0.0001;
-        scene.add(sunLight);
-
-        const fillLight = new THREE.DirectionalLight('#7eb8e0', 3);
-        fillLight.position.set(-10, 5, -8);
-        scene.add(fillLight);
-
-        const rimLight = new THREE.DirectionalLight('#c8e4ff', 2);
-        rimLight.position.set(0, 3, 20);
-        scene.add(rimLight);
+        const hAmbient = new THREE.AmbientLight('#b8d4f0', 2.5);
+        heroScene.add(hAmbient);
+        const hSun = new THREE.DirectionalLight('#ffffff', 8);
+        hSun.position.set(30, 25, 10);
+        hSun.castShadow = true;
+        hSun.shadow.mapSize.width = 2048;
+        hSun.shadow.mapSize.height = 2048;
+        hSun.shadow.camera.near = 0.5;
+        hSun.shadow.camera.far = 100;
+        hSun.shadow.camera.left = -25;
+        hSun.shadow.camera.right = 25;
+        hSun.shadow.camera.top = 25;
+        hSun.shadow.camera.bottom = -25;
+        hSun.shadow.bias = -0.0001;
+        heroScene.add(hSun);
+        const hFill = new THREE.DirectionalLight('#7eb8e0', 3);
+        hFill.position.set(-10, 5, -8);
+        heroScene.add(hFill);
+        const hRim = new THREE.DirectionalLight('#c8e4ff', 2);
+        hRim.position.set(0, 3, 20);
+        heroScene.add(hRim);
 
         // Ground
-        const groundGeo = new THREE.PlaneGeometry(80, 80);
-        const groundMat = new THREE.MeshStandardMaterial({
-            color: '#e8eef5',
-            roughness: 0.6,
-            metalness: 0.05,
-        });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -6;
-        ground.receiveShadow = true;
-        scene.add(ground);
+        const hGround = new THREE.Mesh(
+            new THREE.PlaneGeometry(80, 80),
+            new THREE.MeshStandardMaterial({ color: '#e8eef5', roughness: 0.6, metalness: 0.05 })
+        );
+        hGround.rotation.x = -Math.PI / 2;
+        hGround.position.y = -6;
+        hGround.receiveShadow = true;
+        heroScene.add(hGround);
 
-        // Subtle grid on ground
-        const gridHelper = new THREE.PolarGridHelper(30, 48, 24, 128, '#c8d8ec', '#c8d8ec');
-        gridHelper.position.y = -5.98;
-        scene.add(gridHelper);
+        const hGrid = new THREE.PolarGridHelper(30, 48, 24, 128, '#c8d8ec', '#c8d8ec');
+        hGrid.position.y = -5.98;
+        heroScene.add(hGrid);
 
-        // Main Building Group
+        // Building group
         const buildingGroup = new THREE.Group();
-        scene.add(buildingGroup);
+        heroScene.add(buildingGroup);
         buildingGroup.position.set(0, -6, 0);
 
-        // Materials
-        const concreteMat = new THREE.MeshStandardMaterial({
-            color: '#f5f5f0',
-            roughness: 0.35,
-            metalness: 0.05,
-        });
-        const glassMat = new THREE.MeshStandardMaterial({
-            color: '#a8d4f0',
-            roughness: 0.1,
-            metalness: 0.3,
-            transparent: true,
-            opacity: 0.75,
-        });
-        const darkGlassMat = new THREE.MeshStandardMaterial({
-            color: '#3a7099',
-            roughness: 0.08,
-            metalness: 0.4,
-        });
-        const metalMat = new THREE.MeshStandardMaterial({
-            color: '#d0d8e0',
-            roughness: 0.2,
-            metalness: 0.7,
-        });
-        const accentMat = new THREE.MeshStandardMaterial({
-            color: '#062A5C',
-            roughness: 0.25,
-            metalness: 0.3,
-        });
-        const structMat = new THREE.MeshStandardMaterial({
-            color: '#c8d0d8',
-            roughness: 0.3,
-            metalness: 0.5,
-        });
+        const concreteMat = new THREE.MeshStandardMaterial({ color: '#f5f5f0', roughness: 0.35, metalness: 0.05 });
+        const glassMat = new THREE.MeshStandardMaterial({ color: '#a8d4f0', roughness: 0.1, metalness: 0.3, transparent: true,
+            opacity: 0.75 });
+        const darkGlassMat = new THREE.MeshStandardMaterial({ color: '#3a7099', roughness: 0.08, metalness: 0.4 });
+        const metalMat = new THREE.MeshStandardMaterial({ color: '#d0d8e0', roughness: 0.2, metalness: 0.7 });
+        const accentMat = new THREE.MeshStandardMaterial({ color: '#062A5C', roughness: 0.25, metalness: 0.3 });
+        const structMat = new THREE.MeshStandardMaterial({ color: '#c8d0d8', roughness: 0.3, metalness: 0.5 });
 
-        // Foundation
-        const foundationGeo = new THREE.BoxGeometry(8, 0.6, 6);
-        const foundation = new THREE.Mesh(foundationGeo, concreteMat);
+        const foundation = new THREE.Mesh(new THREE.BoxGeometry(8, 0.6, 6), concreteMat);
         foundation.position.y = 0.3;
         foundation.castShadow = true;
         foundation.receiveShadow = true;
-        foundation.name = 'foundation';
         buildingGroup.add(foundation);
 
-        // Core structural columns
         const columnsGroup = new THREE.Group();
-        columnsGroup.name = 'columns';
         buildingGroup.add(columnsGroup);
-
         const colPositions = [
             [-3.2, 0, -2.2],
             [3.2, 0, -2.2],
@@ -1709,116 +1968,87 @@
             [-1.6, 0, 2.2],
             [1.6, 0, 2.2],
         ];
-
         colPositions.forEach(([cx, cy, cz]) => {
-            const colGeo = new THREE.BoxGeometry(0.35, 12, 0.35);
-            const col = new THREE.Mesh(colGeo, structMat);
+            const col = new THREE.Mesh(new THREE.BoxGeometry(0.35, 12, 0.35), structMat);
             col.position.set(cx, 6.3, cz);
             col.castShadow = true;
             col.receiveShadow = true;
             columnsGroup.add(col);
         });
 
-        // Floor slabs
         const slabsGroup = new THREE.Group();
-        slabsGroup.name = 'slabs';
         buildingGroup.add(slabsGroup);
-
         for (let i = 0; i < 8; i++) {
-            const slabGeo = new THREE.BoxGeometry(7.2, 0.25, 5.2);
-            const slab = new THREE.Mesh(slabGeo, concreteMat);
+            const slab = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.25, 5.2), concreteMat);
             slab.position.y = 1.0 + i * 1.55;
             slab.castShadow = true;
             slab.receiveShadow = true;
             slabsGroup.add(slab);
         }
 
-        // Glass curtain wall panels
         const facadeGroup = new THREE.Group();
-        facadeGroup.name = 'facade';
         buildingGroup.add(facadeGroup);
-
-        // Front and back facades
         for (let floor = 0; floor < 8; floor++) {
             const yPos = 1.0 + floor * 1.55;
-            // Front panels
             for (let px = -3; px <= 3; px += 1.2) {
-                const panelGeo = new THREE.BoxGeometry(1.05, 1.15, 0.06);
-                const panel = new THREE.Mesh(panelGeo, floor % 2 === 0 ? glassMat : darkGlassMat);
+                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), floor % 2 === 0 ? glassMat :
+                    darkGlassMat);
                 panel.position.set(px, yPos, 2.55);
                 panel.castShadow = true;
                 facadeGroup.add(panel);
             }
-            // Back panels
             for (let px = -3; px <= 3; px += 1.2) {
-                const panelGeo = new THREE.BoxGeometry(1.05, 1.15, 0.06);
-                const panel = new THREE.Mesh(panelGeo, glassMat);
+                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), glassMat);
                 panel.position.set(px, yPos, -2.55);
                 panel.castShadow = true;
                 facadeGroup.add(panel);
             }
-            // Side panels
             for (let pz = -1.8; pz <= 1.8; pz += 1.2) {
-                const panelGeo = new THREE.BoxGeometry(0.06, 1.15, 1.05);
-                const panelL = new THREE.Mesh(panelGeo, darkGlassMat);
+                const panelL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
                 panelL.position.set(-3.55, yPos, pz);
                 facadeGroup.add(panelL);
-                const panelR = new THREE.Mesh(panelGeo, darkGlassMat);
+                const panelR = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
                 panelR.position.set(3.55, yPos, pz);
                 facadeGroup.add(panelR);
             }
         }
 
-        // Roof
-        const roofGeo = new THREE.BoxGeometry(7.6, 0.3, 5.6);
-        const roof = new THREE.Mesh(roofGeo, accentMat);
+        const roof = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.3, 5.6), accentMat);
         roof.position.y = 12.7;
         roof.castShadow = true;
         roof.receiveShadow = true;
-        roof.name = 'roof';
         buildingGroup.add(roof);
 
-        // Roof parapet
-        const parapetGeo = new THREE.BoxGeometry(7.8, 0.6, 0.15);
-        const parapetFront = new THREE.Mesh(parapetGeo, metalMat);
+        const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
         parapetFront.position.set(0, 13.05, 2.75);
         buildingGroup.add(parapetFront);
-        const parapetBack = new THREE.Mesh(parapetGeo, metalMat);
+        const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
         parapetBack.position.set(0, 13.05, -2.75);
         buildingGroup.add(parapetBack);
 
-        // Architectural fins on facade
         for (let i = 0; i < 5; i++) {
-            const finGeo = new THREE.BoxGeometry(0.08, 11.5, 0.25);
-            const fin = new THREE.Mesh(finGeo, accentMat);
+            const fin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 11.5, 0.25), accentMat);
             fin.position.set(-2.8 + i * 1.4, 6.5, 2.65);
             fin.castShadow = true;
             facadeGroup.add(fin);
         }
 
-        // Landscaping elements
         const landscapeGroup = new THREE.Group();
-        landscapeGroup.name = 'landscape';
         buildingGroup.add(landscapeGroup);
-
         for (let i = 0; i < 6; i++) {
-            const treeTrunkGeo = new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8);
-            const treeTrunk = new THREE.Mesh(treeTrunkGeo, new THREE.MeshStandardMaterial({ color: '#8a7a6a',
-                roughness: 0.7 }));
-            treeTrunk.position.set(-5 + i * 2, 1.25, 3.8);
-            treeTrunk.castShadow = true;
-            landscapeGroup.add(treeTrunk);
-
-            const treeCanopyGeo = new THREE.SphereGeometry(0.9, 12, 8);
-            const treeCanopy = new THREE.Mesh(treeCanopyGeo, new THREE.MeshStandardMaterial({ color: '#5a8a5a',
-                roughness: 0.6 }));
-            treeCanopy.position.set(-5 + i * 2, 3.0, 3.8);
-            treeCanopy.scale.set(1, 0.7, 1);
-            treeCanopy.castShadow = true;
-            landscapeGroup.add(treeCanopy);
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8),
+                new THREE.MeshStandardMaterial({ color: '#8a7a6a', roughness: 0.7 }));
+            trunk.position.set(-5 + i * 2, 1.25, 3.8);
+            trunk.castShadow = true;
+            landscapeGroup.add(trunk);
+            const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 8),
+                new THREE.MeshStandardMaterial({ color: '#5a8a5a', roughness: 0.6 }));
+            canopy.position.set(-5 + i * 2, 3.0, 3.8);
+            canopy.scale.set(1, 0.7, 1);
+            canopy.castShadow = true;
+            landscapeGroup.add(canopy);
         }
 
-        // Initial state: hide everything for assembly animation
         const allBuildingParts = [
             foundation,
             ...columnsGroup.children,
@@ -1839,77 +2069,39 @@
             part.material.opacity = 0;
         });
 
-        // Animation state
-        let animationProgress = 0;
-        const totalParts = allBuildingParts.length;
-
-        // Particles for construction effect
-        const particlesGeo = new THREE.BufferGeometry();
-        const particlesCount = 300;
-        const particlesPositions = new Float32Array(particlesCount * 3);
-        for (let i = 0; i < particlesCount; i++) {
-            particlesPositions[i * 3] = (Math.random() - 0.5) * 20;
-            particlesPositions[i * 3 + 1] = Math.random() * 18;
-            particlesPositions[i * 3 + 2] = (Math.random() - 0.5) * 14;
-        }
-        particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
-        const particlesMat = new THREE.PointsMaterial({
-            color: '#a8d4ff',
-            size: 0.04,
-            transparent: true,
-            opacity: 0.6,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false,
-        });
-        const particles = new THREE.Points(particlesGeo, particlesMat);
-        particles.position.y = 3;
-        scene.add(particles);
-
-        // Mouse tracking for subtle camera movement
-        let mouseX = 0,
-            mouseY = 0;
-        let targetMouseX = 0,
-            targetMouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        });
-
-        // Animation loop
-        const clock = new THREE.Clock();
         let assemblyPhase = 0;
         let assemblyTimer = 0;
+        let heroMouseX = 0,
+            heroMouseY = 0,
+            targetHeroMouseX = 0,
+            targetHeroMouseY = 0;
 
-        function animate() {
-            requestAnimationFrame(animate);
+        document.addEventListener('mousemove', (e) => {
+            targetHeroMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetHeroMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
 
-            const dt = Math.min(clock.getDelta(), 0.1);
+        const heroClock = new THREE.Clock();
+
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            const dt = Math.min(heroClock.getDelta(), 0.1);
             assemblyTimer += dt;
+            heroMouseX += (targetHeroMouseX - heroMouseX) * 0.03;
+            heroMouseY += (targetHeroMouseY - heroMouseY) * 0.03;
 
-            // Smooth mouse follow
-            mouseX += (targetMouseX - mouseX) * 0.03;
-            mouseY += (targetMouseY - mouseY) * 0.03;
-
-            // Camera orbit
             const time = assemblyTimer;
-            const orbitRadius = 22 + mouseX * 4;
+            const orbitRadius = 22 + heroMouseX * 4;
             const camAngle = time * 0.15 + Math.PI * 0.15;
-            const camX = Math.cos(camAngle) * orbitRadius;
-            const camZ = Math.sin(camAngle) * orbitRadius;
-            const camY = 7 + mouseY * 3;
-
-            camera.position.lerp(
-                new THREE.Vector3(camX, camY, camZ),
+            heroCamera.position.lerp(
+                new THREE.Vector3(Math.cos(camAngle) * orbitRadius, 7 + heroMouseY * 3, Math.sin(camAngle) * orbitRadius),
                 0.02
             );
-            camera.lookAt(0, 4.5, 0);
+            heroCamera.lookAt(0, 4.5, 0);
 
-            // Assembly animation
-            if (assemblyPhase < totalParts && assemblyTimer > 0.6 + assemblyPhase * 0.15) {
+            if (assemblyPhase < allBuildingParts.length && assemblyTimer > 0.6 + assemblyPhase * 0.15) {
                 const part = allBuildingParts[assemblyPhase];
                 if (part) {
-                    // Animate in
                     const startTime = performance.now();
                     const animateIn = () => {
                         const elapsed = (performance.now() - startTime) / 1000;
@@ -1929,8 +2121,7 @@
                 assemblyPhase++;
             }
 
-            // Reset assembly for loop
-            if (assemblyPhase >= totalParts && assemblyTimer > 14) {
+            if (assemblyPhase >= allBuildingParts.length && assemblyTimer > 14) {
                 assemblyTimer = 0;
                 assemblyPhase = 0;
                 allBuildingParts.forEach(part => {
@@ -1939,24 +2130,233 @@
                 });
             }
 
-            // Particles float
-            particles.rotation.y += dt * 0.08;
-            particles.position.y = 3 + Math.sin(time * 0.5) * 1.5;
+            heroRenderer.render(heroScene, heroCamera);
+        }
+        animateHero();
 
-            // Update particle opacity
-            particlesMat.opacity = 0.3 + Math.sin(time * 0.7) * 0.2;
+        window.addEventListener('resize', () => {
+            heroRenderer.setSize(window.innerWidth, window.innerHeight);
+            heroCamera.aspect = window.innerWidth / window.innerHeight;
+            heroCamera.updateProjectionMatrix();
+        });
 
-            renderer.render(scene, camera);
+        // ===== SECTION 3D BACKGROUNDS =====
+        class SectionBackground {
+            constructor(canvasId, config) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.config = config || {};
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.0;
+
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(50, this.canvas.parentElement.offsetWidth / Math.max(this
+                    .canvas.parentElement.offsetHeight, 400), 0.1, 100);
+                this.camera.position.set(0, 5, 15);
+                this.camera.lookAt(0, 0, 0);
+
+                this.objects = [];
+                this.clock = new THREE.Clock();
+                this.isVisible = false;
+                this.animated = true;
+
+                // Ambient light
+                const ambient = new THREE.AmbientLight(this.config.ambientColor || '#d0dce8', 1.5);
+                this.scene.add(ambient);
+                const dirLight = new THREE.DirectionalLight('#ffffff', 3);
+                dirLight.position.set(10, 15, 10);
+                this.scene.add(dirLight);
+                const backLight = new THREE.DirectionalLight(this.config.backLightColor || '#8ab8d8', 2);
+                backLight.position.set(-5, 8, -8);
+                this.scene.add(backLight);
+
+                this.initObjects();
+                this.setupResize();
+                this.setupVisibilityObserver();
+                this.animate();
+            }
+
+            initObjects() {
+                const type = this.config.type || 'particles';
+                const color = this.config.color || '#8ab8d8';
+
+                if (type === 'wireframe') {
+                    for (let i = 0; i < 5; i++) {
+                        const w = Math.random() * 2 + 1.5;
+                        const h = Math.random() * 6 + 3;
+                        const d = Math.random() * 2 + 1.5;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.5 });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-8 + i * 4 + (Math.random() - 0.5) * 2, h / 2 - 2, (Math.random() - 0.5) * 6);
+                        mesh.rotation.y = Math.random() * 0.3 - 0.15;
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.3 + Math.random() * 0.3, floatAmp: 0.4 +
+                                Math.random() * 0.4, rotSpeed: 0.002 + Math.random() * 0.003 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'particles') {
+                    const count = 120;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * 24;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+                        positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+                    }
+                    const geo = new THREE.BufferGeometry();
+                    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: 0.06, transparent: true, opacity: 0.6, blending: THREE
+                            .AdditiveBlending, depthWrite: false });
+                    const points = new THREE.Points(geo, mat);
+                    points.userData = { baseY: 0, floatSpeed: 0.5, floatAmp: 1.5, rotSpeed: 0.003 };
+                    this.scene.add(points);
+                    this.objects.push(points);
+                } else if (type === 'floating') {
+                    const shapes = [
+                        new THREE.IcosahedronGeometry(1.5, 1),
+                        new THREE.OctahedronGeometry(1.8, 1),
+                        new THREE.TorusGeometry(1.2, 0.4, 8, 12),
+                        new THREE.DodecahedronGeometry(1.3, 0),
+                    ];
+                    for (let i = 0; i < 6; i++) {
+                        const geo = shapes[i % shapes.length];
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#c8d8ec',
+                            roughness: 0.3,
+                            metalness: 0.4,
+                            transparent: true,
+                            opacity: 0.45,
+                            wireframe: i % 3 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-8 + i * 3.5 + (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 8, (Math
+                            .random() - 0.5) * 8);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.2 + Math.random() * 0.4, floatAmp: 0.8 +
+                                Math.random() * 0.8, rotSpeed: 0.004 + Math.random() * 0.006, rotAxis: new THREE.Vector3(
+                                Math.random(), Math.random(), Math.random()).normalize() };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'grid') {
+                    const gridGeo = new THREE.PlaneGeometry(30, 20);
+                    const gridMat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.3 });
+                    const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+                    gridMesh.rotation.x = -Math.PI / 2;
+                    gridMesh.position.y = -3;
+                    gridMesh.userData = { baseY: -3, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                    this.scene.add(gridMesh);
+                    this.objects.push(gridMesh);
+
+                    for (let i = 0; i < 12; i++) {
+                        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+                            new THREE.Vector3(-12 + i * 2.2, -3, -6),
+                            new THREE.Vector3(-12 + i * 2.2, -3 + Math.random() * 5, -6),
+                        ]);
+                        const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.25 });
+                        const line = new THREE.Line(lineGeo, lineMat);
+                        line.userData = { baseY: 0, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                        this.scene.add(line);
+                        this.objects.push(line);
+                    }
+                } else if (type === 'orbit') {
+                    const particlesGeo = new THREE.BufferGeometry();
+                    const count = 80;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        const angle = (i / count) * Math.PI * 2;
+                        const radius = 4 + Math.random() * 3;
+                        positions[i * 3] = Math.cos(angle) * radius;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                        positions[i * 3 + 2] = Math.sin(angle) * radius;
+                    }
+                    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: 0.05, transparent: true, opacity: 0.5, blending: THREE
+                            .AdditiveBlending, depthWrite: false });
+                    const particles = new THREE.Points(particlesGeo, mat);
+                    particles.userData = { baseY: 0, floatSpeed: 0.2, floatAmp: 1, rotSpeed: 0.008 };
+                    this.scene.add(particles);
+                    this.objects.push(particles);
+                } else if (type === 'blocks') {
+                    for (let i = 0; i < 8; i++) {
+                        const w = 1 + Math.random() * 1.5;
+                        const h = 2 + Math.random() * 4;
+                        const d = 1 + Math.random() * 1.5;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#e0e8f2',
+                            roughness: 0.4,
+                            metalness: 0.2,
+                            transparent: true,
+                            opacity: 0.4,
+                            wireframe: i % 4 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-10 + i * 2.8, h / 2 - 1.5, (Math.random() - 0.5) * 5);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.1 + Math.random() * 0.2, floatAmp: 0.3,
+                            rotSpeed: 0.001 + Math.random() * 0.002 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                }
+            }
+
+            setupResize() {
+                this.resizeHandler = () => {
+                    const parent = this.canvas.parentElement;
+                    const w = parent ? parent.offsetWidth : window.innerWidth;
+                    const h = parent ? parent.offsetHeight : 400;
+                    this.renderer.setSize(w, h, false);
+                    this.camera.aspect = w / Math.max(h, 100);
+                    this.camera.updateProjectionMatrix();
+                };
+                this.resizeHandler();
+                window.addEventListener('resize', this.resizeHandler);
+            }
+
+            setupVisibilityObserver() {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        this.isVisible = entry.isIntersecting;
+                    });
+                }, { threshold: 0.05 });
+                this.observer.observe(this.canvas.parentElement);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                if (!this.isVisible && this.config.skipWhenHidden !== false) return;
+                const dt = Math.min(this.clock.getDelta(), 0.1);
+                const time = performance.now() * 0.001;
+
+                this.objects.forEach(obj => {
+                    if (obj.userData.floatSpeed > 0) {
+                        obj.position.y = obj.userData.baseY + Math.sin(time * obj.userData.floatSpeed * 2) * obj.userData
+                            .floatAmp;
+                    }
+                    if (obj.userData.rotSpeed > 0) {
+                        obj.rotation.y += obj.userData.rotSpeed;
+                        if (obj.userData.rotAxis) {
+                            obj.rotation.x += obj.userData.rotSpeed * 0.7;
+                        }
+                    }
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
         }
 
-        animate();
-
-        // Resize handler
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
+        // Initialize all section 3D backgrounds with appropriate colors
+        new SectionBackground('aboutCanvas', { type: 'wireframe', color: '#8ab8d8' });
+        new SectionBackground('servicesCanvas', { type: 'floating', color: '#b8d4f0' });
+        new SectionBackground('projectsCanvas', { type: 'blocks', color: '#a8c4e0' });
+        new SectionBackground('countriesCanvas', { type: 'particles', color: '#ffffff' });
+        new SectionBackground('whyCanvas', { type: 'floating', color: '#d0dce8' });
+        new SectionBackground('techCanvas', { type: 'orbit', color: '#8ab8d8' });
+        new SectionBackground('processCanvas', { type: 'grid', color: '#c8d8ec' });
+        new SectionBackground('commitmentCanvas', { type: 'particles', color: '#ffffff' });
+        new SectionBackground('ctaCanvas', { type: 'blocks', color: '#c8d8ec' });
     </script>
 
     <!-- GSAP + ScrollTrigger -->
@@ -1965,10 +2365,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
     </script>
     <script>
-        // Register ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // Navigation scroll effect
         const nav = document.getElementById('nav');
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -2004,13 +2402,8 @@
         }
 
         // GSAP Scroll Animations
-        // About section
         gsap.from('.about-image-wrap', {
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top 70%',
-                toggleActions: 'play none none none',
-            },
+            scrollTrigger: { trigger: '#about', start: 'top 70%', toggleActions: 'play none none none' },
             x: -60,
             opacity: 0,
             duration: 1,
@@ -2018,10 +2411,7 @@
         });
 
         gsap.from('#about .section-heading', {
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top 70%',
-            },
+            scrollTrigger: { trigger: '#about', start: 'top 70%' },
             y: 40,
             opacity: 0,
             duration: 0.8,
@@ -2030,10 +2420,7 @@
         });
 
         gsap.from('.about-stats-number', {
-            scrollTrigger: {
-                trigger: '#about',
-                start: 'top 65%',
-            },
+            scrollTrigger: { trigger: '#about', start: 'top 65%' },
             scale: 0.5,
             opacity: 0,
             duration: 0.9,
@@ -2041,23 +2428,16 @@
             ease: 'back.out(1.7)',
         });
 
-        // Service blocks
         document.querySelectorAll('.service-block').forEach((block, i) => {
             gsap.from(block.querySelector('.service-content'), {
-                scrollTrigger: {
-                    trigger: block,
-                    start: 'top 75%',
-                },
+                scrollTrigger: { trigger: block, start: 'top 75%' },
                 x: i % 2 === 0 ? -50 : 50,
                 opacity: 0,
                 duration: 0.9,
                 ease: 'power3.out',
             });
             gsap.from(block.querySelector('.service-visual'), {
-                scrollTrigger: {
-                    trigger: block,
-                    start: 'top 75%',
-                },
+                scrollTrigger: { trigger: block, start: 'top 75%' },
                 x: i % 2 === 0 ? 50 : -50,
                 opacity: 0,
                 duration: 0.9,
@@ -2066,12 +2446,8 @@
             });
         });
 
-        // Project cards
         gsap.from('.project-card', {
-            scrollTrigger: {
-                trigger: '#projects',
-                start: 'top 70%',
-            },
+            scrollTrigger: { trigger: '#projects', start: 'top 70%' },
             y: 60,
             opacity: 0,
             stagger: 0.1,
@@ -2079,12 +2455,8 @@
             ease: 'power3.out',
         });
 
-        // Stats
         gsap.from('.stat-item', {
-            scrollTrigger: {
-                trigger: '.stats-row',
-                start: 'top 80%',
-            },
+            scrollTrigger: { trigger: '.stats-row', start: 'top 80%' },
             y: 40,
             opacity: 0,
             stagger: 0.15,
@@ -2092,12 +2464,26 @@
             ease: 'power3.out',
         });
 
-        // Process steps
+        gsap.from('.feature-card', {
+            scrollTrigger: { trigger: '.features-grid', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.7,
+            ease: 'power3.out',
+        });
+
+        gsap.from('.tech-card', {
+            scrollTrigger: { trigger: '.tech-grid', start: 'top 80%' },
+            scale: 0.8,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'back.out(1.2)',
+        });
+
         gsap.from('.process-step', {
-            scrollTrigger: {
-                trigger: '#process',
-                start: 'top 75%',
-            },
+            scrollTrigger: { trigger: '#process', start: 'top 75%' },
             y: 50,
             opacity: 0,
             stagger: 0.12,
@@ -2105,53 +2491,25 @@
             ease: 'power3.out',
         });
 
-        // Tech orbit items
-        gsap.from('.tech-orbiter', {
-            scrollTrigger: {
-                trigger: '#techOrbit',
-                start: 'top 80%',
-            },
-            scale: 0,
-            opacity: 0,
-            stagger: 0.08,
-            duration: 0.6,
-            ease: 'back.out(1.5)',
-        });
-
-        // Commitment section
         gsap.from('.commitment-section .section-heading', {
-            scrollTrigger: {
-                trigger: '.commitment-section',
-                start: 'top 75%',
-            },
+            scrollTrigger: { trigger: '.commitment-section', start: 'top 75%' },
             y: 50,
             opacity: 0,
             duration: 1,
             ease: 'power3.out',
         });
 
-        // Map dots hover
         document.querySelectorAll('.map-dot').forEach(dot => {
-            dot.addEventListener('mouseenter', () => {
-                dot.classList.add('active');
-            });
-            dot.addEventListener('mouseleave', () => {
-                if (!dot.dataset.permanent) {
-                    // Keep some always active
-                }
-            });
+            dot.addEventListener('mouseenter', () => dot.classList.add('active'));
         });
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href === '#') return;
                 e.preventDefault();
                 const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 closeMobileMenu();
             });
         });
@@ -2160,4 +2518,4 @@
         console.log('Engineering Better Spaces. Designing Smarter Futures.');
     </script>
 </body>
-</html>
+</html> 

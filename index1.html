@@ -54,19 +54,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
-            perspective: 1000px;
-        }
-
-        /* GLOBAL 3D PARTICLES CANVAS */
-        #globalParticlesCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.35;
         }
 
         /* NAVIGATION */
@@ -130,21 +117,6 @@
             letter-spacing: -0.5px;
             position: relative;
             overflow: hidden;
-            transform-style: preserve-3d;
-            animation: logoFloat3D 6s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat3D {
-            0%,
-            100% {
-                transform: translateZ(0) rotateY(0deg);
-            }
-            25% {
-                transform: translateZ(8px) rotateY(5deg);
-            }
-            75% {
-                transform: translateZ(4px) rotateY(-3deg);
-            }
         }
 
         .nav-logo-mark::after {
@@ -234,8 +206,6 @@
             background: #fff;
             color: var(--navy);
             border-color: #fff;
-            transform: translateZ(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .nav-mobile-toggle {
@@ -264,9 +234,6 @@
             height: 100svh;
             overflow: hidden;
             background: #000;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-start;
         }
 
         .hero-canvas {
@@ -287,21 +254,17 @@
             z-index: 2;
             pointer-events: none;
             background: linear-gradient(180deg,
-                    rgba(6, 42, 92, 0.3) 0%,
-                    rgba(6, 42, 92, 0.15) 25%,
-                    rgba(6, 42, 92, 0.25) 50%,
-                    rgba(6, 42, 92, 0.55) 80%,
-                    rgba(6, 42, 92, 0.7) 100%);
+                    rgba(6, 42, 92, 0.55) 0%,
+                    rgba(6, 42, 92, 0.25) 40%,
+                    rgba(6, 42, 92, 0.45) 100%);
         }
 
         .hero-content {
-            position: relative;
+            position: absolute;
+            bottom: 12%;
+            left: 6%;
             z-index: 3;
             max-width: 750px;
-            padding: 0 6%;
-            padding-bottom: clamp(60px, 10vh, 120px);
-            padding-top: 120px;
-            width: 100%;
         }
 
         .hero-tag {
@@ -309,23 +272,11 @@
             font-size: 0.7rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 500;
             margin-bottom: 20px;
-            border-left: 2px solid rgba(255, 255, 255, 0.6);
+            border-left: 2px solid rgba(255, 255, 255, 0.5);
             padding-left: 14px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .hero-heading {
@@ -335,11 +286,9 @@
             line-height: 1.05;
             letter-spacing: -1px;
             margin-bottom: 16px;
-            animation: fadeInUp 1s ease-out 0.2s both;
-            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
         }
         .hero-heading .line2 {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 300;
         }
 
@@ -347,20 +296,18 @@
             font-size: 0.85rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 10px;
             font-weight: 400;
-            animation: fadeInUp 1s ease-out 0.35s both;
         }
 
         .hero-credibility {
             font-size: 0.72rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.55);
             margin-bottom: 30px;
             font-weight: 500;
-            animation: fadeInUp 1s ease-out 0.45s both;
         }
 
         .hero-buttons {
@@ -368,7 +315,6 @@
             gap: 16px;
             flex-wrap: wrap;
             pointer-events: all;
-            animation: fadeInUp 1s ease-out 0.55s both;
         }
 
         .btn-primary {
@@ -386,12 +332,11 @@
             text-decoration: none;
             transition: all 0.4s;
             display: inline-block;
-            transform-style: preserve-3d;
         }
         .btn-primary:hover {
             background: #083d7a;
-            transform: translateY(-3px) translateZ(5px);
-            box-shadow: 0 20px 50px rgba(6, 42, 92, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.4);
         }
 
         .btn-outline {
@@ -409,13 +354,11 @@
             text-decoration: none;
             transition: all 0.4s;
             display: inline-block;
-            transform-style: preserve-3d;
         }
         .btn-outline:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: #fff;
-            transform: translateY(-3px) translateZ(5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
         }
 
         .hero-scroll-indicator {
@@ -455,7 +398,6 @@
             padding: 100px 40px;
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
 
         .section-white {
@@ -472,8 +414,6 @@
         .section-inner {
             max-width: 1300px;
             margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
         .section-label {
@@ -507,131 +447,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* 3D BACKGROUND ELEMENTS PER SECTION */
-        .section-3d-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        /* Floating geometric shapes */
-        .geo-shape {
-            position: absolute;
-            border-radius: 4px;
-            opacity: 0.04;
-            pointer-events: none;
-            animation: floatShape 12s ease-in-out infinite;
-        }
-        .geo-shape.cube {
-            width: 80px;
-            height: 80px;
-            background: var(--navy);
-            border-radius: 8px;
-        }
-        .geo-shape.circle {
-            width: 60px;
-            height: 60px;
-            background: var(--blue);
-            border-radius: 50%;
-        }
-        .geo-shape.triangle {
-            width: 0;
-            height: 0;
-            border-left: 40px solid transparent;
-            border-right: 40px solid transparent;
-            border-bottom: 70px solid var(--navy);
-            background: transparent;
-            border-radius: 0;
-        }
-        .geo-shape.line-h {
-            width: 120px;
-            height: 2px;
-            background: var(--blue);
-            border-radius: 1px;
-        }
-        .geo-shape.line-v {
-            width: 2px;
-            height: 100px;
-            background: var(--navy);
-            border-radius: 1px;
-        }
-
-        @keyframes floatShape {
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg) translateZ(0);
-            }
-            25% {
-                transform: translateY(-30px) rotate(5deg) translateZ(15px);
-            }
-            50% {
-                transform: translateY(-15px) rotate(-3deg) translateZ(8px);
-            }
-            75% {
-                transform: translateY(-40px) rotate(2deg) translateZ(20px);
-            }
-        }
-
-        /* 3D Grid overlay */
-        .grid-overlay-3d {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            background-image:
-                linear-gradient(rgba(11, 92, 173, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(11, 92, 173, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(800px) rotateX(60deg) translateY(-20%);
-            transform-origin: top center;
-            animation: gridDrift 20s linear infinite;
-        }
-
-        @keyframes gridDrift {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: 0 50px;
-            }
-        }
-
-        /* Blueprint overlay */
-        .blueprint-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.025;
-            background-image:
-                radial-gradient(circle at 30% 40%, #062A5C 1px, transparent 1px),
-                radial-gradient(circle at 70% 60%, #0B5CAD 1px, transparent 1px),
-                radial-gradient(circle at 50% 20%, #062A5C 1px, transparent 1px);
-            background-size: 80px 80px, 100px 100px, 60px 60px;
-            animation: blueprintPulse 8s ease-in-out infinite;
-        }
-
-        @keyframes blueprintPulse {
-            0%,
-            100% {
-                opacity: 0.02;
-            }
-            50% {
-                opacity: 0.04;
-            }
-        }
-
         /* ABOUT */
         .about-grid {
             display: grid;
@@ -646,12 +461,6 @@
             overflow: hidden;
             aspect-ratio: 4/3;
             background: var(--bg-light);
-            transform-style: preserve-3d;
-            transition: transform 0.6s var(--transition);
-        }
-        .about-image-wrap:hover {
-            transform: rotateY(-5deg) rotateX(3deg);
-            box-shadow: -20px 20px 60px rgba(6, 42, 92, 0.15);
         }
 
         .about-image-placeholder {
@@ -665,50 +474,20 @@
             overflow: hidden;
         }
 
-        .about-3d-rotating-cube {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            transform-style: preserve-3d;
-            animation: rotateCube3D 15s linear infinite;
-            top: 20%;
-            right: 15%;
-            opacity: 0.5;
-        }
-        .cube-face {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--navy);
-            background: rgba(6, 42, 92, 0.08);
-            border-radius: 4px;
-        }
-        .cube-face.front {
-            transform: translateZ(30px);
-        }
-        .cube-face.back {
-            transform: rotateY(180deg) translateZ(30px);
-        }
-        .cube-face.right {
-            transform: rotateY(90deg) translateZ(30px);
-        }
-        .cube-face.left {
-            transform: rotateY(-90deg) translateZ(30px);
-        }
-        .cube-face.top {
-            transform: rotateX(90deg) translateZ(30px);
-        }
-        .cube-face.bottom {
-            transform: rotateX(-90deg) translateZ(30px);
+        .about-3d-building {
+            width: 70%;
+            height: 70%;
+            position: relative;
         }
 
-        @keyframes rotateCube3D {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-            }
-            100% {
-                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-            }
+        .about-building-block {
+            position: absolute;
+            background: var(--navy);
+            border-radius: 2px;
+        }
+        .about-building-block.glass {
+            background: rgba(11, 92, 173, 0.4);
+            border: 1px solid rgba(11, 92, 173, 0.6);
         }
 
         .about-stats-number {
@@ -742,15 +521,11 @@
             font-weight: 500;
             color: var(--text);
             transition: all 0.3s;
-            cursor: pointer;
-            transform-style: preserve-3d;
         }
         .about-country-tag:hover {
             background: var(--navy);
             color: #fff;
             border-color: var(--navy);
-            transform: translateZ(8px);
-            box-shadow: 0 8px 25px rgba(6, 42, 92, 0.25);
         }
 
         /* SERVICES */
@@ -761,7 +536,6 @@
             align-items: center;
             padding: 60px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            position: relative;
         }
         .service-block:last-child {
             border-bottom: none;
@@ -813,14 +587,6 @@
             border-radius: 50px;
             color: var(--navy);
             font-weight: 500;
-            transition: all 0.3s;
-            cursor: default;
-        }
-        .service-list li:hover {
-            background: var(--navy);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 42, 92, 0.2);
         }
 
         .service-visual {
@@ -828,12 +594,6 @@
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s var(--transition);
-        }
-        .service-visual:hover {
-            transform: rotateY(3deg) rotateX(-2deg);
-            box-shadow: 15px 15px 50px rgba(6, 42, 92, 0.2);
         }
 
         .service-visual-inner {
@@ -857,35 +617,17 @@
             background: linear-gradient(160deg, #f0ede8 0%, #e8e2d8 40%, #ddd6c8 100%);
         }
 
-        /* Service blueprint lines */
-        .service-blueprint-lines {
+        .wireframe-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 2;
-            opacity: 0.3;
         }
-        .bp-line {
+        .wireframe-line {
             position: absolute;
-            background: var(--navy);
-            animation: bpLineDraw 3s ease-in-out infinite;
-        }
-        @keyframes bpLineDraw {
-            0% {
-                transform: scaleX(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scaleX(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scaleX(0);
-                opacity: 0;
-            }
+            background: rgba(11, 92, 173, 0.25);
         }
 
         /* PROJECTS */
@@ -902,14 +644,7 @@
             overflow: hidden;
             aspect-ratio: 3/4;
             cursor: pointer;
-            transform-style: preserve-3d;
-            transition: all 0.5s var(--transition);
-            box-shadow: 0 4px 20px rgba(6, 42, 92, 0.08);
-        }
-        .project-card:hover {
-            transform: rotateY(-4deg) rotateX(3deg) translateZ(20px);
-            box-shadow: -15px 20px 50px rgba(6, 42, 92, 0.25);
-            z-index: 10;
+            group: true;
         }
 
         .project-card-inner {
@@ -934,7 +669,6 @@
             padding: 30px;
             background: linear-gradient(transparent, rgba(6, 42, 92, 0.85));
             color: #fff;
-            transform: translateZ(10px);
         }
         .project-card-overlay h4 {
             font-size: 1.1rem;
@@ -979,14 +713,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transform-style: preserve-3d;
         }
 
         .map-dots {
             position: relative;
             width: 80%;
             height: 70%;
-            transform-style: preserve-3d;
         }
         .map-dot {
             position: absolute;
@@ -996,19 +728,10 @@
             border-radius: 50%;
             transition: all 0.4s;
             cursor: pointer;
-            transform-style: preserve-3d;
         }
         .map-dot.active {
             background: #fff;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 60px rgba(168, 212, 255, 0.5);
-            width: 14px;
-            height: 14px;
-            transform: translateZ(10px);
-        }
-        .map-dot:hover {
-            background: #fff;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-            transform: translateZ(8px) scale(1.5);
             width: 12px;
             height: 12px;
         }
@@ -1033,16 +756,6 @@
             background: rgba(255, 255, 255, 0.15);
             transform-origin: left center;
             pointer-events: none;
-            animation: connectionGlow 3s ease-in-out infinite;
-        }
-        @keyframes connectionGlow {
-            0%,
-            100% {
-                opacity: 0.15;
-            }
-            50% {
-                opacity: 0.4;
-            }
         }
 
         /* STATS */
@@ -1054,11 +767,6 @@
         }
         .stat-item {
             text-align: center;
-            transform-style: preserve-3d;
-            transition: transform 0.4s;
-        }
-        .stat-item:hover {
-            transform: translateZ(15px);
         }
         .stat-number {
             font-size: clamp(3rem, 5vw, 5rem);
@@ -1084,7 +792,6 @@
             align-items: center;
             justify-content: center;
             margin-top: 40px;
-            transform-style: preserve-3d;
         }
         .tech-center {
             width: 80px;
@@ -1100,18 +807,6 @@
             letter-spacing: 2px;
             z-index: 2;
             position: relative;
-            box-shadow: 0 0 40px rgba(6, 42, 92, 0.4);
-            animation: techPulse 3s ease-in-out infinite;
-            transform-style: preserve-3d;
-        }
-        @keyframes techPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 30px rgba(6, 42, 92, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 60px rgba(11, 92, 173, 0.6), 0 0 100px rgba(11, 92, 173, 0.3);
-            }
         }
         .tech-orbiter {
             position: absolute;
@@ -1126,13 +821,12 @@
             transition: all 0.4s;
             cursor: default;
             white-space: nowrap;
-            transform-style: preserve-3d;
         }
         .tech-orbiter:hover {
             background: var(--navy);
             color: #fff;
-            box-shadow: 0 12px 40px rgba(6, 42, 92, 0.35);
-            transform: translateZ(20px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.25);
+            transform: scale(1.08);
         }
 
         /* PROCESS */
@@ -1150,11 +844,6 @@
             text-align: center;
             position: relative;
             padding: 20px 15px;
-            transform-style: preserve-3d;
-            transition: transform 0.4s;
-        }
-        .process-step:hover {
-            transform: translateZ(12px);
         }
         .process-step-num {
             width: 50px;
@@ -1171,12 +860,11 @@
             position: relative;
             z-index: 2;
             transition: all 0.4s;
-            box-shadow: 0 8px 25px rgba(6, 42, 92, 0.2);
         }
         .process-step:hover .process-step-num {
             background: var(--blue);
-            transform: scale(1.2) translateZ(8px);
-            box-shadow: 0 15px 40px rgba(11, 92, 173, 0.5);
+            transform: scale(1.15);
+            box-shadow: 0 12px 35px rgba(11, 92, 173, 0.4);
         }
         .process-step h4 {
             font-size: 0.85rem;
@@ -1221,48 +909,6 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
-            transform: perspective(600px) rotateX(55deg);
-            transform-origin: top center;
-            animation: commitGridMove 15s linear infinite;
-        }
-        @keyframes commitGridMove {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: 0 80px;
-            }
-        }
-
-        /* 3D Floating rings in commitment */
-        .commitment-rings {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .commitment-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            animation: ringExpand 8s ease-in-out infinite;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @keyframes ringExpand {
-            0% {
-                width: 100px;
-                height: 100px;
-                opacity: 0.5;
-            }
-            100% {
-                width: 500px;
-                height: 500px;
-                opacity: 0;
-            }
         }
 
         /* CTA */
@@ -1277,18 +923,13 @@
             position: absolute;
             right: -5%;
             top: 50%;
-            transform: translateY(-50%) perspective(800px) rotateY(-10deg);
+            transform: translateY(-50%);
             width: 45%;
             height: 80%;
             background: linear-gradient(180deg, #e0eaf5 0%, #c8d8ec 30%, #a8c4e0 60%, #8aafd4 100%);
             border-radius: 16px;
             opacity: 0.5;
             pointer-events: none;
-            box-shadow: -20px 20px 60px rgba(6, 42, 92, 0.1);
-            transition: transform 0.8s var(--transition);
-        }
-        .cta-section:hover .cta-bg-building {
-            transform: translateY(-50%) perspective(800px) rotateY(-5deg) translateZ(20px);
         }
 
         /* FOOTER */
@@ -1296,8 +937,6 @@
             background: var(--navy-dark);
             color: #fff;
             padding: 60px 40px 30px;
-            position: relative;
-            z-index: 1;
         }
         .footer-grid {
             display: grid;
@@ -1348,6 +987,84 @@
             text-align: center;
         }
 
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .service-block {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-mobile-toggle {
+                display: flex;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .hero-content {
+                left: 5%;
+                bottom: 10%;
+                max-width: 90%;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-primary,
+            .btn-outline {
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .process-timeline {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            .process-step {
+                min-width: 130px;
+                flex-shrink: 0;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .nav {
+                padding: 14px 16px;
+            }
+            .nav.scrolled {
+                padding: 10px 16px;
+            }
+            .hero-heading {
+                font-size: clamp(1.8rem, 7vw, 2.6rem);
+            }
+            .about-stats-number {
+                font-size: 4rem;
+            }
+            .section-heading {
+                font-size: clamp(1.6rem, 6vw, 2.8rem);
+            }
+        }
+
         /* MOBILE NAV */
         .mobile-menu {
             position: fixed;
@@ -1388,119 +1105,9 @@
         .mobile-menu-links a:hover {
             color: var(--blue-light);
         }
-
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .about-grid,
-            .service-block {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .stats-row {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .nav-links {
-                display: none;
-            }
-            .nav-mobile-toggle {
-                display: flex;
-            }
-            .section {
-                padding: 60px 20px;
-            }
-            .hero-content {
-                padding-left: 5%;
-                padding-right: 5%;
-                padding-bottom: 60px;
-                max-width: 100%;
-            }
-            .hero-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .btn-primary,
-            .btn-outline {
-                text-align: center;
-                width: 100%;
-            }
-            .cta-bg-building {
-                width: 60%;
-                right: -20%;
-                opacity: 0.3;
-            }
-            .geo-shape {
-                display: none;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .stats-row {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-            .process-timeline {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-            }
-            .process-step {
-                min-width: 130px;
-                flex-shrink: 0;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .nav {
-                padding: 14px 16px;
-            }
-            .nav.scrolled {
-                padding: 10px 16px;
-            }
-            .hero-heading {
-                font-size: clamp(1.8rem, 7vw, 2.6rem);
-            }
-            .about-stats-number {
-                font-size: 4rem;
-            }
-            .section-heading {
-                font-size: clamp(1.6rem, 6vw, 2.8rem);
-            }
-            .hero-content {
-                padding-bottom: 40px;
-                padding-top: 100px;
-            }
-            .hero-scroll-indicator {
-                right: 16px;
-                bottom: 20px;
-            }
-            .cta-bg-building {
-                display: none;
-            }
-            .about-3d-rotating-cube {
-                display: none;
-            }
-            .commitment-ring {
-                display: none;
-            }
-            .grid-overlay-3d {
-                background-size: 30px 30px;
-            }
-        }
     </style>
 </head>
 <body>
-
-    <!-- GLOBAL 3D PARTICLES -->
-    <canvas id="globalParticlesCanvas"></canvas>
 
     <!-- NAVIGATION -->
     <nav class="nav" id="nav">
@@ -1540,13 +1147,13 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-tag">OSM Design Engineering Consultancy</p>
-            <h1 class="hero-heading">ENGINEERING<br>BETTER SPACES.<br><span class="line2">DESIGNING SMARTER FUTURES.</span></h1>
-            <p class="hero-subtitle">Architecture | Structural Engineering | MEP Design | Interior Design</p>
+            <!-- <h1 class="hero-heading">ENGINEERING<br>BETTER SPACES.<br><span class="line2">DESIGNING SMARTER FUTURES.</span></h1> -->
+            <!-- <p class="hero-subtitle">Architecture | Structural Engineering | MEP Design | Interior Design</p>
             <p class="hero-credibility">10+ Years of Excellence in Design Engineering</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-primary">Get Free Consultation</a>
                 <a href="#contact" class="btn-outline">Request a Quote</a>
-            </div>
+ -->            </div>
         </div>
         <div class="hero-scroll-indicator">
             <span>Scroll</span>
@@ -1556,17 +1163,6 @@
 
     <!-- ABOUT -->
     <section class="section section-white" id="about">
-        <div class="section-3d-bg">
-            <div class="grid-overlay-3d"></div>
-            <div class="about-3d-rotating-cube">
-                <div class="cube-face front"></div><div class="cube-face back"></div>
-                <div class="cube-face right"></div><div class="cube-face left"></div>
-                <div class="cube-face top"></div><div class="cube-face bottom"></div>
-            </div>
-            <div class="geo-shape cube" style="top:15%;left:5%;animation-delay:0s;"></div>
-            <div class="geo-shape circle" style="top:60%;right:8%;animation-delay:3s;"></div>
-            <div class="geo-shape line-h" style="top:25%;right:15%;animation-delay:5s;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">About OSM</span>
             <div class="about-grid">
@@ -1590,6 +1186,9 @@
                             <rect x="130" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
                             <rect x="180" y="190" width="40" height="25" rx="1" fill="rgba(255,255,255,0.15)"/>
                             <rect x="60" y="250" width="180" height="12" rx="1" fill="#062A5C" opacity="0.8"/>
+                            <line x1="60" y1="100" x2="60" y2="60" stroke="#062A5C" stroke-width="2"/>
+                            <line x1="240" y1="100" x2="240" y2="60" stroke="#062A5C" stroke-width="2"/>
+                            <line x1="150" y1="100" x2="150" y2="40" stroke="#062A5C" stroke-width="1.5" opacity="0.6"/>
                         </svg>
                     </div>
                 </div>
@@ -1616,16 +1215,11 @@
 
     <!-- SERVICES -->
     <section class="section section-light" id="services">
-        <div class="section-3d-bg">
-            <div class="blueprint-overlay"></div>
-            <div class="geo-shape line-v" style="top:10%;left:20%;animation-delay:1s;"></div>
-            <div class="geo-shape line-v" style="top:40%;right:15%;animation-delay:4s;"></div>
-            <div class="geo-shape circle" style="bottom:20%;left:10%;animation-delay:2s;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Our Services</span>
             <h2 class="section-heading">FOUR CORE<br>DISCIPLINES.</h2>
 
+            <!-- Architecture -->
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">01</div>
@@ -1638,12 +1232,16 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-arch">
+                    <div class="service-visual-inner sv-arch" id="svArch">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="80" y="60" width="240" height="210" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
                             <rect x="100" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
+                            <rect x="160" y="80" width="50" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
                             <rect x="220" y="80" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
+                            <rect x="100" y="120" width="50" height="30" fill="rgba(6,42,92,0.15)" rx="2"/>
+                            <rect x="160" y="120" width="110" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
                             <rect x="100" y="160" width="50" height="30" fill="rgba(6,42,92,0.2)" rx="2"/>
+                            <rect x="160" y="160" width="50" height="30" fill="rgba(6,42,92,0.15)" rx="2"/>
                             <rect x="220" y="160" width="50" height="30" fill="rgba(6,42,92,0.25)" rx="2"/>
                             <rect x="100" y="200" width="170" height="50" fill="rgba(6,42,92,0.1)" rx="2"/>
                             <line x1="80" y1="270" x2="320" y2="270" stroke="#062A5C" stroke-width="4"/>
@@ -1652,6 +1250,7 @@
                 </div>
             </div>
 
+            <!-- Structural -->
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">02</div>
@@ -1664,7 +1263,7 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-struct">
+                    <div class="service-visual-inner sv-struct" id="svStruct">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="60" y="30" width="280" height="240" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" rx="2"/>
                             <line x1="100" y1="30" x2="100" y2="270" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
@@ -1673,11 +1272,13 @@
                             <line x1="60" y1="80" x2="340" y2="80" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
                             <line x1="60" y1="150" x2="340" y2="150" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
                             <line x1="60" y1="220" x2="340" y2="220" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                            <rect x="60" y="260" width="280" height="15" fill="rgba(255,255,255,0.3)" rx="2"/>
                         </svg>
                     </div>
                 </div>
             </div>
 
+            <!-- MEP -->
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">03</div>
@@ -1690,7 +1291,7 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-mep">
+                    <div class="service-visual-inner sv-mep" id="svMep">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="80" y="70" width="240" height="190" fill="none" stroke="#062A5C" stroke-width="2" rx="4"/>
                             <path d="M120 120 L280 120" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
@@ -1698,11 +1299,14 @@
                             <path d="M120 180 L280 180" stroke="#0B5CAD" stroke-width="3" stroke-dasharray="8,4"/>
                             <circle cx="120" cy="120" r="6" fill="#0B5CAD"/>
                             <circle cx="280" cy="120" r="6" fill="#0B5CAD"/>
+                            <circle cx="200" cy="150" r="8" fill="#062A5C"/>
+                            <rect x="150" y="200" width="100" height="30" rx="4" fill="rgba(6,42,92,0.2)"/>
                         </svg>
                     </div>
                 </div>
             </div>
 
+            <!-- Interior -->
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">04</div>
@@ -1715,12 +1319,14 @@
                     </ul>
                 </div>
                 <div class="service-visual">
-                    <div class="service-visual-inner sv-interior">
+                    <div class="service-visual-inner sv-interior" id="svInterior">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="50" y="50" width="300" height="220" fill="none" stroke="#5c4a3a" stroke-width="1.5" rx="6"/>
                             <rect x="70" y="160" width="120" height="8" rx="2" fill="#8a7a6a" opacity="0.5"/>
                             <rect x="220" y="100" width="80" height="100" rx="3" fill="rgba(90,70,50,0.25)"/>
                             <circle cx="300" cy="70" r="20" fill="rgba(200,180,150,0.4)"/>
+                            <rect x="70" y="70" width="60" height="40" rx="3" fill="rgba(140,120,100,0.35)"/>
+                            <rect x="150" y="180" width="160" height="3" rx="1" fill="#8a7a6a" opacity="0.4"/>
                         </svg>
                     </div>
                 </div>
@@ -1730,49 +1336,92 @@
 
     <!-- PROJECTS -->
     <section class="section section-white" id="projects">
-        <div class="section-3d-bg">
-            <div class="grid-overlay-3d" style="opacity:0.5;"></div>
-            <div class="geo-shape cube" style="top:10%;right:5%;animation-delay:6s;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Selected Projects</span>
             <h2 class="section-heading">OUR<br>PORTFOLIO.</h2>
             <div class="projects-grid">
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc1"></div><div class="project-card-overlay"><h4>Luxury Villa</h4><span>Dubai / UAE</span></div></div></div>
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc2"></div><div class="project-card-overlay"><h4>Residential Development</h4><span>Hyderabad / India</span></div></div></div>
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc3"></div><div class="project-card-overlay"><h4>Commercial Office</h4><span>Doha / Qatar</span></div></div></div>
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc4"></div><div class="project-card-overlay"><h4>Hospital Project</h4><span>Riyadh / Saudi Arabia</span></div></div></div>
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc5"></div><div class="project-card-overlay"><h4>Industrial Facility</h4><span>Oman</span></div></div></div>
-                <div class="project-card"><div class="project-card-inner"><div class="project-card-bg pc6"></div><div class="project-card-overlay"><h4>Restaurant & Hospitality</h4><span>UAE</span></div></div></div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc1"></div>
+                        <div class="project-card-overlay">
+                            <h4>Luxury Villa</h4><span>Dubai / UAE</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc2"></div>
+                        <div class="project-card-overlay">
+                            <h4>Residential Development</h4><span>Hyderabad / India</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc3"></div>
+                        <div class="project-card-overlay">
+                            <h4>Commercial Office</h4><span>Doha / Qatar</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc4"></div>
+                        <div class="project-card-overlay">
+                            <h4>Hospital Project</h4><span>Riyadh / Saudi Arabia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc5"></div>
+                        <div class="project-card-overlay">
+                            <h4>Industrial Facility</h4><span>Oman</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-bg pc6"></div>
+                        <div class="project-card-overlay">
+                            <h4>Restaurant & Hospitality</h4><span>UAE</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- COUNTRIES -->
     <section class="section section-navy">
-        <div class="section-3d-bg">
-            <div class="geo-shape circle" style="top:10%;right:10%;animation-delay:1s;opacity:0.06;background:#fff;"></div>
-            <div class="geo-shape line-h" style="bottom:20%;left:5%;animation-delay:3s;opacity:0.06;background:#fff;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Our Reach</span>
             <h2 class="section-heading">DESIGNING ACROSS<br>THE REGION.</h2>
             <div class="countries-visual" id="countriesMap">
                 <div class="map-dots" id="mapDots">
+                    <!-- Dots positioned roughly on a Middle East + India map area -->
                     <div class="map-dot active" style="left:20%;top:45%;" data-country="UAE"></div>
                     <div class="map-dot-label" style="left:20%;top:35%;">UAE</div>
+
                     <div class="map-dot" style="left:35%;top:38%;" data-country="Qatar"></div>
                     <div class="map-dot-label" style="left:35%;top:28%;">Qatar</div>
+
                     <div class="map-dot" style="left:28%;top:52%;" data-country="Saudi Arabia"></div>
                     <div class="map-dot-label" style="left:28%;top:42%;">Saudi Arabia</div>
+
                     <div class="map-dot" style="left:44%;top:48%;" data-country="Oman"></div>
                     <div class="map-dot-label" style="left:44%;top:38%;">Oman</div>
+
                     <div class="map-dot" style="left:15%;top:50%;" data-country="Kuwait"></div>
                     <div class="map-dot-label" style="left:15%;top:40%;">Kuwait</div>
+
                     <div class="map-dot" style="left:22%;top:55%;" data-country="Bahrain"></div>
                     <div class="map-dot-label" style="left:22%;top:48%;">Bahrain</div>
+
                     <div class="map-dot active" style="left:62%;top:42%;" data-country="India"></div>
                     <div class="map-dot-label" style="left:62%;top:32%;">India</div>
+
+                    <!-- Connection lines -->
                     <div class="map-connection" style="left:20%;top:45%;width:42%;transform:rotate(-5deg);"></div>
                 </div>
             </div>
@@ -1781,26 +1430,32 @@
 
     <!-- WHY OSM -->
     <section class="section section-white">
-        <div class="section-3d-bg">
-            <div class="blueprint-overlay"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Why OSM</span>
             <h2 class="section-heading">WHY<br>OSM?</h2>
             <div class="stats-row">
-                <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Years of Experience</div></div>
-                <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">Countries</div></div>
-                <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Core Disciplines</div></div>
-                <div class="stat-item"><div class="stat-number">E2E</div><div class="stat-label">End-to-End Consultancy</div></div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="10">10+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="7">7</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="4">4</div>
+                    <div class="stat-label">Core Disciplines</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">E2E</div>
+                    <div class="stat-label">End-to-End Consultancy</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- TECHNOLOGY -->
     <section class="section section-light">
-        <div class="section-3d-bg">
-            <div class="grid-overlay-3d" style="opacity:0.4;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Technology</span>
             <h2 class="section-heading">DESIGNED WITH<br>PRECISION.</h2>
@@ -1820,20 +1475,45 @@
 
     <!-- PROCESS -->
     <section class="section section-white" id="process">
-        <div class="section-3d-bg">
-            <div class="geo-shape line-h" style="top:30%;left:10%;animation-delay:0s;"></div>
-            <div class="geo-shape line-h" style="bottom:30%;right:8%;animation-delay:4s;"></div>
-        </div>
         <div class="section-inner">
             <span class="section-label">Our Process</span>
             <h2 class="section-heading">HOW WE<br>BUILD.</h2>
             <div class="process-timeline">
-                <div class="process-step"><div class="process-step-num">01</div><h4>Project Discussion</h4><p>Understanding vision & requirements</p><div class="process-connector"></div></div>
-                <div class="process-step"><div class="process-step-num">02</div><h4>Concept Design</h4><p>Architectural concept & planning</p><div class="process-connector"></div></div>
-                <div class="process-step"><div class="process-step-num">03</div><h4>Detailed Engineering</h4><p>Structure, MEP & systems design</p><div class="process-connector"></div></div>
-                <div class="process-step"><div class="process-step-num">04</div><h4>3D Visualization</h4><p>Photorealistic renders & walkthroughs</p><div class="process-connector"></div></div>
-                <div class="process-step"><div class="process-step-num">05</div><h4>Construction Docs</h4><p>Complete documentation package</p><div class="process-connector"></div></div>
-                <div class="process-step"><div class="process-step-num">06</div><h4>Project Support</h4><p>On-site coordination & delivery</p></div>
+                <div class="process-step">
+                    <div class="process-step-num">01</div>
+                    <h4>Project Discussion</h4>
+                    <p>Understanding vision & requirements</p>
+                    <div class="process-connector"></div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">02</div>
+                    <h4>Concept Design</h4>
+                    <p>Architectural concept & planning</p>
+                    <div class="process-connector"></div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">03</div>
+                    <h4>Detailed Engineering</h4>
+                    <p>Structure, MEP & systems design</p>
+                    <div class="process-connector"></div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">04</div>
+                    <h4>3D Visualization</h4>
+                    <p>Photorealistic renders & walkthroughs</p>
+                    <div class="process-connector"></div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">05</div>
+                    <h4>Construction Docs</h4>
+                    <p>Complete documentation package</p>
+                    <div class="process-connector"></div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">06</div>
+                    <h4>Project Support</h4>
+                    <p>On-site coordination & delivery</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1841,23 +1521,17 @@
     <!-- COMMITMENT -->
     <section class="section section-navy commitment-section">
         <div class="commitment-grid-bg"></div>
-        <div class="commitment-rings">
-            <div class="commitment-ring" style="animation-delay:0s;"></div>
-            <div class="commitment-ring" style="animation-delay:2.5s;"></div>
-            <div class="commitment-ring" style="animation-delay:5s;"></div>
-        </div>
         <div class="section-inner" style="position:relative;z-index:2;text-align:center;">
             <h2 class="section-heading" style="font-size:clamp(1.8rem,4vw,3.5rem);">WE DON'T SIMPLY<br>DESIGN BUILDINGS.</h2>
-            <p class="section-text" style="max-width:700px;margin:24px auto 0;font-size:1.1rem;">We engineer spaces that are safe, sustainable, efficient, and built to perform for decades.</p>
+            <p class="section-text" style="max-width:700px;margin:24px auto 0;font-size:1.1rem;">
+                We engineer spaces that are safe, sustainable, efficient, and built to perform for decades.
+            </p>
         </div>
     </section>
 
     <!-- CTA -->
     <section class="section section-white cta-section" id="contact">
         <div class="cta-bg-building"></div>
-        <div class="section-3d-bg">
-            <div class="geo-shape cube" style="top:20%;left:5%;animation-delay:2s;"></div>
-        </div>
         <div class="section-inner" style="position:relative;z-index:2;">
             <span class="section-label">Get In Touch</span>
             <h2 class="section-heading">READY TO BUILD<br>YOUR VISION?</h2>
@@ -1878,40 +1552,60 @@
                 <div style="font-size:0.7rem;letter-spacing:1.5px;opacity:0.6;margin-bottom:16px;">DESIGN ENGINEERING CONSULTANCY</div>
                 <p class="footer-tagline">ENGINEERING BETTER SPACES.<br>DESIGNING SMARTER FUTURES.</p>
             </div>
-            <div><h5>Navigation</h5><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
-            <div><h5>Services</h5><a href="#services">Architecture</a><a href="#services">Structural Engineering</a><a href="#services">MEP Design</a><a href="#services">Interior Design</a></div>
-            <div><h5>Contact</h5><a href="#">info@osmconsultancy.com</a><a href="#">+971 50 000 0000</a><a href="#">Dubai, UAE</a><a href="#">Hyderabad, India</a></div>
+            <div>
+                <h5>Navigation</h5>
+                <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h5>Services</h5>
+                <a href="#services">Architecture</a><a href="#services">Structural Engineering</a><a href="#services">MEP Design</a><a href="#services">Interior Design</a>
+            </div>
+            <div>
+                <h5>Contact</h5>
+                <a href="#">info@osmconsultancy.com</a>
+                <a href="#">+971 50 000 0000</a>
+                <a href="#">Dubai, UAE</a>
+                <a href="#">Hyderabad, India</a>
+            </div>
         </div>
-        <div class="footer-bottom">&copy; 2026 OSM Design Engineering Consultancy. All rights reserved.</div>
+        <div class="footer-bottom">
+            &copy; 2026 OSM Design Engineering Consultancy. All rights reserved.
+        </div>
     </footer>
 
     <!-- Three.js -->
     <script type="importmap">
-        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
     </script>
     <script type="module">
         import * as THREE from 'three';
 
-        // ============ HERO 3D SCENE ============
-        const heroCanvas = document.getElementById('heroCanvas');
-        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
-        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        heroRenderer.setSize(window.innerWidth, window.innerHeight);
-        heroRenderer.shadowMap.enabled = true;
-        heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-        heroRenderer.toneMappingExposure = 1.2;
+        // HERO 3D SCENE
+        const canvas = document.getElementById('heroCanvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
 
-        const heroScene = new THREE.Scene();
-        heroScene.background = new THREE.Color('#062a4a');
-        heroScene.fog = new THREE.Fog('#062a4a', 30, 100);
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color('#062a4a');
+        scene.fog = new THREE.Fog('#062a4a', 30, 100);
 
-        const heroCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
-        heroCamera.position.set(18, 8, 22);
-        heroCamera.lookAt(0, 3, 0);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 200);
+        camera.position.set(18, 8, 22);
+        camera.lookAt(0, 3, 0);
 
+        // Lighting
         const ambientLight = new THREE.AmbientLight('#b8d4f0', 2.5);
-        heroScene.add(ambientLight);
+        scene.add(ambientLight);
+
         const sunLight = new THREE.DirectionalLight('#ffffff', 8);
         sunLight.position.set(30, 25, 10);
         sunLight.castShadow = true;
@@ -1924,44 +1618,88 @@
         sunLight.shadow.camera.top = 25;
         sunLight.shadow.camera.bottom = -25;
         sunLight.shadow.bias = -0.0001;
-        heroScene.add(sunLight);
-        heroScene.add(new THREE.DirectionalLight('#7eb8e0', 3).position.set(-10, 5, -8));
-        heroScene.add(new THREE.DirectionalLight('#c8e4ff', 2).position.set(0, 3, 20));
+        scene.add(sunLight);
 
+        const fillLight = new THREE.DirectionalLight('#7eb8e0', 3);
+        fillLight.position.set(-10, 5, -8);
+        scene.add(fillLight);
+
+        const rimLight = new THREE.DirectionalLight('#c8e4ff', 2);
+        rimLight.position.set(0, 3, 20);
+        scene.add(rimLight);
+
+        // Ground
         const groundGeo = new THREE.PlaneGeometry(80, 80);
-        const ground = new THREE.Mesh(groundGeo, new THREE.MeshStandardMaterial({ color: '#e8eef5', roughness: 0.6,
-            metalness: 0.05 }));
+        const groundMat = new THREE.MeshStandardMaterial({
+            color: '#e8eef5',
+            roughness: 0.6,
+            metalness: 0.05,
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
         ground.position.y = -6;
         ground.receiveShadow = true;
-        heroScene.add(ground);
+        scene.add(ground);
 
+        // Subtle grid on ground
         const gridHelper = new THREE.PolarGridHelper(30, 48, 24, 128, '#c8d8ec', '#c8d8ec');
         gridHelper.position.y = -5.98;
-        heroScene.add(gridHelper);
+        scene.add(gridHelper);
 
+        // Main Building Group
         const buildingGroup = new THREE.Group();
+        scene.add(buildingGroup);
         buildingGroup.position.set(0, -6, 0);
-        heroScene.add(buildingGroup);
 
-        const concreteMat = new THREE.MeshStandardMaterial({ color: '#f5f5f0', roughness: 0.35, metalness: 0.05 });
-        const glassMat = new THREE.MeshStandardMaterial({ color: '#a8d4f0', roughness: 0.1, metalness: 0.3, transparent: true,
-            opacity: 0.75 });
-        const darkGlassMat = new THREE.MeshStandardMaterial({ color: '#3a7099', roughness: 0.08, metalness: 0.4 });
-        const metalMat = new THREE.MeshStandardMaterial({ color: '#d0d8e0', roughness: 0.2, metalness: 0.7 });
-        const accentMat = new THREE.MeshStandardMaterial({ color: '#062A5C', roughness: 0.25, metalness: 0.3 });
-        const structMat = new THREE.MeshStandardMaterial({ color: '#c8d0d8', roughness: 0.3, metalness: 0.5 });
+        // Materials
+        const concreteMat = new THREE.MeshStandardMaterial({
+            color: '#f5f5f0',
+            roughness: 0.35,
+            metalness: 0.05,
+        });
+        const glassMat = new THREE.MeshStandardMaterial({
+            color: '#a8d4f0',
+            roughness: 0.1,
+            metalness: 0.3,
+            transparent: true,
+            opacity: 0.75,
+        });
+        const darkGlassMat = new THREE.MeshStandardMaterial({
+            color: '#3a7099',
+            roughness: 0.08,
+            metalness: 0.4,
+        });
+        const metalMat = new THREE.MeshStandardMaterial({
+            color: '#d0d8e0',
+            roughness: 0.2,
+            metalness: 0.7,
+        });
+        const accentMat = new THREE.MeshStandardMaterial({
+            color: '#062A5C',
+            roughness: 0.25,
+            metalness: 0.3,
+        });
+        const structMat = new THREE.MeshStandardMaterial({
+            color: '#c8d0d8',
+            roughness: 0.3,
+            metalness: 0.5,
+        });
 
-        const foundation = new THREE.Mesh(new THREE.BoxGeometry(8, 0.6, 6), concreteMat);
+        // Foundation
+        const foundationGeo = new THREE.BoxGeometry(8, 0.6, 6);
+        const foundation = new THREE.Mesh(foundationGeo, concreteMat);
         foundation.position.y = 0.3;
-        foundation.castShadow = foundation.receiveShadow = true;
+        foundation.castShadow = true;
+        foundation.receiveShadow = true;
         foundation.name = 'foundation';
         buildingGroup.add(foundation);
 
+        // Core structural columns
         const columnsGroup = new THREE.Group();
         columnsGroup.name = 'columns';
         buildingGroup.add(columnsGroup);
-        [
+
+        const colPositions = [
             [-3.2, 0, -2.2],
             [3.2, 0, -2.2],
             [-3.2, 0, 2.2],
@@ -1969,91 +1707,131 @@
             [-1.6, 0, -2.2],
             [1.6, 0, -2.2],
             [-1.6, 0, 2.2],
-            [1.6, 0, 2.2]
-        ].forEach(([cx, cy, cz]) => {
-            const col = new THREE.Mesh(new THREE.BoxGeometry(0.35, 12, 0.35), structMat);
+            [1.6, 0, 2.2],
+        ];
+
+        colPositions.forEach(([cx, cy, cz]) => {
+            const colGeo = new THREE.BoxGeometry(0.35, 12, 0.35);
+            const col = new THREE.Mesh(colGeo, structMat);
             col.position.set(cx, 6.3, cz);
-            col.castShadow = col.receiveShadow = true;
+            col.castShadow = true;
+            col.receiveShadow = true;
             columnsGroup.add(col);
         });
 
+        // Floor slabs
         const slabsGroup = new THREE.Group();
         slabsGroup.name = 'slabs';
         buildingGroup.add(slabsGroup);
+
         for (let i = 0; i < 8; i++) {
-            const slab = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.25, 5.2), concreteMat);
+            const slabGeo = new THREE.BoxGeometry(7.2, 0.25, 5.2);
+            const slab = new THREE.Mesh(slabGeo, concreteMat);
             slab.position.y = 1.0 + i * 1.55;
-            slab.castShadow = slab.receiveShadow = true;
+            slab.castShadow = true;
+            slab.receiveShadow = true;
             slabsGroup.add(slab);
         }
 
+        // Glass curtain wall panels
         const facadeGroup = new THREE.Group();
         facadeGroup.name = 'facade';
         buildingGroup.add(facadeGroup);
+
+        // Front and back facades
         for (let floor = 0; floor < 8; floor++) {
             const yPos = 1.0 + floor * 1.55;
+            // Front panels
             for (let px = -3; px <= 3; px += 1.2) {
-                const panel = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), floor % 2 === 0 ? glassMat :
-                    darkGlassMat);
+                const panelGeo = new THREE.BoxGeometry(1.05, 1.15, 0.06);
+                const panel = new THREE.Mesh(panelGeo, floor % 2 === 0 ? glassMat : darkGlassMat);
                 panel.position.set(px, yPos, 2.55);
                 panel.castShadow = true;
                 facadeGroup.add(panel);
-                const panelB = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.15, 0.06), glassMat);
-                panelB.position.set(px, yPos, -2.55);
-                panelB.castShadow = true;
-                facadeGroup.add(panelB);
             }
+            // Back panels
+            for (let px = -3; px <= 3; px += 1.2) {
+                const panelGeo = new THREE.BoxGeometry(1.05, 1.15, 0.06);
+                const panel = new THREE.Mesh(panelGeo, glassMat);
+                panel.position.set(px, yPos, -2.55);
+                panel.castShadow = true;
+                facadeGroup.add(panel);
+            }
+            // Side panels
             for (let pz = -1.8; pz <= 1.8; pz += 1.2) {
-                const panelL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
+                const panelGeo = new THREE.BoxGeometry(0.06, 1.15, 1.05);
+                const panelL = new THREE.Mesh(panelGeo, darkGlassMat);
                 panelL.position.set(-3.55, yPos, pz);
                 facadeGroup.add(panelL);
-                const panelR = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.15, 1.05), darkGlassMat);
+                const panelR = new THREE.Mesh(panelGeo, darkGlassMat);
                 panelR.position.set(3.55, yPos, pz);
                 facadeGroup.add(panelR);
             }
         }
 
-        const roof = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.3, 5.6), accentMat);
+        // Roof
+        const roofGeo = new THREE.BoxGeometry(7.6, 0.3, 5.6);
+        const roof = new THREE.Mesh(roofGeo, accentMat);
         roof.position.y = 12.7;
-        roof.castShadow = roof.receiveShadow = true;
+        roof.castShadow = true;
+        roof.receiveShadow = true;
         roof.name = 'roof';
         buildingGroup.add(roof);
 
-        const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
+        // Roof parapet
+        const parapetGeo = new THREE.BoxGeometry(7.8, 0.6, 0.15);
+        const parapetFront = new THREE.Mesh(parapetGeo, metalMat);
         parapetFront.position.set(0, 13.05, 2.75);
         buildingGroup.add(parapetFront);
-        const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(7.8, 0.6, 0.15), metalMat);
+        const parapetBack = new THREE.Mesh(parapetGeo, metalMat);
         parapetBack.position.set(0, 13.05, -2.75);
         buildingGroup.add(parapetBack);
 
+        // Architectural fins on facade
         for (let i = 0; i < 5; i++) {
-            const fin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 11.5, 0.25), accentMat);
+            const finGeo = new THREE.BoxGeometry(0.08, 11.5, 0.25);
+            const fin = new THREE.Mesh(finGeo, accentMat);
             fin.position.set(-2.8 + i * 1.4, 6.5, 2.65);
             fin.castShadow = true;
             facadeGroup.add(fin);
         }
 
+        // Landscaping elements
         const landscapeGroup = new THREE.Group();
         landscapeGroup.name = 'landscape';
         buildingGroup.add(landscapeGroup);
+
         for (let i = 0; i < 6; i++) {
-            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8), new THREE
-        .MeshStandardMaterial({ color: '#8a7a6a', roughness: 0.7 }));
-            trunk.position.set(-5 + i * 2, 1.25, 3.8);
-            trunk.castShadow = true;
-            landscapeGroup.add(trunk);
-            const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 8), new THREE.MeshStandardMaterial({ color: '#5a8a5a',
+            const treeTrunkGeo = new THREE.CylinderGeometry(0.12, 0.18, 2.5, 8);
+            const treeTrunk = new THREE.Mesh(treeTrunkGeo, new THREE.MeshStandardMaterial({ color: '#8a7a6a',
+                roughness: 0.7 }));
+            treeTrunk.position.set(-5 + i * 2, 1.25, 3.8);
+            treeTrunk.castShadow = true;
+            landscapeGroup.add(treeTrunk);
+
+            const treeCanopyGeo = new THREE.SphereGeometry(0.9, 12, 8);
+            const treeCanopy = new THREE.Mesh(treeCanopyGeo, new THREE.MeshStandardMaterial({ color: '#5a8a5a',
                 roughness: 0.6 }));
-            canopy.position.set(-5 + i * 2, 3.0, 3.8);
-            canopy.scale.set(1, 0.7, 1);
-            canopy.castShadow = true;
-            landscapeGroup.add(canopy);
+            treeCanopy.position.set(-5 + i * 2, 3.0, 3.8);
+            treeCanopy.scale.set(1, 0.7, 1);
+            treeCanopy.castShadow = true;
+            landscapeGroup.add(treeCanopy);
         }
 
-        const allBuildingParts = [foundation, ...columnsGroup.children, ...slabsGroup.children, ...facadeGroup.children,
-            roof, parapetFront, parapetBack, ...landscapeGroup.children
+        // Initial state: hide everything for assembly animation
+        const allBuildingParts = [
+            foundation,
+            ...columnsGroup.children,
+            ...slabsGroup.children,
+            ...facadeGroup.children,
+            roof,
+            parapetFront,
+            parapetBack,
+            ...landscapeGroup.children,
         ];
+
         allBuildingParts.forEach(part => {
+            part.userData.originalY = part.position.y;
             part.userData.originalScale = part.scale.clone();
             part.scale.set(0, 0, 0);
             part.material = part.material.clone();
@@ -2061,137 +1839,123 @@
             part.material.opacity = 0;
         });
 
+        // Animation state
+        let animationProgress = 0;
+        const totalParts = allBuildingParts.length;
+
+        // Particles for construction effect
         const particlesGeo = new THREE.BufferGeometry();
         const particlesCount = 300;
-        const posArray = new Float32Array(particlesCount * 3);
-        for (let i = 0; i < particlesCount; i++) { posArray[i * 3] = (Math.random() - 0.5) * 20;
-            posArray[i * 3 + 1] = Math.random() * 18;
-            posArray[i * 3 + 2] = (Math.random() - 0.5) * 14; }
-        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMat = new THREE.PointsMaterial({ color: '#a8d4ff', size: 0.04, transparent: true, opacity: 0.6,
-            blending: THREE.AdditiveBlending, depthWrite: false });
+        const particlesPositions = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount; i++) {
+            particlesPositions[i * 3] = (Math.random() - 0.5) * 20;
+            particlesPositions[i * 3 + 1] = Math.random() * 18;
+            particlesPositions[i * 3 + 2] = (Math.random() - 0.5) * 14;
+        }
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+        const particlesMat = new THREE.PointsMaterial({
+            color: '#a8d4ff',
+            size: 0.04,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+        });
         const particles = new THREE.Points(particlesGeo, particlesMat);
         particles.position.y = 3;
-        heroScene.add(particles);
+        scene.add(particles);
 
+        // Mouse tracking for subtle camera movement
         let mouseX = 0,
-            mouseY = 0,
-            targetMouseX = 0,
+            mouseY = 0;
+        let targetMouseX = 0,
             targetMouseY = 0;
-        document.addEventListener('mousemove', e => {
+
+        document.addEventListener('mousemove', (e) => {
             targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
+        // Animation loop
         const clock = new THREE.Clock();
-        let assemblyPhase = 0,
-            assemblyTimer = 0;
-        const totalParts = allBuildingParts.length;
+        let assemblyPhase = 0;
+        let assemblyTimer = 0;
 
-        function animateHero() {
-            requestAnimationFrame(animateHero);
+        function animate() {
+            requestAnimationFrame(animate);
+
             const dt = Math.min(clock.getDelta(), 0.1);
             assemblyTimer += dt;
+
+            // Smooth mouse follow
             mouseX += (targetMouseX - mouseX) * 0.03;
             mouseY += (targetMouseY - mouseY) * 0.03;
+
+            // Camera orbit
             const time = assemblyTimer;
             const orbitRadius = 22 + mouseX * 4;
             const camAngle = time * 0.15 + Math.PI * 0.15;
-            heroCamera.position.lerp(new THREE.Vector3(Math.cos(camAngle) * orbitRadius, 7 + mouseY * 3, Math.sin(camAngle) *
-                orbitRadius), 0.02);
-            heroCamera.lookAt(0, 4.5, 0);
+            const camX = Math.cos(camAngle) * orbitRadius;
+            const camZ = Math.sin(camAngle) * orbitRadius;
+            const camY = 7 + mouseY * 3;
 
+            camera.position.lerp(
+                new THREE.Vector3(camX, camY, camZ),
+                0.02
+            );
+            camera.lookAt(0, 4.5, 0);
+
+            // Assembly animation
             if (assemblyPhase < totalParts && assemblyTimer > 0.6 + assemblyPhase * 0.15) {
                 const part = allBuildingParts[assemblyPhase];
                 if (part) {
-                    const startT = performance.now();
-                    const animIn = () => {
-                        const t = Math.min((performance.now() - startT) / 800, 1);
+                    // Animate in
+                    const startTime = performance.now();
+                    const animateIn = () => {
+                        const elapsed = (performance.now() - startTime) / 1000;
+                        const t = Math.min(elapsed / 0.8, 1);
                         const ease = 1 - Math.pow(1 - t, 3);
                         part.scale.lerp(part.userData.originalScale, ease);
                         part.material.opacity = Math.min(part.material.opacity + 0.05, 1);
-                        if (t < 1) requestAnimationFrame(animIn);
-                        else { part.scale.copy(part.userData.originalScale);
-                            part.material.opacity = 1; }
+                        if (t < 1) {
+                            requestAnimationFrame(animateIn);
+                        } else {
+                            part.scale.copy(part.userData.originalScale);
+                            part.material.opacity = 1;
+                        }
                     };
-                    animIn();
+                    animateIn();
                 }
                 assemblyPhase++;
             }
+
+            // Reset assembly for loop
             if (assemblyPhase >= totalParts && assemblyTimer > 14) {
                 assemblyTimer = 0;
                 assemblyPhase = 0;
-                allBuildingParts.forEach(p => { p.scale.set(0, 0, 0);
-                    p.material.opacity = 0; });
+                allBuildingParts.forEach(part => {
+                    part.scale.set(0, 0, 0);
+                    part.material.opacity = 0;
+                });
             }
+
+            // Particles float
             particles.rotation.y += dt * 0.08;
             particles.position.y = 3 + Math.sin(time * 0.5) * 1.5;
+
+            // Update particle opacity
             particlesMat.opacity = 0.3 + Math.sin(time * 0.7) * 0.2;
-            heroRenderer.render(heroScene, heroCamera);
-        }
-        animateHero();
 
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Resize handler
         window.addEventListener('resize', () => {
-            heroRenderer.setSize(window.innerWidth, window.innerHeight);
-            heroCamera.aspect = window.innerWidth / window.innerHeight;
-            heroCamera.updateProjectionMatrix();
-        });
-
-        // ============ GLOBAL PARTICLES BACKGROUND ============
-        const globalCanvas = document.getElementById('globalParticlesCanvas');
-        const globalCtx = globalCanvas.getContext('2d');
-        globalCanvas.width = window.innerWidth;
-        globalCanvas.height = window.innerHeight;
-
-        const globalParticlesArr = [];
-        for (let i = 0; i < 50; i++) {
-            globalParticlesArr.push({
-                x: Math.random() * globalCanvas.width,
-                y: Math.random() * globalCanvas.height,
-                r: Math.random() * 1.5 + 0.5,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                opacity: Math.random() * 0.4 + 0.1,
-            });
-        }
-
-        function animateGlobalParticles() {
-            globalCtx.clearRect(0, 0, globalCanvas.width, globalCanvas.height);
-            globalParticlesArr.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0) p.x = globalCanvas.width;
-                if (p.x > globalCanvas.width) p.x = 0;
-                if (p.y < 0) p.y = globalCanvas.height;
-                if (p.y > globalCanvas.height) p.y = 0;
-                globalCtx.beginPath();
-                globalCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                globalCtx.fillStyle = `rgba(6,42,92,${p.opacity})`;
-                globalCtx.fill();
-            });
-            // Draw subtle connection lines
-            for (let i = 0; i < globalParticlesArr.length; i++) {
-                for (let j = i + 1; j < globalParticlesArr.length; j++) {
-                    const dx = globalParticlesArr[i].x - globalParticlesArr[j].x;
-                    const dy = globalParticlesArr[i].y - globalParticlesArr[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 120) {
-                        globalCtx.beginPath();
-                        globalCtx.moveTo(globalParticlesArr[i].x, globalParticlesArr[i].y);
-                        globalCtx.lineTo(globalParticlesArr[j].x, globalParticlesArr[j].y);
-                        globalCtx.strokeStyle = `rgba(11,92,173,${0.04 * (1 - dist/120)})`;
-                        globalCtx.lineWidth = 0.5;
-                        globalCtx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateGlobalParticles);
-        }
-        animateGlobalParticles();
-
-        window.addEventListener('resize', () => {
-            globalCanvas.width = window.innerWidth;
-            globalCanvas.height = window.innerHeight;
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
         });
     </script>
 
@@ -2201,14 +1965,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
     </script>
     <script>
+        // Register ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
+        // Navigation scroll effect
         const nav = document.getElementById('nav');
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
 
         window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 80);
+            if (window.scrollY > 80) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
         });
 
         mobileToggle.addEventListener('click', () => {
@@ -2219,60 +1989,174 @@
                 spans[1].style.opacity = '0';
                 spans[2].style.transform = 'rotate(-45deg) translate(6px,-6px)';
             } else {
-                spans[0].style.transform = spans[1].style.opacity = spans[2].style.transform = '';
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '';
+                spans[2].style.transform = '';
             }
         });
 
         function closeMobileMenu() {
             mobileMenu.classList.remove('open');
             const spans = mobileToggle.querySelectorAll('span');
-            spans[0].style.transform = spans[1].style.opacity = spans[2].style.transform = '';
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
         }
 
         // GSAP Scroll Animations
-        gsap.from('.about-image-wrap', { scrollTrigger: { trigger: '#about', start: 'top 70%' }, x: -60, opacity: 0,
-            duration: 1, ease: 'power3.out' });
-        gsap.from('#about .section-heading', { scrollTrigger: { trigger: '#about', start: 'top 70%' }, y: 40, opacity: 0,
-            duration: 0.8, delay: 0.2, ease: 'power3.out' });
-        gsap.from('.about-stats-number', { scrollTrigger: { trigger: '#about', start: 'top 65%' }, scale: 0.5, opacity: 0,
-            duration: 0.9, delay: 0.4, ease: 'back.out(1.7)' });
+        // About section
+        gsap.from('.about-image-wrap', {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 70%',
+                toggleActions: 'play none none none',
+            },
+            x: -60,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+        });
 
+        gsap.from('#about .section-heading', {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 70%',
+            },
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            delay: 0.2,
+            ease: 'power3.out',
+        });
+
+        gsap.from('.about-stats-number', {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 65%',
+            },
+            scale: 0.5,
+            opacity: 0,
+            duration: 0.9,
+            delay: 0.4,
+            ease: 'back.out(1.7)',
+        });
+
+        // Service blocks
         document.querySelectorAll('.service-block').forEach((block, i) => {
-            gsap.from(block.querySelector('.service-content'), { scrollTrigger: { trigger: block, start: 'top 75%' },
-                x: i % 2 === 0 ? -50 : 50, opacity: 0, duration: 0.9, ease: 'power3.out' });
-            gsap.from(block.querySelector('.service-visual'), { scrollTrigger: { trigger: block, start: 'top 75%' },
-                x: i % 2 === 0 ? 50 : -50, opacity: 0, duration: 0.9, delay: 0.15, ease: 'power3.out' });
+            gsap.from(block.querySelector('.service-content'), {
+                scrollTrigger: {
+                    trigger: block,
+                    start: 'top 75%',
+                },
+                x: i % 2 === 0 ? -50 : 50,
+                opacity: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+            });
+            gsap.from(block.querySelector('.service-visual'), {
+                scrollTrigger: {
+                    trigger: block,
+                    start: 'top 75%',
+                },
+                x: i % 2 === 0 ? 50 : -50,
+                opacity: 0,
+                duration: 0.9,
+                delay: 0.15,
+                ease: 'power3.out',
+            });
         });
 
-        gsap.from('.project-card', { scrollTrigger: { trigger: '#projects', start: 'top 70%' }, y: 60, opacity: 0,
-            stagger: 0.1, duration: 0.8, ease: 'power3.out' });
-        gsap.from('.stat-item', { scrollTrigger: { trigger: '.stats-row', start: 'top 80%' }, y: 40, opacity: 0,
-            stagger: 0.15, duration: 0.7, ease: 'power3.out' });
-        gsap.from('.process-step', { scrollTrigger: { trigger: '#process', start: 'top 75%' }, y: 50, opacity: 0,
-            stagger: 0.12, duration: 0.7, ease: 'power3.out' });
-        gsap.from('.tech-orbiter', { scrollTrigger: { trigger: '#techOrbit', start: 'top 80%' }, scale: 0, opacity: 0,
-            stagger: 0.08, duration: 0.6, ease: 'back.out(1.5)' });
-        gsap.from('.commitment-section .section-heading', { scrollTrigger: { trigger: '.commitment-section',
-                start: 'top 75%' }, y: 50, opacity: 0, duration: 1, ease: 'power3.out' });
+        // Project cards
+        gsap.from('.project-card', {
+            scrollTrigger: {
+                trigger: '#projects',
+                start: 'top 70%',
+            },
+            y: 60,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power3.out',
+        });
 
+        // Stats
+        gsap.from('.stat-item', {
+            scrollTrigger: {
+                trigger: '.stats-row',
+                start: 'top 80%',
+            },
+            y: 40,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.7,
+            ease: 'power3.out',
+        });
+
+        // Process steps
+        gsap.from('.process-step', {
+            scrollTrigger: {
+                trigger: '#process',
+                start: 'top 75%',
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.12,
+            duration: 0.7,
+            ease: 'power3.out',
+        });
+
+        // Tech orbit items
+        gsap.from('.tech-orbiter', {
+            scrollTrigger: {
+                trigger: '#techOrbit',
+                start: 'top 80%',
+            },
+            scale: 0,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'back.out(1.5)',
+        });
+
+        // Commitment section
+        gsap.from('.commitment-section .section-heading', {
+            scrollTrigger: {
+                trigger: '.commitment-section',
+                start: 'top 75%',
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+        });
+
+        // Map dots hover
         document.querySelectorAll('.map-dot').forEach(dot => {
-            dot.addEventListener('mouseenter', () => dot.classList.add('active'));
-            dot.addEventListener('mouseleave', () => { if (!dot.dataset.permanent) dot.classList.remove(
-                    'active'); });
+            dot.addEventListener('mouseenter', () => {
+                dot.classList.add('active');
+            });
+            dot.addEventListener('mouseleave', () => {
+                if (!dot.dataset.permanent) {
+                    // Keep some always active
+                }
+            });
         });
 
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href === '#') return;
                 e.preventDefault();
                 const target = document.querySelector(href);
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
                 closeMobileMenu();
             });
         });
 
-        console.log('OSM Design Engineering Consultancy — Premium 3D Website Initialized');
+        console.log('OSM Design Engineering Consultancy — Premium Website Initialized');
         console.log('Engineering Better Spaces. Designing Smarter Futures.');
     </script>
 </body>
