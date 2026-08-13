@@ -31,11 +31,11 @@
 
         html {
             scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: var(--navy) var(--bg-light);
+            /*scrollbar-width: thin;
+            scrollbar-color: var(--navy) var(--bg-light);*/
         }
 
-        ::-webkit-scrollbar {
+        /*::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
@@ -44,7 +44,7 @@
         ::-webkit-scrollbar-thumb {
             background: var(--navy);
             border-radius: 3px;
-        }
+        }*/
 
         body {
             font-family: 'Manrope', sans-serif;
@@ -267,13 +267,13 @@
 
         .hero-tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.85);
             font-weight: 500;
             margin-bottom: 20px;
-            border-left: 2px solid rgba(255, 255, 255, 0.5);
+            /*border-left: 2px solid rgba(255, 255, 255, 0.5);*/
             padding-left: 14px;
         }
 
@@ -459,7 +459,7 @@
         }
 
         .section-text {
-            font-size: 1.05rem;
+            font-size: 1.45rem;
             color: var(--text-light);
             max-width: 600px;
             line-height: 1.7;
@@ -479,17 +479,18 @@
         }
 
         .about-image-wrap {
+            height: 95%;
             position: relative;
-            border-radius: 16px;
+            border-radius: px;
             overflow: hidden;
             aspect-ratio: 4/3;
             background: var(--bg-light);
-            z-index: 2;
+            /*z-index: 2;*/
             box-shadow: 0 20px 60px rgba(6, 42, 92, 0.1);
         }
 
         .about-stats-number {
-            font-size: clamp(5rem, 10vw, 10rem);
+            font-size: clamp(2rem, 7vw, 7rem);
             font-weight: 800;
             color: var(--navy);
             line-height: 1;
@@ -509,7 +510,7 @@
         .about-countries {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 7px;
             margin-top: 24px;
         }
         .about-country-tag {
@@ -562,7 +563,7 @@
             z-index: 2;
         }
         .service-content h3 {
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-size: clamp(3.6rem, 3vw, 2.2rem);
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 12px;
@@ -571,6 +572,7 @@
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
         .service-content p {
+            font-size: 1.5rem;
             color: var(--text-light);
             margin-bottom: 16px;
             position: relative;
@@ -598,7 +600,7 @@
 
         .service-visual {
             aspect-ratio: 4/3;
-            border-radius: 12px;
+            /*border-radius: 12px;*/
             overflow: hidden;
             position: relative;
             z-index: 2;
@@ -751,9 +753,9 @@
             z-index: 2;
         }
         .why-intro {
-            max-width: 700px;
-            margin: 0 auto 40px;
-            text-align: center;
+            max-width: 1200px;
+            /*margin: 0 auto 40px;*/
+            /*text-align: center;*/
         }
         .why-intro p {
             font-size: 1.1rem;
@@ -917,7 +919,7 @@
             z-index: 2;
             transition: all 0.4s;
             box-shadow: 0 4px 15px rgba(6, 42, 92, 0.25);
-        }
+why-intro        }
         .process-step:hover .process-step-num {
             background: var(--blue);
             transform: scale(1.15);
@@ -947,29 +949,59 @@
         }
 
         /* ===== COMMITMENT ===== */
-        .commitment-section {
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .commitment-grid-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.04;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 1;
-        }
+        /* ===== COMMITMENT BACKGROUND ===== */
+
+.commitment-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+}
+
+/* Real architecture image background */
+.commitment-grid-bg {
+    position: absolute;
+    inset: -30px;
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+
+    background-image: url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=2000&q=85");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(7px);
+    transform: scale(1.04);
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Extra blue glass overlay */
+.commitment-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(11, 92, 173, 0.18),
+            rgba(4, 28, 61, 0.45)
+        );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Keep text above image */
+.commitment-section .section-inner {
+    position: relative;
+    z-index: 3 !important;
+}
 
         /* ===== CTA ===== */
         .cta-section {
@@ -1227,26 +1259,48 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <p class="hero-tag">OSM Design Engineering Consultancy</p>
+            <p class="hero-tag"> OSM Design Engineering Consultancy</p>
         </div>
-        <div class="hero-scroll-indicator">
+        <!-- <div class="hero-scroll-indicator">
             <span>Scroll</span>
             <div class="hero-scroll-line"></div>
-        </div>
+        </div> -->
+
     </section>
+     <section>
+         <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Core Disciplines</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">E2E</div>
+                    <div class="stat-label">End-to-End Consultancy</div>
+                </div>
+            </div>
+            <br><br>
+     </section>
 
     <!-- ABOUT -->
     <section class="section section-blue section-transition-blue" id="about">
         <canvas class="section-canvas-3d" id="aboutCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">About OSM</span>
+             <h2 class="section-heading">ENGINEERING WITH PURPOSE</h2><br>
             <div class="about-grid">
                 <div class="about-image-wrap">
                     <!-- REPLACED SVG WITH RELEVANT WEB IMAGE -->
                     <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="Modern Architecture Firm" class="w-full h-full object-cover">
                 </div>
                 <div>
-                    <h2 class="section-heading">ENGINEERING<br>WITH PURPOSE.</h2>
                     <p class="section-text">OSM Design Engineering Consultancy is a multidisciplinary design firm delivering innovative, sustainable, and technically precise engineering solutions for residential, commercial, institutional, and industrial projects across India and the Gulf region.</p>
                     <div style="margin-top:30px;">
                         <div class="about-stats-number">10+</div>
@@ -1271,13 +1325,13 @@
         <canvas class="section-canvas-3d faint" id="servicesCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Our Services</span>
-            <h2 class="section-heading">FOUR CORE<br>DISCIPLINES.</h2>
+            <h2 class="section-heading">FOUR CORE DISCIPLINES</h2>
 
             <!-- Architecture -->
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">01</div>
-                    <h3>Architectural Design</h3>
+                    <h3>Architectural <br> Design</h3>
                     <p>Creating iconic structures that blend form, function, and cultural context — from luxury villas to commercial towers.</p>
                     <ul class="service-list">
                         <li>Concept Design</li><li>Floor Plans</li><li>Elevation Design</li>
@@ -1299,7 +1353,7 @@
                 </div>
                 <div class="service-content">
                     <div class="service-number">02</div>
-                    <h3>Structural Engineering</h3>
+                    <h3>Structural<br>Engineering</h3>
                     <p>The backbone of every great building — precision structural systems engineered for safety, durability, and efficiency.</p>
                     <ul class="service-list">
                         <li>RCC Structure Design</li><li>Steel Structure Design</li><li>Foundation Design</li>
@@ -1313,7 +1367,7 @@
             <div class="service-block">
                 <div class="service-content">
                     <div class="service-number">03</div>
-                    <h3>MEP Design</h3>
+                    <h3>MEP <br> Design</h3>
                     <p>Intelligent mechanical, electrical, and plumbing systems that deliver seamless performance and energy efficiency.</p>
                     <ul class="service-list">
                         <li>HVAC Design</li><li>Electrical Systems</li><li>Plumbing Design</li>
@@ -1335,7 +1389,7 @@
                 </div>
                 <div class="service-content">
                     <div class="service-number">04</div>
-                    <h3>Interior Design</h3>
+                    <h3>Interior<br>Design</h3>
                     <p>Spaces that inspire — luxury interiors crafted with meticulous attention to detail, materiality, and human experience.</p>
                     <ul class="service-list">
                         <li>Space Planning</li><li>Luxury Residential</li><li>Commercial Interiors</li>
@@ -1356,7 +1410,7 @@
         <span class="section-label">Selected Projects</span>
 
         <h2 class="section-heading">
-            OUR<br>PORTFOLIO.
+            OUR PORTFOLIO
         </h2>
 
         <div class="projects-grid">
@@ -1536,7 +1590,7 @@
         <canvas class="section-canvas-3d" id="whyCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Why OSM</span>
-            <h2 class="section-heading">WHY<br>OSM?</h2>
+            <h2 class="section-heading">WHY OSM ?</h2>
             <div class="why-intro">
                 <p>Choosing the right design consultancy can significantly influence the success of your project. Here's why clients continue to trust us:</p>
             </div>
@@ -1603,24 +1657,7 @@
                 </div>
             </div>
             <!-- Stats Row -->
-            <div class="stats-row">
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Years of Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">7</div>
-                    <div class="stat-label">Countries</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Core Disciplines</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">E2E</div>
-                    <div class="stat-label">End-to-End Consultancy</div>
-                </div>
-            </div>
+           
         </div>
     </section>
 
@@ -1629,8 +1666,8 @@
         <canvas class="section-canvas-3d" id="techCanvas" style="opacity:0.8;"></canvas>
         <div class="section-inner">
             <span class="section-label">Technology</span>
-            <h2 class="section-heading">DESIGNED WITH<br>PRECISION.</h2>
-            <p class="section-text" style="max-width:700px;margin-bottom:20px;">Modern engineering demands modern tools. At OSM Design Engineering Consultancy, we leverage industry-leading software to improve design accuracy, coordination, visualization, and project efficiency. Our technology stack includes:</p>
+            <h2 class="section-heading">DESIGNED WITH PRECISION</h2>
+            <p class="section-text" style="max-width:1200px;margin-bottom:20px;">Modern engineering demands modern tools. At OSM Design Engineering Consultancy, we leverage industry-leading software to improve design accuracy, coordination, visualization, and project efficiency. Our technology stack includes:</p>
             <div class="tech-grid">
                 <div class="tech-card" style="--i:0;">
                     <span class="tech-logo">🅰️</span>
@@ -1673,7 +1710,7 @@
                     <div class="tech-name">Adobe Creative Suite</div>
                 </div>
             </div>
-            <p class="section-text" style="max-width:700px;margin-top:20px;">These advanced platforms enable us to produce highly accurate drawings, realistic visualizations, coordinated engineering models, and construction-ready documentation.</p>
+            <p class="section-text" style="max-width:1200px;margin-top:20px;">These advanced platforms enable us to produce highly accurate drawings, realistic visualizations, coordinated engineering models, and construction-ready documentation.</p>
         </div>
     </section>
 
@@ -1682,7 +1719,7 @@
         <canvas class="section-canvas-3d faint" id="processCanvas"></canvas>
         <div class="section-inner">
             <span class="section-label">Our Process</span>
-            <h2 class="section-heading">HOW WE<br>BUILD.</h2>
+            <h2 class="section-heading">HOW WE BUILD</h2>
             <div class="process-timeline">
                 <div class="process-step">
                     <div class="process-step-num">01</div>
@@ -1745,7 +1782,7 @@
             <p class="section-text" style="max-width:550px;">Whether you're building your dream villa, developing a commercial complex, planning a hospital, or designing an industrial warehouse, our experienced design team is ready to assist.</p>
             <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:30px;">
                 <a href="#" class="btn-primary" style="background:var(--navy);">Request Free Consultation</a>
-                <a href="#" class="btn-outline" style="color:var(--navy);border-color:var(--navy);">Get a Design Proposal</a>
+                <!-- <a href="#" class="btn-outline" style="color:var(--navy);border-color:var(--navy);">Get a Design Proposal</a> -->
                 <a href="#" class="btn-outline" style="color:var(--navy);border-color:var(--navy);">Contact Our Experts</a>
             </div>
         </div>
