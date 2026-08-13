@@ -81,24 +81,9 @@
             background: linear-gradient(to bottom, transparent, #E8F1FA);
         }
 
-        /* Hero fade-out shadow - made more transparent and blending */
+        /* Hero fade-out shadow - REMOVED AS REQUESTED */
         .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 160px;
-            z-index: 4;
-            pointer-events: none;
-            background: linear-gradient(to bottom,
-                    rgba(6, 42, 92, 0) 0%,
-                    rgba(6, 42, 92, 0.1) 25%,
-                    rgba(6, 42, 92, 0.2) 50%,
-                    rgba(6, 42, 92, 0.35) 75%,
-                    rgba(232, 241, 250, 0.7) 100%);
-            transition: opacity 0.6s ease;
-            opacity: 0.7;
+            display: none;
         }
 
         /* ===== NAVIGATION ===== */
@@ -953,7 +938,7 @@
         /* ===== TECHNOLOGY (Redesigned with 3D logo grid) ===== */
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 25px;
             margin-top: 40px;
             z-index: 2;
@@ -970,8 +955,6 @@
             transition: all 0.4s;
             transform-style: preserve-3d;
             perspective: 800px;
-            animation: float 4s ease-in-out infinite;
-            animation-delay: calc(var(--i) * 0.2s);
             cursor: pointer;
         }
         .tech-card:hover {
@@ -992,6 +975,7 @@
             color: var(--navy);
             letter-spacing: -0.3px;
         }
+        /* Removed infinite float animation to prevent GSAP conflict */
         @keyframes float {
             0%,
             100% {
@@ -1442,7 +1426,7 @@
 
             <!-- Structural -->
             <div class="service-block">
-                 <div class="service-visual">
+                <div class="service-visual">
                     <div class="service-visual-inner sv-struct" id="svStruct">
                         <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <rect x="60" y="30" width="280" height="240" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" rx="2"/>
@@ -1466,7 +1450,6 @@
                         <li>Structural Detailing</li><li>BOQ Preparation</li>
                     </ul>
                 </div>
-               
             </div>
 
             <!-- MEP -->
@@ -1521,7 +1504,6 @@
                         <li>Lighting Design</li><li>Turnkey Solutions</li>
                     </ul>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -2401,13 +2383,14 @@
             spans[2].style.transform = '';
         }
 
-        // GSAP Scroll Animations
+        // GSAP Scroll Animations (safe versions)
         gsap.from('.about-image-wrap', {
             scrollTrigger: { trigger: '#about', start: 'top 70%', toggleActions: 'play none none none' },
             x: -60,
             opacity: 0,
             duration: 1,
             ease: 'power3.out',
+            clearProps: 'opacity,transform' // Clean up after animation to avoid conflicts
         });
 
         gsap.from('#about .section-heading', {
@@ -2417,6 +2400,7 @@
             duration: 0.8,
             delay: 0.2,
             ease: 'power3.out',
+            clearProps: 'opacity,transform'
         });
 
         gsap.from('.about-stats-number', {
@@ -2426,6 +2410,7 @@
             duration: 0.9,
             delay: 0.4,
             ease: 'back.out(1.7)',
+            clearProps: 'opacity,transform'
         });
 
         document.querySelectorAll('.service-block').forEach((block, i) => {
@@ -2435,6 +2420,7 @@
                 opacity: 0,
                 duration: 0.9,
                 ease: 'power3.out',
+                clearProps: 'opacity,transform'
             });
             gsap.from(block.querySelector('.service-visual'), {
                 scrollTrigger: { trigger: block, start: 'top 75%' },
@@ -2443,6 +2429,7 @@
                 duration: 0.9,
                 delay: 0.15,
                 ease: 'power3.out',
+                clearProps: 'opacity,transform'
             });
         });
 
@@ -2453,6 +2440,7 @@
             stagger: 0.1,
             duration: 0.8,
             ease: 'power3.out',
+            clearProps: 'opacity,transform'
         });
 
         gsap.from('.stat-item', {
@@ -2462,25 +2450,12 @@
             stagger: 0.15,
             duration: 0.7,
             ease: 'power3.out',
+            clearProps: 'opacity,transform'
         });
 
-        gsap.from('.feature-card', {
-            scrollTrigger: { trigger: '.features-grid', start: 'top 80%' },
-            y: 40,
-            opacity: 0,
-            stagger: 0.1,
-            duration: 0.7,
-            ease: 'power3.out',
-        });
-
-        gsap.from('.tech-card', {
-            scrollTrigger: { trigger: '.tech-grid', start: 'top 80%' },
-            scale: 0.8,
-            opacity: 0,
-            stagger: 0.08,
-            duration: 0.6,
-            ease: 'back.out(1.2)',
-        });
+        // These two animations were causing conflicts; removed to ensure content visibility
+        // gsap.from('.feature-card', { ... });
+        // gsap.from('.tech-card', { ... });
 
         gsap.from('.process-step', {
             scrollTrigger: { trigger: '#process', start: 'top 75%' },
@@ -2489,6 +2464,7 @@
             stagger: 0.12,
             duration: 0.7,
             ease: 'power3.out',
+            clearProps: 'opacity,transform'
         });
 
         gsap.from('.commitment-section .section-heading', {
@@ -2497,6 +2473,7 @@
             opacity: 0,
             duration: 1,
             ease: 'power3.out',
+            clearProps: 'opacity,transform'
         });
 
         document.querySelectorAll('.map-dot').forEach(dot => {
@@ -2518,4 +2495,4 @@
         console.log('Engineering Better Spaces. Designing Smarter Futures.');
     </script>
 </body>
-</html> 
+</html>
