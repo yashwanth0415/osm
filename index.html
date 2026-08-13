@@ -637,62 +637,144 @@
         }
 
         /* COUNTRIES */
-        .countries-visual {
-            position: relative;
-            height: 400px;
-            margin-top: 40px;
-            border-radius: 16px;
-            overflow: hidden;
-            background: var(--navy-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-        .map-dots {
-            position: relative;
-            width: 80%;
-            height: 70%;
-            z-index: 2;
-        }
-        .map-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            transition: all 0.4s;
-            cursor: pointer;
-        }
-        .map-dot.active {
-            background: #fff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-            width: 12px;
-            height: 12px;
-        }
-        .map-dot-label {
-            position: absolute;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            color: rgba(255, 255, 255, 0.7);
-            pointer-events: none;
-            transition: all 0.3s;
-            white-space: nowrap;
-            transform: translate(-50%, -100%);
-            margin-top: -14px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .map-dot.active + .map-dot-label {
-            color: #fff;
-            font-weight: 600;
-        }
-        .map-connection {
-            position: absolute;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.15);
-            transform-origin: left center;
-            pointer-events: none;
-        }
+        /* ===== COUNTRIES / WORLD MAP ===== */
+
+.countries-visual {
+    position: relative;
+    height: 400px;
+    margin-top: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+
+    /* World map background */
+    background:
+        linear-gradient(
+            rgba(3, 18, 38, 0.72),
+            rgba(3, 18, 38, 0.82)
+        ),
+        url("assets/img/3.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Soft blur behind the map */
+.countries-visual::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+
+    background:
+        url("assets/img/3.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    filter: blur(1px);
+    transform: scale(1.03);
+
+    z-index: 0;
+}
+
+/* Blue glass tint */
+.countries-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 100, 200, 0.15),
+            rgba(0, 0, 0, 0.45)
+        );
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Dots layer stays above map */
+.map-dots {
+    position: relative;
+    width: 80%;
+    height: 70%;
+    z-index: 3;
+}
+
+/* Country dots */
+.map-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    border-radius: 50%;
+    transition: all 0.4s;
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+.map-dot.active {
+    background: #ffffff;
+
+    box-shadow:
+        0 0 10px #ffffff,
+        0 0 25px rgba(255, 255, 255, 0.9),
+        0 0 45px rgba(80, 170, 255, 0.7);
+
+    width: 12px;
+    height: 12px;
+}
+
+/* Country names */
+.map-dot-label {
+    position: absolute;
+
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    pointer-events: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+
+    transform: translate(-50%, -100%);
+    margin-top: -14px;
+
+    text-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.map-dot.active + .map-dot-label {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Connection line */
+.map-connection {
+    position: absolute;
+
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.3);
+
+    transform-origin: left center;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.25);
+}
 
         /* WHY OSM */
         .why-section {
@@ -1384,7 +1466,7 @@
     <!-- COUNTRIES -->
     <section class="section section-navy section-transition-navy">
         <canvas class="section-canvas-3d" id="countriesCanvas"></canvas>
-        <div class="section-inner">
+        <div class="section-inner" >
             <span class="section-label">Our Reach</span>
             <h2 class="section-heading">DESIGNING ACROSS<br>THE REGION.</h2>
             <div class="countries-visual" id="countriesMap">
