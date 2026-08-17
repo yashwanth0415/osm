@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | OSM Design Engineering Consultancy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #062A5C;
+            --navy-dark: #041c3d;
+            --blue: #0B5CAD;
+            --blue-light: #EAF4FF;
+            --bg-light: #F5F9FD;
+            --white: #FFFFFF;
+            --text: #071A33;
+            --text-light: #3a5070;
+            --accent: #1a8cff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.5s var(--transition);
+        }
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(6, 42, 92, 0.08);
+            padding: 12px 40px;
+        }
+        .nav.scrolled .nav-link {
+            color: var(--text);
+        }
+        .nav.scrolled .nav-cta {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .nav.scrolled .nav-cta:hover {
+            background: var(--navy);
+            color: #fff;
+        }
+        .nav.scrolled .nav-mobile-toggle span {
+            background: var(--navy);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1001;
+        }
+        .nav-logo-text-img {
+            height: 60px;
+            object-fit: contain;
+        }
+        @media (max-width: 640px) {
+            .nav-logo-text-img {
+                height: 36px;
+            }
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--white);
+            transition: width 0.3s var(--transition);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            padding: 10px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+            white-space: nowrap;
+        }
+        .nav-cta:hover {
+            background: #fff;
+            color: var(--navy);
+            border-color: #fff;
+        }
+        .nav-mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .nav-mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(6, 42, 92, 0.97);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .mobile-menu-links a:hover {
+            color: var(--blue-light);
+        }
+
+        /* ===== HERO (HALF PAGE, STATIC IMAGE) ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            min-height: 380px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: blur(2px);
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                rgba(6, 42, 92, 0.70) 0%,
+                rgba(6, 42, 92, 0.50) 50%,
+                rgba(6, 42, 92, 0.70) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .hero-heading {
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+        }
+        .hero-sub {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 14px;
+            font-weight: 400;
+        }
+        .hero-breadcrumb {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .hero-breadcrumb a {
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .hero-breadcrumb a:hover {
+            color: #fff;
+        }
+        .hero-breadcrumb span {
+            opacity: 0.5;
+        }
+
+        /* ===== SECTION BASE ===== */
+        .section {
+            padding: 90px 40px;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .section-white {
+            background: var(--white);
+        }
+        .section-light {
+            background: var(--bg-light);
+        }
+        .section-navy {
+            background: var(--navy);
+            color: #fff;
+        }
+        .section-blue {
+            background: #E8F1FA;
+        }
+        .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+        .section-canvas-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .section-canvas-3d.faint {
+            opacity: 0.35;
+        }
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .section-navy .section-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .section-heading {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.08;
+            margin-bottom: 24px;
+        }
+        .section-text {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        .section-navy .section-text {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===== INTRO ===== */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .intro-image-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            box-shadow: 0 20px 60px rgba(6, 42, 92, 0.12);
+        }
+        .intro-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .intro-highlight {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--navy);
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        .intro-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        .intro-text strong {
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        /* ===== STATS STRIP ===== */
+        .stats-strip {
+            background: linear-gradient(135deg, var(--navy) 0%, #0a3d7a 100%);
+            padding: 40px 40px;
+            position: relative;
+        }
+        .stats-strip-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .stat-item-light {
+            text-align: center;
+            padding: 10px;
+        }
+        .stat-number-light {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .stat-label-light {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        /* ===== OUR STORY ===== */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .story-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+        }
+        .story-quote {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--navy);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        .story-body {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ===== TEAM / WHO WE ARE ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .team-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px 18px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+        }
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .team-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--blue);
+        }
+        .team-icon img {
+            width: 44px;
+            height: 44px;
+            display: block;
+            margin: 0 auto;
+        }
+        .team-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--navy);
+        }
+
+        /* ===== WHAT WE DO ===== */
+        .services-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .service-summary-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 28px 22px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+        }
+        .service-summary-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+        }
+        .service-summary-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        .service-summary-icon img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+        }
+        .service-summary-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--navy);
+        }
+
+        /* ===== GLOBAL PRESENCE ===== */
+        .countries-visual {
+            position: relative;
+            height: 350px;
+            margin-top: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            background:
+                linear-gradient(rgba(3, 18, 38, 0.72), rgba(3, 18, 38, 0.82)),
+                url("https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .countries-visual::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            background: url("https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            filter: blur(1px);
+            transform: scale(1.03);
+            z-index: 0;
+        }
+        .countries-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                rgba(0, 100, 200, 0.15),
+                rgba(0, 0, 0, 0.45));
+            z-index: 1;
+            pointer-events: none;
+        }
+        .map-dots {
+            position: relative;
+            width: 80%;
+            height: 70%;
+            z-index: 3;
+        }
+        .map-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 50%;
+            transition: all 0.4s;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+        }
+        .map-dot.active {
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff, 0 0 25px rgba(255, 255, 255, 0.9), 0 0 45px rgba(80, 170, 255, 0.7);
+            width: 12px;
+            height: 12px;
+        }
+        .map-dot-label {
+            position: absolute;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.85);
+            pointer-events: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+            transform: translate(-50%, -100%);
+            margin-top: -14px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+        }
+        .map-dot.active+.map-dot-label {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* ===== PHILOSOPHY ===== */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .philosophy-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 28px 22px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+        }
+        .philosophy-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .philosophy-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        .philosophy-icon img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+        }
+        .philosophy-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .philosophy-desc {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ===== WHY CHOOSE (FEATURES) ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+            text-align: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--blue);
+        }
+        .feature-icon img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+        }
+        .feature-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .feature-desc {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ===== MISSION / VISION ===== */
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .mv-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 35px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s;
+        }
+        .mv-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(6, 42, 92, 0.15);
+        }
+        .mv-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .mv-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 14px;
+        }
+        .mv-text {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--navy) 0%, #0a3d7a 100%);
+            text-align: center;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-heading {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .cta-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        .btn-primary-light {
+            padding: 15px 34px;
+            background: #fff;
+            color: var(--navy);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+        }
+        .btn-primary-light:hover {
+            background: var(--blue-light);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--navy-dark);
+            color: #fff;
+            padding: 60px 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .footer-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        .footer h5 {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .intro-grid,
+            .story-grid,
+            .mv-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .services-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-strip-inner {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-mobile-toggle {
+                display: flex;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .stats-strip {
+                padding: 30px 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero {
+                height: 45vh;
+                min-height: 300px;
+            }
+            .hero-heading {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            .services-summary {
+                grid-template-columns: 1fr;
+            }
+            .stats-strip-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav {
+                padding: 14px 16px;
+            }
+            .nav.scrolled {
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <img src="assets/img/logo.png" id="logoText" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="blogs.html" class="nav-link">Blogs</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+        <div class="nav-mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+            <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO (HALF PAGE, STATIC IMAGE) -->
+    <section class="hero" id="home">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=2000&q=85"
+        alt="OSM Design Engineering Consultancy - Modern Architecture"
+        class="hero-bg-img">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tag">OSM Design</p>
+            <h1 class="hero-heading">About Us</h1>
+            <!-- <p class="hero-sub">Engineering Better Spaces. Designing Smarter Futures.</p> -->
+            <div class="hero-breadcrumb">
+                <a href="#">Home</a>
+                <span>/</span>
+                <span>About Us</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS STRIP -->
+    <!-- <section class="stats-strip">
+        <div class="stats-strip-inner">
+            <div class="stat-item-light">
+                <div class="stat-number-light">10+</div>
+                <div class="stat-label-light">Years of Experience</div>
+            </div>
+            <div class="stat-item-light">
+                <div class="stat-number-light">7</div>
+                <div class="stat-label-light">Countries Served</div>
+            </div>
+            <div class="stat-item-light">
+                <div class="stat-number-light">4</div>
+                <div class="stat-label-light">Core Disciplines</div>
+            </div>
+            <div class="stat-item-light">
+                <div class="stat-number-light">E2E</div>
+                <div class="stat-label-light">End-to-End Consultancy</div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- INTRO: About OSM -->
+    <section class="section section-blue" id="about">
+        <canvas class="section-canvas-3d" id="aboutCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">About OSM Design Engineering Consultancy</span>
+            <h2 class="section-heading">Designing the Future with Innovation, Precision &amp; Engineering Excellence</h2>
+            <div class="intro-grid">
+                <div class="intro-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="Architectural design and engineering" loading="lazy">
+                </div>
+                <div>
+                    <p class="intro-text">
+                        At <strong>OSM Design Engineering Consultancy</strong>, we believe that every remarkable structure begins with a thoughtful design and a strong engineering foundation. For more than <strong>10 years</strong>, we have been helping homeowners, developers, businesses, architects, contractors, and organizations transform ideas into functional, sustainable, and visually inspiring spaces.
+                    </p>
+                    <br>
+                    <p class="intro-text">
+                        Established with a vision to provide world-class design consultancy services, OSM has grown into a trusted multidisciplinary engineering firm serving clients across <strong>India, United Arab Emirates (UAE), Oman, Kuwait, Qatar, Saudi Arabia, and Bahrain</strong>. Over the years, we have earned a reputation for delivering innovative, practical, and cost-effective design solutions tailored to the unique requirements of each project.
+                    </p>
+                    <br>
+                    <p class="intro-text">
+                        Our expertise extends beyond creating beautiful designs. We combine creativity with technical precision to ensure that every project is safe, efficient, compliant with applicable building regulations, and ready for successful construction.
+                    </p>
+                    <br>
+                    <!-- <p class="intro-text">
+                        Whether you are planning a luxury villa, a commercial office, a hospital, a residential apartment, a school, a warehouse, or a retail showroom, our experienced professionals are committed to delivering engineering solutions that stand the test of time.
+                    </p> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section class="section section-light">
+        <canvas class="section-canvas-3d faint" id="storyCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Our Story</span>
+            <h2 class="section-heading">Bridging Creativity &amp; Engineering Precision</h2>
+            <div class="story-grid">
+                <div>
+                    <p class="story-body">
+                        OSM Design Engineering Consultancy was founded with a simple objective — to <strong>bridge the gap between architectural creativity and engineering precision</strong>.
+                    </p>
+                    <br>
+                    <p class="story-body">
+                        From our early projects to our current international portfolio, our philosophy has remained the same: design spaces that are functional, aesthetically appealing, structurally sound, and built for the future.
+                    </p>
+                    <br>
+                    <p class="story-body">
+                        As the construction industry continues to evolve, we continuously invest in advanced design technologies, industry best practices, and skilled professionals to ensure that our clients receive modern engineering solutions that meet international quality standards.
+                    </p>
+                    <br>
+                    <p class="story-body">
+                        Today, we proudly collaborate with private homeowners, real estate developers, construction companies, architects, consultants, industrial clients, educational institutions, healthcare organizations, and commercial businesses across multiple countries.
+                    </p>
+                </div>
+                <div class="story-card">
+                    <p class="story-quote">
+                        "Design spaces that are functional, aesthetically appealing, structurally sound, and built for the future."
+                    </p>
+                    <p class="story-body">
+                        Our philosophy has remained unchanged since day one — delivering designs that perform beautifully and stand the test of time. Every project we take on is approached with this core belief.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHO WE ARE -->
+    <section class="section section-blue">
+        <canvas class="section-canvas-3d faint" id="whoCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Who We Are</span>
+            <h2 class="section-heading">A Multidisciplinary Design Consultancy</h2>
+            <p class="section-text" style="max-width:800px;">
+                OSM Design Engineering Consultancy is a multidisciplinary design consultancy specializing in integrated engineering services. Instead of working with separate consultants for architecture, structural engineering, MEP systems, and interior design, our clients benefit from a coordinated approach where every discipline works together from the beginning of the project.
+            </p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/architect-male.png" alt="Architects"></div>
+                    <div class="team-name">Certified Architects</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/bridge.png" alt="Structural Engineers"></div>
+                    <div class="team-name">Structural Engineers</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/engineering.png" alt="MEP Engineers"></div>
+                    <div class="team-name">MEP Engineers</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/interior.png" alt="Interior Designers"></div>
+                    <div class="team-name">Interior Designers</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/autocad.png" alt="BIM & CAD"></div>
+                    <div class="team-name">BIM &amp; CAD Professionals</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/3d.png" alt="3D Visualization"></div>
+                    <div class="team-name">3D Visualization Experts</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon"><img src="https://img.icons8.com/color/48/calendar--v1.png" alt="Project Coordinators"></div>
+                    <div class="team-name">Project Coordinators</div>
+                </div>
+            </div>
+            <p class="section-text" style="max-width:800px;margin-top:24px;">
+                This collaborative process improves design coordination, minimizes conflicts during construction, reduces project costs, and helps deliver projects more efficiently.
+            </p>
+        </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section class="section section-light">
+        <canvas class="section-canvas-3d faint" id="whatCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">What We Do</span>
+            <h2 class="section-heading">Comprehensive Design Consultancy Services</h2>
+            <p class="section-text" style="max-width:800px;">
+                We provide comprehensive design consultancy services for projects of every scale, from individual residences to large commercial and institutional developments.
+            </p>
+            <div class="services-summary">
+                <div class="service-summary-card">
+                    <div class="service-summary-icon"><img src="https://img.icons8.com/color/48/home.png" alt="Architecture"></div>
+                    <div class="service-summary-title">Architectural Design</div>
+                </div>
+                <div class="service-summary-card">
+                    <div class="service-summary-icon"><img src="https://img.icons8.com/color/48/bridge.png" alt="Structural"></div>
+                    <div class="service-summary-title">Structural Engineering</div>
+                </div>
+                <div class="service-summary-card">
+                    <div class="service-summary-icon"><img src="https://img.icons8.com/color/48/engineering.png" alt="MEP"></div>
+                    <div class="service-summary-title">MEP Design</div>
+                </div>
+                <div class="service-summary-card">
+                    <div class="service-summary-icon"><img src="https://img.icons8.com/color/48/interior.png" alt="Interior"></div>
+                    <div class="service-summary-title">Interior Design</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL PRESENCE -->
+    <section class="section section-navy" id="global">
+        <canvas class="section-canvas-3d" id="globalCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Our Global Presence</span>
+            <h2 class="section-heading">Designing Across the Region.</h2>
+            <p class="section-text" style="max-width:700px;">
+                OSM Design Engineering Consultancy proudly serves clients across multiple countries through online collaboration and digital project delivery.
+            </p>
+            <div class="countries-visual">
+                <div class="map-dots">
+                    <div class="map-dot active" style="left:20%;top:45%;" data-country="UAE"></div>
+                    <div class="map-dot-label" style="left:20%;top:35%;">UAE</div>
+                    <div class="map-dot" style="left:35%;top:38%;" data-country="Qatar"></div>
+                    <div class="map-dot-label" style="left:35%;top:28%;">Qatar</div>
+                    <div class="map-dot" style="left:28%;top:52%;" data-country="Saudi Arabia"></div>
+                    <div class="map-dot-label" style="left:28%;top:42%;">Saudi Arabia</div>
+                    <div class="map-dot" style="left:44%;top:48%;" data-country="Oman"></div>
+                    <div class="map-dot-label" style="left:44%;top:38%;">Oman</div>
+                    <div class="map-dot" style="left:15%;top:50%;" data-country="Kuwait"></div>
+                    <div class="map-dot-label" style="left:15%;top:40%;">Kuwait</div>
+                    <div class="map-dot" style="left:22%;top:55%;" data-country="Bahrain"></div>
+                    <div class="map-dot-label" style="left:22%;top:48%;">Bahrain</div>
+                    <div class="map-dot active" style="left:62%;top:42%;" data-country="India"></div>
+                    <div class="map-dot-label" style="left:62%;top:32%;">India</div>
+                </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;justify-content:center;">
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">India</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">UAE</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">Oman</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">Kuwait</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">Qatar</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">Saudi Arabia</span>
+                <span class="about-country-tag" style="padding:8px 18px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.75rem;letter-spacing:1px;color:#fff;">Bahrain</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR DESIGN PHILOSOPHY -->
+    <section class="section section-blue">
+        <canvas class="section-canvas-3d faint" id="philosophyCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Our Design Philosophy</span>
+            <h2 class="section-heading">Five Core Principles</h2>
+            <p class="section-text" style="max-width:700px;">
+                Every successful project begins with understanding people — their vision, goals, challenges, and aspirations. Our design philosophy is built on five core principles:
+            </p>
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <div class="philosophy-icon"><img src="https://img.icons8.com/color/48/idea.png" alt="Innovation"></div>
+                    <div class="philosophy-title">Innovation</div>
+                    <div class="philosophy-desc">We explore creative ideas that add value to every project.</div>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-icon"><img src="https://img.icons8.com/color/48/ok.png" alt="Functionality"></div>
+                    <div class="philosophy-title">Functionality</div>
+                    <div class="philosophy-desc">Beautiful spaces must also be practical and efficient.</div>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-icon"><img src="https://img.icons8.com/color/48/shield.png" alt="Safety"></div>
+                    <div class="philosophy-title">Safety</div>
+                    <div class="philosophy-desc">Engineering excellence ensures structural stability and occupant safety.</div>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-icon"><img src="https://img.icons8.com/color/48/leaf.png" alt="Sustainability"></div>
+                    <div class="philosophy-title">Sustainability</div>
+                    <div class="philosophy-desc">We encourage energy-efficient and environmentally responsible design solutions.</div>
+                </div>
+                <div class="philosophy-card">
+                    <div class="philosophy-icon"><img src="https://img.icons8.com/color/48/quality.png" alt="Quality"></div>
+                    <div class="philosophy-title">Quality</div>
+                    <div class="philosophy-desc">Every drawing, model, and document is prepared with meticulous attention to detail.</div>
+                </div>
+            </div>
+            <p class="section-text" style="max-width:700px;margin-top:24px;">
+                These principles guide every decision we make throughout the design process.
+            </p>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE OSM -->
+    <section class="section section-light">
+        <canvas class="section-canvas-3d faint" id="whyCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Why Choose OSM</span>
+            <h2 class="section-heading">Why Choose OSM Design Engineering Consultancy?</h2>
+            <p class="section-text" style="max-width:700px;">
+                Choosing the right design consultancy can significantly influence the success of your project. Here's why clients continue to trust us:
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/calendar--v1.png" alt="Experience"></div>
+                    <div class="feature-title">Over 10 Years of Industry Experience</div>
+                    <div class="feature-desc">Proven track record across diverse sectors.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/teamwork--v1.png" alt="Multidisciplinary"></div>
+                    <div class="feature-title">Multidisciplinary Engineering Expertise</div>
+                    <div class="feature-desc">Architecture, structural, MEP, and interiors under one roof.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/globe--v1.png" alt="International"></div>
+                    <div class="feature-title">International Project Experience</div>
+                    <div class="feature-desc">Successfully delivered projects in India and the Gulf region.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/settings--v1.png" alt="Customized"></div>
+                    <div class="feature-title">Customized Design Solutions</div>
+                    <div class="feature-desc">Tailored designs that meet specific client needs and site conditions.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/blueprint.png" alt="Documentation"></div>
+                    <div class="feature-title">Construction-Ready Documentation</div>
+                    <div class="feature-desc">Detailed drawings and specifications for seamless execution.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/quality--v1.png" alt="Quality"></div>
+                    <div class="feature-title">Strong Quality Control Process</div>
+                    <div class="feature-desc">Rigorous checks at every stage to ensure accuracy.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/money--v1.png" alt="Cost"></div>
+                    <div class="feature-title">Cost-Effective Engineering Solutions</div>
+                    <div class="feature-desc">Optimized designs that save money without compromising quality.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/3d.png" alt="BIM"></div>
+                    <div class="feature-title">Advanced BIM &amp; Design Technologies</div>
+                    <div class="feature-desc">Leveraging the latest software for coordination and visualization.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/clock--v1.png" alt="Timely"></div>
+                    <div class="feature-title">Timely Project Delivery</div>
+                    <div class="feature-desc">Commitment to schedules and milestones.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/chat--v1.png" alt="Communication"></div>
+                    <div class="feature-title">Responsive Client Communication</div>
+                    <div class="feature-desc">Clear and regular updates throughout the project lifecycle.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/support--v1.png" alt="Support"></div>
+                    <div class="feature-title">Dedicated Technical Support</div>
+                    <div class="feature-desc">Experienced engineers ready to assist at every phase.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="https://img.icons8.com/color/48/building--v1.png" alt="Value"></div>
+                    <div class="feature-title">Long-Term Value</div>
+                    <div class="feature-desc">Spaces designed to perform for decades.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION & VISION -->
+    <section class="section section-blue">
+        <canvas class="section-canvas-3d faint" id="mvCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Our Purpose</span>
+            <h2 class="section-heading">Mission &amp; Vision</h2>
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-label">Our Mission</div>
+                    <div class="mv-heading">Building with Purpose</div>
+                    <p class="mv-text">
+                        To provide innovative, sustainable, and technically superior architectural, structural, MEP, and interior design consultancy services that exceed client expectations while contributing to the development of safe, functional, and inspiring built environments.
+                    </p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-label">Our Vision</div>
+                    <div class="mv-heading">Shaping the Future</div>
+                    <p class="mv-text">
+                        To become one of the most trusted and respected international design engineering consultancies, recognized for technical excellence, innovation, client satisfaction, and sustainable design practices across the Middle East and Asia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="section-inner">
+            <h2 class="cta-heading">Let's Build Something Exceptional</h2>
+            <p class="cta-text">
+                Whether you are developing a dream home, a commercial complex, an educational institution, a healthcare facility, or an industrial project, OSM Design Engineering Consultancy is ready to partner with you from concept to construction.
+            </p>
+            <p class="cta-text" style="margin-bottom:30px;">
+                Contact us today to discuss your project and discover how we can turn your vision into reality.
+            </p>
+            <a href="#" class="btn-primary-light">Request Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">OSM</div>
+                <div style="font-size:0.7rem;letter-spacing:1.5px;opacity:0.6;margin-bottom:16px;">DESIGN ENGINEERING CONSULTANCY</div>
+                <p class="footer-tagline">ENGINEERING BETTER SPACES.<br>DESIGNING SMARTER FUTURES.</p>
+            </div>
+            <div>
+                <h5>Navigation</h5>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h5>Services</h5>
+                <a href="#services">Architecture</a>
+                <a href="#services">Structural Engineering</a>
+                <a href="#services">MEP Design</a>
+                <a href="#services">Interior Design</a>
+            </div>
+            <div>
+                <h5>Contact</h5>
+                <a href="#">info@osmconsultancy.com</a>
+                <a href="#">+971 50 000 0000</a>
+                <a href="#">Dubai, UAE</a>
+                <a href="#">Hyderabad, India</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 OSM Design Engineering Consultancy. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ===== SECTION 3D BACKGROUNDS =====
+        class SectionBackground {
+            constructor(canvasId, config) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.config = config || {};
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.0;
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(50, this.canvas.parentElement.offsetWidth / Math.max(this.canvas.parentElement.offsetHeight, 400), 0.1, 100);
+                this.camera.position.set(0, 5, 15);
+                this.camera.lookAt(0, 0, 0);
+                this.objects = [];
+                this.clock = new THREE.Clock();
+                this.isVisible = false;
+                this.animated = true;
+                const ambient = new THREE.AmbientLight(this.config.ambientColor || '#d0dce8', 1.5);
+                this.scene.add(ambient);
+                const dirLight = new THREE.DirectionalLight('#ffffff', 3);
+                dirLight.position.set(10, 15, 10);
+                this.scene.add(dirLight);
+                const backLight = new THREE.DirectionalLight(this.config.backLightColor || '#8ab8d8', 2);
+                backLight.position.set(-5, 8, -8);
+                this.scene.add(backLight);
+                this.initObjects();
+                this.setupResize();
+                this.setupVisibilityObserver();
+                this.animate();
+            }
+            initObjects() {
+                const type = this.config.type || 'particles';
+                const color = this.config.color || '#8ab8d8';
+                if (type === 'wireframe') {
+                    for (let i = 0; i < 5; i++) {
+                        const w = Math.random() * 2 + 1.5;
+                        const h = Math.random() * 6 + 3;
+                        const d = Math.random() * 2 + 1.5;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.5 });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-8 + i * 4 + (Math.random() - 0.5) * 2, h / 2 - 2, (Math.random() - 0.5) * 6);
+                        mesh.rotation.y = Math.random() * 0.3 - 0.15;
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.3 + Math.random() * 0.3, floatAmp: 0.4 + Math.random() * 0.4, rotSpeed: 0.002 + Math.random() * 0.003 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'particles') {
+                    const count = 120;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * 24;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+                        positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+                    }
+                    const geo = new THREE.BufferGeometry();
+                    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: 0.06, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false });
+                    const points = new THREE.Points(geo, mat);
+                    points.userData = { baseY: 0, floatSpeed: 0.5, floatAmp: 1.5, rotSpeed: 0.003 };
+                    this.scene.add(points);
+                    this.objects.push(points);
+                } else if (type === 'floating') {
+                    const shapes = [
+                        new THREE.IcosahedronGeometry(1.5, 1),
+                        new THREE.OctahedronGeometry(1.8, 1),
+                        new THREE.TorusGeometry(1.2, 0.4, 8, 12),
+                        new THREE.DodecahedronGeometry(1.3, 0),
+                    ];
+                    for (let i = 0; i < 6; i++) {
+                        const geo = shapes[i % shapes.length];
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#c8d8ec',
+                            roughness: 0.3,
+                            metalness: 0.4,
+                            transparent: true,
+                            opacity: 0.45,
+                            wireframe: i % 3 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-8 + i * 3.5 + (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.2 + Math.random() * 0.4, floatAmp: 0.8 + Math.random() * 0.8, rotSpeed: 0.004 + Math.random() * 0.006, rotAxis: new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize() };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'grid') {
+                    const gridGeo = new THREE.PlaneGeometry(30, 20);
+                    const gridMat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.3 });
+                    const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+                    gridMesh.rotation.x = -Math.PI / 2;
+                    gridMesh.position.y = -3;
+                    gridMesh.userData = { baseY: -3, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                    this.scene.add(gridMesh);
+                    this.objects.push(gridMesh);
+                    for (let i = 0; i < 12; i++) {
+                        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+                            new THREE.Vector3(-12 + i * 2.2, -3, -6),
+                            new THREE.Vector3(-12 + i * 2.2, -3 + Math.random() * 5, -6),
+                        ]);
+                        const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.25 });
+                        const line = new THREE.Line(lineGeo, lineMat);
+                        line.userData = { baseY: 0, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                        this.scene.add(line);
+                        this.objects.push(line);
+                    }
+                } else if (type === 'orbit') {
+                    const particlesGeo = new THREE.BufferGeometry();
+                    const count = 80;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        const angle = (i / count) * Math.PI * 2;
+                        const radius = 4 + Math.random() * 3;
+                        positions[i * 3] = Math.cos(angle) * radius;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                        positions[i * 3 + 2] = Math.sin(angle) * radius;
+                    }
+                    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: 0.05, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false });
+                    const particles = new THREE.Points(particlesGeo, mat);
+                    particles.userData = { baseY: 0, floatSpeed: 0.2, floatAmp: 1, rotSpeed: 0.008 };
+                    this.scene.add(particles);
+                    this.objects.push(particles);
+                } else if (type === 'blocks') {
+                    for (let i = 0; i < 8; i++) {
+                        const w = 1 + Math.random() * 1.5;
+                        const h = 2 + Math.random() * 4;
+                        const d = 1 + Math.random() * 1.5;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#e0e8f2',
+                            roughness: 0.4,
+                            metalness: 0.2,
+                            transparent: true,
+                            opacity: 0.4,
+                            wireframe: i % 4 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-10 + i * 2.8, h / 2 - 1.5, (Math.random() - 0.5) * 5);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.1 + Math.random() * 0.2, floatAmp: 0.3, rotSpeed: 0.001 + Math.random() * 0.002 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                }
+            }
+            setupResize() {
+                this.resizeHandler = () => {
+                    const parent = this.canvas.parentElement;
+                    const w = parent ? parent.offsetWidth : window.innerWidth;
+                    const h = parent ? parent.offsetHeight : 400;
+                    this.renderer.setSize(w, h, false);
+                    this.camera.aspect = w / Math.max(h, 100);
+                    this.camera.updateProjectionMatrix();
+                };
+                this.resizeHandler();
+                window.addEventListener('resize', this.resizeHandler);
+            }
+            setupVisibilityObserver() {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        this.isVisible = entry.isIntersecting;
+                    });
+                }, { threshold: 0.05 });
+                this.observer.observe(this.canvas.parentElement);
+            }
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                if (!this.isVisible && this.config.skipWhenHidden !== false) return;
+                const dt = Math.min(this.clock.getDelta(), 0.1);
+                const time = performance.now() * 0.001;
+                this.objects.forEach(obj => {
+                    if (obj.userData.floatSpeed > 0) {
+                        obj.position.y = obj.userData.baseY + Math.sin(time * obj.userData.floatSpeed * 2) * obj.userData.floatAmp;
+                    }
+                    if (obj.userData.rotSpeed > 0) {
+                        obj.rotation.y += obj.userData.rotSpeed;
+                        if (obj.userData.rotAxis) {
+                            obj.rotation.x += obj.userData.rotSpeed * 0.7;
+                        }
+                    }
+                });
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        new SectionBackground('aboutCanvas', { type: 'wireframe', color: '#8ab8d8' });
+        new SectionBackground('storyCanvas', { type: 'particles', color: '#b8d4f0' });
+        new SectionBackground('whoCanvas', { type: 'floating', color: '#d0dce8' });
+        new SectionBackground('whatCanvas', { type: 'blocks', color: '#c8d8ec' });
+        new SectionBackground('globalCanvas', { type: 'particles', color: '#ffffff' });
+        new SectionBackground('philosophyCanvas', { type: 'orbit', color: '#8ab8d8' });
+        new SectionBackground('whyCanvas', { type: 'floating', color: '#d0dce8' });
+        new SectionBackground('mvCanvas', { type: 'grid', color: '#c8d8ec' });
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+    </script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const nav = document.getElementById('nav');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const logoText = document.getElementById('logoText');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.classList.add('scrolled');
+                logoText.src = 'assets/img/logo5.png';
+            } else {
+                nav.classList.remove('scrolled');
+                logoText.src = 'assets/img/logo.png';
+            }
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            if (mobileMenu.classList.contains('open')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px,6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px,-6px)';
+            } else {
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '';
+                spans[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
+        }
+
+        // GSAP Scroll Animations
+        gsap.from('.hero-heading', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.2,
+        });
+        gsap.from('.hero-tag', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.05,
+        });
+        gsap.from('.hero-sub', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.35,
+        });
+        gsap.from('.hero-breadcrumb', {
+            duration: 0.8,
+            y: 15,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.5,
+        });
+
+        // Stats strip
+        gsap.from('.stat-item-light', {
+            scrollTrigger: { trigger: '.stats-strip', start: 'top 85%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.7,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Section headings
+        gsap.utils.toArray('.section-heading').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: { trigger: heading, start: 'top 85%' },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                clearProps: 'opacity,transform'
+            });
+        });
+
+        // Section texts
+        gsap.utils.toArray('.section-text, .story-body, .intro-text, .mv-text').forEach(text => {
+            gsap.from(text, {
+                scrollTrigger: { trigger: text, start: 'top 90%' },
+                y: 20,
+                opacity: 0,
+                duration: 0.7,
+                ease: 'power3.out',
+                clearProps: 'opacity,transform'
+            });
+        });
+
+        // Intro image
+        gsap.from('.intro-image-wrap', {
+            scrollTrigger: { trigger: '.intro-image-wrap', start: 'top 75%' },
+            x: -50,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Story card
+        gsap.from('.story-card', {
+            scrollTrigger: { trigger: '.story-card', start: 'top 75%' },
+            x: 50,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Team cards
+        gsap.from('.team-card', {
+            scrollTrigger: { trigger: '.team-grid', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.06,
+            duration: 0.6,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Service summary cards
+        gsap.from('.service-summary-card', {
+            scrollTrigger: { trigger: '.services-summary', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Philosophy cards
+        gsap.from('.philosophy-card', {
+            scrollTrigger: { trigger: '.philosophy-grid', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Feature cards
+        gsap.from('.feature-card', {
+            scrollTrigger: { trigger: '.features-grid', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.06,
+            duration: 0.6,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // MV cards
+        gsap.from('.mv-card', {
+            scrollTrigger: { trigger: '.mv-grid', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.7,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Country dots interactive
+        document.querySelectorAll('.map-dot').forEach(dot => {
+            dot.addEventListener('mouseenter', () => {
+                document.querySelectorAll('.map-dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+            });
+        });
+
+        // Smooth anchor scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                closeMobileMenu();
+            });
+        });
+
+        console.log('OSM About Page — Initialized');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | OSM Design Engineering Consultancy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #062A5C;
+            --navy-dark: #041c3d;
+            --blue: #0B5CAD;
+            --blue-light: #EAF4FF;
+            --bg-light: #F5F9FD;
+            --white: #FFFFFF;
+            --text: #071A33;
+            --text-light: #3a5070;
+            --accent: #1a8cff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.5s var(--transition);
+        }
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(6, 42, 92, 0.08);
+            padding: 12px 40px;
+        }
+        .nav.scrolled .nav-link {
+            color: var(--text);
+        }
+        .nav.scrolled .nav-cta {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .nav.scrolled .nav-cta:hover {
+            background: var(--navy);
+            color: #fff;
+        }
+        .nav.scrolled .nav-mobile-toggle span {
+            background: var(--navy);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1001;
+        }
+        .nav-logo-text-img {
+            height: 60px;
+            object-fit: contain;
+        }
+        @media (max-width: 640px) {
+            .nav-logo-text-img {
+                height: 36px;
+            }
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--white);
+            transition: width 0.3s var(--transition);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            padding: 10px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+            white-space: nowrap;
+        }
+        .nav-cta:hover {
+            background: #fff;
+            color: var(--navy);
+            border-color: #fff;
+        }
+        .nav-mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .nav-mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(6, 42, 92, 0.97);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .mobile-menu-links a:hover {
+            color: var(--blue-light);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 78vh;
+            min-height: 400px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: blur(2px);
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                rgba(6, 42, 92, 0.78) 0%,
+                rgba(6, 42, 92, 0.55) 50%,
+                rgba(6, 42, 92, 0.78) 100%);
+        }
+        .hero-canvas-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 4;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .hero-heading {
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+        }
+        .hero-sub {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 14px;
+            font-weight: 400;
+        }
+        .hero-breadcrumb {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .hero-breadcrumb a {
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .hero-breadcrumb a:hover {
+            color: #fff;
+        }
+        .hero-breadcrumb span {
+            opacity: 0.5;
+        }
+
+        /* ===== SECTION BASE ===== */
+        .section {
+            padding: 90px 40px;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .section-white {
+            background: var(--white);
+        }
+        .section-light {
+            background: var(--bg-light);
+        }
+        .section-navy {
+            background: var(--navy);
+            color: #fff;
+        }
+        .section-blue {
+            background: #E8F1FA;
+        }
+        .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+        .section-canvas-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .section-canvas-3d.faint {
+            opacity: 0.35;
+        }
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .section-navy .section-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .section-heading {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.08;
+            margin-bottom: 24px;
+        }
+        .section-text {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        .section-navy .section-text {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===== CONTACT FORM & INFO ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            margin-top: 30px;
+            align-items: start;
+        }
+        .contact-form-wrapper {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 35px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+        }
+        .contact-info-wrapper {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 35px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+        }
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            display: block;
+        }
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid rgba(6, 42, 92, 0.15);
+            border-radius: 10px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: #fff;
+            transition: all 0.3s;
+        }
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(11, 92, 173, 0.15);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-submit {
+            padding: 14px 32px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s;
+            width: 100%;
+        }
+        .form-submit:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 42, 92, 0.2);
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .contact-info-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: var(--blue-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+        .contact-info-title {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+        .contact-info-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy);
+            line-height: 1.4;
+        }
+        .contact-info-text a {
+            color: var(--navy);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .contact-info-text a:hover {
+            color: var(--blue);
+        }
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: var(--blue-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            background: var(--navy);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* ===== MAP / GLOBAL ===== */
+        .map-embed {
+            margin-top: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.15);
+            height: 400px;
+            position: relative;
+        }
+        .map-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(100%) contrast(1.2) opacity(0.9);
+            transition: filter 0.4s;
+        }
+        .map-embed iframe:hover {
+            filter: grayscale(0%) contrast(1) opacity(1);
+        }
+
+        /* ===== STATS STRIP ===== */
+        .stats-strip {
+            background: linear-gradient(135deg, var(--navy) 0%, #0a3d7a 100%);
+            padding: 40px 40px;
+            position: relative;
+        }
+        .stats-strip-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .stat-item-light {
+            text-align: center;
+            padding: 10px;
+        }
+        .stat-number-light {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .stat-label-light {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--navy) 0%, #0a3d7a 100%);
+            text-align: center;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-heading {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .cta-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        .btn-primary-light {
+            padding: 15px 34px;
+            background: #fff;
+            color: var(--navy);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+        }
+        .btn-primary-light:hover {
+            background: var(--blue-light);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--navy-dark);
+            color: #fff;
+            padding: 60px 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .footer-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        .footer h5 {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .stats-strip-inner {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-mobile-toggle {
+                display: flex;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .stats-strip {
+                padding: 30px 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero {
+                height: 55vh;
+                min-height: 300px;
+            }
+            .hero-heading {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            .stats-strip-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .nav {
+                padding: 14px 16px;
+            }
+            .nav.scrolled {
+                padding: 10px 16px;
+            }
+            .contact-form-wrapper,
+            .contact-info-wrapper {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <img src="assets/img/logo.png" id="logoText" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="blogs.html" class="nav-link">Blogs</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+        <div class="nav-mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="projects.html" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="blogs.html" onclick="closeMobileMenu()">Blogs</a></li>
+            <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=2000&q=85"
+        alt="Contact OSM Design Engineering Consultancy"
+        class="hero-bg-img">
+        <div class="hero-overlay"></div>
+        <canvas class="hero-canvas-3d" id="heroCanvas"></canvas>
+        <div class="hero-content">
+            <p class="hero-tag">Get In Touch</p>
+            <h1 class="hero-heading">Contact Us</h1>
+            <!-- <p class="hero-sub">Let's Start a Conversation</p> -->
+            <div class="hero-breadcrumb">
+                <a href="#">Home</a>
+                <span>/</span>
+                <span>Contact</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS STRIP -->
+
+    <!-- CONTACT INTRO -->
+    <!-- <section class="section section-blue" id="contact-intro">
+        <canvas class="section-canvas-3d" id="introCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Contact OSM Design Engineering Consultancy</span>
+            <h2 class="section-heading">We're Here to Bring Your Ideas to Life</h2>
+            <p class="section-text" style="max-width:850px;">
+                At <strong>OSM Design Engineering Consultancy</strong>, we're here to help bring your ideas to life.
+                Whether you're planning a villa, commercial building, hospital, school, warehouse, or interior project,
+                our experienced team is ready to provide expert architectural, structural, MEP, and interior design solutions.
+                Get in touch with us today to discuss your project, request a consultation, or receive a customized quotation.
+                We look forward to working with you.
+            </p>
+        </div>
+    </section>
+ -->
+    <!-- CONTACT FORM & INFO -->
+    <section class="section section-white" id="contact-form">
+        <canvas class="section-canvas-3d faint" id="formCanvas"></canvas>
+        <div class="section-inner">
+            <div class="contact-grid">
+                <!-- FORM -->
+                <div class="contact-form-wrapper">
+                    <h3 class="form-title">Send Us a Message</h3>
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+971 50 000 0000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="project-type">Project Type</label>
+                            <select id="project-type" name="project-type" class="form-select">
+                                <option value="" disabled selected>Select project type</option>
+                                <option value="villa">Villa / Residential</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="hospital">Hospital / Healthcare</option>
+                                <option value="school">School / Educational</option>
+                                <option value="warehouse">Warehouse / Industrial</option>
+                                <option value="interior">Interior Design</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Project Details</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your project, location, timeline, and any specific requirements..." required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Request Free Consultation</button>
+                    </form>
+                </div>
+
+                <!-- INFO -->
+                <div class="contact-info-wrapper">
+                    <h3 class="form-title">Contact Information</h3>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">📧</div>
+                        <div>
+                            <div class="contact-info-title">Email Us</div>
+                            <div class="contact-info-text"><a href="mailto:info@osmconsultancy.com">info@osmconsultancy.com</a></div>
+                            <div class="contact-info-text"><a href="mailto:projects@osmconsultancy.com">projects@osmconsultancy.com</a></div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">📞</div>
+                        <div>
+                            <div class="contact-info-title">Call Us</div>
+                            <div class="contact-info-text"><a href="tel:+971500000000">+971 50 000 0000 (UAE)</a></div>
+                            <div class="contact-info-text"><a href="tel:+919999999999">+91 99 999 99999 (India)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">📍</div>
+                        <div>
+                            <div class="contact-info-title">Our Offices</div>
+                            <div class="contact-info-text">Dubai, United Arab Emirates</div>
+                            <div class="contact-info-text">Hyderabad, India</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">⏰</div>
+                        <div>
+                            <div class="contact-info-title">Working Hours</div>
+                            <div class="contact-info-text">Monday – Friday: 9:00 AM – 6:00 PM</div>
+                            <div class="contact-info-text">Saturday: 10:00 AM – 2:00 PM</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div class="contact-info-title" style="margin-bottom: 12px;">Follow Us</div>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+                            <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+                            <a href="#" class="social-link" aria-label="Facebook">f</a>
+                            <a href="#" class="social-link" aria-label="Twitter">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL PRESENCE / MAP -->
+    <section class="section section-navy" id="global">
+        <canvas class="section-canvas-3d" id="globalCanvas"></canvas>
+        <div class="section-inner">
+            <span class="section-label">Our Global Presence</span>
+            <h2 class="section-heading">Serving Clients Across 7 Countries</h2>
+            <p class="section-text" style="max-width:700px;">
+                We collaborate with clients worldwide through online consultation and digital project delivery.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;justify-content:center;">
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇮🇳 India</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇦🇪 UAE</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇴🇲 Oman</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇰🇼 Kuwait</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇶🇦 Qatar</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇸🇦 Saudi Arabia</span>
+                <span style="padding:10px 22px;border:1px solid rgba(255,255,255,0.3);border-radius:50px;font-size:0.78rem;letter-spacing:1.5px;color:#fff;font-weight:600;background:rgba(255,255,255,0.06);">🇧🇭 Bahrain</span>
+            </div>
+            <div class="map-embed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.831934654715!2d55.2707813150109!3d25.204457383894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d0129123457%3A0x1234567890abcdef!2sDubai%20Marina!5e0!3m2!1sen!2sae!4v1700000000000!5m2!1sen!2sae"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <!-- <section class="cta-section" id="contact">
+        <div class="section-inner">
+            <h2 class="cta-heading">Ready to Start Your Project?</h2>
+            <p class="cta-text">
+                Contact us today to discuss your project and discover how we can turn your vision into reality.
+                Our team is ready to provide expert guidance from concept to construction.
+            </p>
+            <a href="#" class="btn-primary-light">Request Free Consultation</a>
+        </div>
+    </section> -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">OSM</div>
+                <div style="font-size:0.7rem;letter-spacing:1.5px;opacity:0.6;margin-bottom:16px;">DESIGN ENGINEERING CONSULTANCY</div>
+                <p class="footer-tagline">ENGINEERING BETTER SPACES.<br>DESIGNING SMARTER FUTURES.</p>
+            </div>
+            <div>
+                <h5>Navigation</h5>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blogs.html">Blogs</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div>
+                <h5>Services</h5>
+                <a href="about.html#services">Architecture</a>
+                <a href="about.html#services">Structural Engineering</a>
+                <a href="about.html#services">MEP Design</a>
+                <a href="about.html#services">Interior Design</a>
+            </div>
+            <div>
+                <h5>Contact</h5>
+                <a href="mailto:info@osmconsultancy.com">info@osmconsultancy.com</a>
+                <a href="tel:+971500000000">+971 50 000 0000</a>
+                <a href="#">Dubai, UAE</a>
+                <a href="#">Hyderabad, India</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 OSM Design Engineering Consultancy. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ===== SECTION 3D BACKGROUNDS =====
+        class SectionBackground {
+            constructor(canvasId, config) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.config = config || {};
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.0;
+                this.scene = new THREE.Scene();
+                const parent = this.canvas.parentElement;
+                this.camera = new THREE.PerspectiveCamera(50, (parent ? parent.offsetWidth : window.innerWidth) / Math.max(parent ? parent.offsetHeight : 400, 400), 0.1, 100);
+                this.camera.position.set(0, 5, 15);
+                this.camera.lookAt(0, 0, 0);
+                this.objects = [];
+                this.clock = new THREE.Clock();
+                this.isVisible = false;
+                const ambient = new THREE.AmbientLight(this.config.ambientColor || '#d0dce8', 1.5);
+                this.scene.add(ambient);
+                const dirLight = new THREE.DirectionalLight('#ffffff', 3);
+                dirLight.position.set(10, 15, 10);
+                this.scene.add(dirLight);
+                const backLight = new THREE.DirectionalLight(this.config.backLightColor || '#8ab8d8', 2);
+                backLight.position.set(-5, 8, -8);
+                this.scene.add(backLight);
+                this.initObjects();
+                this.setupResize();
+                this.setupVisibilityObserver();
+                this.animate();
+            }
+            initObjects() {
+                const type = this.config.type || 'particles';
+                const color = this.config.color || '#8ab8d8';
+                if (type === 'wireframe') {
+                    for (let i = 0; i < 7; i++) {
+                        const w = Math.random() * 2 + 1.2;
+                        const h = Math.random() * 7 + 3;
+                        const d = Math.random() * 2 + 1.2;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.45 });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-12 + i * 4 + (Math.random() - 0.5) * 2, h / 2 - 2, (Math.random() - 0.5) * 7);
+                        mesh.rotation.y = Math.random() * 0.3 - 0.15;
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.25 + Math.random() * 0.3, floatAmp: 0.35 + Math.random() * 0.3, rotSpeed: 0.002 + Math.random() * 0.003 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'particles') {
+                    const count = this.config.count || 120;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        positions[i * 3] = (Math.random() - 0.5) * 26;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 16;
+                        positions[i * 3 + 2] = (Math.random() - 0.5) * 14;
+                    }
+                    const geo = new THREE.BufferGeometry();
+                    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: this.config.particleSize || 0.06, transparent: true, opacity: this.config.particleOpacity || 0.6, blending: THREE.AdditiveBlending, depthWrite: false });
+                    const points = new THREE.Points(geo, mat);
+                    points.userData = { baseY: 0, floatSpeed: 0.5, floatAmp: 1.5, rotSpeed: 0.003 };
+                    this.scene.add(points);
+                    this.objects.push(points);
+                } else if (type === 'floating') {
+                    const shapes = [
+                        new THREE.IcosahedronGeometry(1.6, 1),
+                        new THREE.OctahedronGeometry(1.9, 1),
+                        new THREE.TorusGeometry(1.3, 0.42, 8, 12),
+                        new THREE.DodecahedronGeometry(1.4, 0),
+                        new THREE.TorusKnotGeometry(1.1, 0.3, 32, 8),
+                    ];
+                    for (let i = 0; i < 7; i++) {
+                        const geo = shapes[i % shapes.length];
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#c8d8ec',
+                            roughness: 0.3,
+                            metalness: 0.4,
+                            transparent: true,
+                            opacity: 0.4,
+                            wireframe: i % 3 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-10 + i * 3.2 + (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 9, (Math.random() - 0.5) * 9);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.2 + Math.random() * 0.4, floatAmp: 0.7 + Math.random() * 0.7, rotSpeed: 0.004 + Math.random() * 0.006, rotAxis: new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize() };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                } else if (type === 'grid') {
+                    const gridGeo = new THREE.PlaneGeometry(32, 22);
+                    const gridMat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.3 });
+                    const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+                    gridMesh.rotation.x = -Math.PI / 2;
+                    gridMesh.position.y = -3;
+                    gridMesh.userData = { baseY: -3, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                    this.scene.add(gridMesh);
+                    this.objects.push(gridMesh);
+                    for (let i = 0; i < 14; i++) {
+                        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+                            new THREE.Vector3(-14 + i * 2.2, -3, -7),
+                            new THREE.Vector3(-14 + i * 2.2, -3 + Math.random() * 6, -7),
+                        ]);
+                        const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.22 });
+                        const line = new THREE.Line(lineGeo, lineMat);
+                        line.userData = { baseY: 0, floatSpeed: 0, floatAmp: 0, rotSpeed: 0 };
+                        this.scene.add(line);
+                        this.objects.push(line);
+                    }
+                } else if (type === 'orbit') {
+                    const particlesGeo = new THREE.BufferGeometry();
+                    const count = 90;
+                    const positions = new Float32Array(count * 3);
+                    for (let i = 0; i < count; i++) {
+                        const angle = (i / count) * Math.PI * 2;
+                        const radius = 4 + Math.random() * 3.5;
+                        positions[i * 3] = Math.cos(angle) * radius;
+                        positions[i * 3 + 1] = (Math.random() - 0.5) * 6;
+                        positions[i * 3 + 2] = Math.sin(angle) * radius;
+                    }
+                    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const mat = new THREE.PointsMaterial({ color, size: 0.05, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false });
+                    const particles = new THREE.Points(particlesGeo, mat);
+                    particles.userData = { baseY: 0, floatSpeed: 0.2, floatAmp: 1, rotSpeed: 0.008 };
+                    this.scene.add(particles);
+                    this.objects.push(particles);
+                } else if (type === 'blocks') {
+                    for (let i = 0; i < 9; i++) {
+                        const w = 1 + Math.random() * 1.4;
+                        const h = 2.5 + Math.random() * 4;
+                        const d = 1 + Math.random() * 1.4;
+                        const geo = new THREE.BoxGeometry(w, h, d);
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: i % 2 === 0 ? color : '#e0e8f2',
+                            roughness: 0.35,
+                            metalness: 0.25,
+                            transparent: true,
+                            opacity: 0.38,
+                            wireframe: i % 4 === 0,
+                        });
+                        const mesh = new THREE.Mesh(geo, mat);
+                        mesh.position.set(-12 + i * 2.8, h / 2 - 1.5, (Math.random() - 0.5) * 6);
+                        mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.08 + Math.random() * 0.18, floatAmp: 0.25, rotSpeed: 0.001 + Math.random() * 0.002 };
+                        this.scene.add(mesh);
+                        this.objects.push(mesh);
+                    }
+                }
+            }
+            setupResize() {
+                this.resizeHandler = () => {
+                    const parent = this.canvas.parentElement;
+                    const w = parent ? parent.offsetWidth : window.innerWidth;
+                    const h = parent ? parent.offsetHeight : 400;
+                    this.renderer.setSize(w, h, false);
+                    this.camera.aspect = w / Math.max(h, 100);
+                    this.camera.updateProjectionMatrix();
+                };
+                this.resizeHandler();
+                window.addEventListener('resize', this.resizeHandler);
+            }
+            setupVisibilityObserver() {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        this.isVisible = entry.isIntersecting;
+                    });
+                }, { threshold: 0.05 });
+                this.observer.observe(this.canvas.parentElement);
+            }
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                if (!this.isVisible && this.config.skipWhenHidden !== false) return;
+                const dt = Math.min(this.clock.getDelta(), 0.1);
+                const time = performance.now() * 0.001;
+                this.objects.forEach(obj => {
+                    if (obj.userData.floatSpeed > 0) {
+                        obj.position.y = obj.userData.baseY + Math.sin(time * obj.userData.floatSpeed * 2) * obj.userData.floatAmp;
+                    }
+                    if (obj.userData.rotSpeed > 0) {
+                        obj.rotation.y += obj.userData.rotSpeed;
+                        if (obj.userData.rotAxis) {
+                            obj.rotation.x += obj.userData.rotSpeed * 0.7;
+                        }
+                    }
+                });
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        new SectionBackground('heroCanvas', { type: 'particles', color: '#ffffff', count: 180, particleSize: 0.045, particleOpacity: 0.7 });
+        new SectionBackground('introCanvas', { type: 'wireframe', color: '#8ab8d8' });
+        new SectionBackground('formCanvas', { type: 'floating', color: '#d0dce8' });
+        new SectionBackground('globalCanvas', { type: 'particles', color: '#ffffff', count: 90, particleSize: 0.05, particleOpacity: 0.5 });
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+    </script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const nav = document.getElementById('nav');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const logoText = document.getElementById('logoText');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.classList.add('scrolled');
+                logoText.src = 'assets/img/logo5.png';
+            } else {
+                nav.classList.remove('scrolled');
+                logoText.src = 'assets/img/logo.png';
+            }
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            if (mobileMenu.classList.contains('open')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px,6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px,-6px)';
+            } else {
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '';
+                spans[2].style.transform = '';
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            const spans = mobileToggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
+        }
+
+        // GSAP Scroll Animations
+        gsap.from('.hero-heading', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.2,
+        });
+        gsap.from('.hero-tag', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.05,
+        });
+        gsap.from('.hero-sub', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.35,
+        });
+        gsap.from('.hero-breadcrumb', {
+            duration: 0.8,
+            y: 15,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.5,
+        });
+
+        // Stats strip
+        gsap.from('.stat-item-light', {
+            scrollTrigger: { trigger: '.stats-strip', start: 'top 85%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.7,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Section headings
+        gsap.utils.toArray('.section-heading').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: { trigger: heading, start: 'top 85%' },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                clearProps: 'opacity,transform'
+            });
+        });
+
+        // Section texts
+        gsap.utils.toArray('.section-text').forEach(text => {
+            gsap.from(text, {
+                scrollTrigger: { trigger: text, start: 'top 90%' },
+                y: 20,
+                opacity: 0,
+                duration: 0.7,
+                ease: 'power3.out',
+                clearProps: 'opacity,transform'
+            });
+        });
+
+        // Form and info cards
+        gsap.from('.contact-form-wrapper', {
+            scrollTrigger: { trigger: '.contact-grid', start: 'top 75%' },
+            x: -50,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+        gsap.from('.contact-info-wrapper', {
+            scrollTrigger: { trigger: '.contact-grid', start: 'top 75%' },
+            x: 50,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Map embed
+        gsap.from('.map-embed', {
+            scrollTrigger: { trigger: '.map-embed', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Country tags in global section
+        gsap.from('section#global span', {
+            scrollTrigger: { trigger: 'section#global', start: 'top 80%' },
+            y: 20,
+            opacity: 0,
+            stagger: 0.06,
+            duration: 0.5,
+            ease: 'power3.out',
+            clearProps: 'opacity,transform'
+        });
+
+        // Smooth anchor scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '#home') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        console.log('OSM Contact Page — Initialized');
+    </script>
+</body>
+</html>
