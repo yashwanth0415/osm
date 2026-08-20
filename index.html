@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>OSM Design & Engineering Consultancy | Architecture & Engineering</title>
+=======
+    <title>OSM Desig Engineering Consultancy | Architecture & Engineering</title>
+>>>>>>> 934a7e17e271e426fc38e33f60a45843317f5780
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -322,6 +326,7 @@
 
     padding: 34px;
 
+<<<<<<< HEAD
     background:
         linear-gradient(
             145deg,
@@ -332,6 +337,10 @@
     border: 1px solid rgba(255, 255, 255, 0.75);
 
     border-radius: 10px;
+=======
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(18px);
+>>>>>>> 934a7e17e271e426fc38e33f60a45843317f5780
 
     box-shadow:
         0 30px 80px rgba(3, 24, 50, 0.35),
@@ -2155,11 +2164,43 @@
 </head>
 <body>
 
+<<<<<<< HEAD
    
 
  <div id="header"></div>
  <script>
 document.addEventListener("DOMContentLoaded", function () {
+=======
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <!-- <img src="assets/img/logo1.png" id="logoMark" alt="OSM Logo Mark" class="nav-logo-mark-img"> -->
+            <img src="assets/img/logo.png" id="logoText" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="blogs.html" class="nav-link">Blogs</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Get a Quote</a>
+        <div class="nav-mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="#blogs" onclick="closeMobileMenu()">Services</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+>>>>>>> 934a7e17e271e426fc38e33f60a45843317f5780
 
     fetch("header.html")
         .then(response => {
