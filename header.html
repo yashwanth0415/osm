@@ -1,0 +1,202 @@
+<style>
+    /* =========================================
+   NAV PHONE
+========================================= */
+
+.nav-phone {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    border-radius: 50px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+}
+
+
+.nav-phone i {
+    font-size: 13px;
+}
+
+
+.nav-phone:hover {
+    background: #fff;
+
+    color: #062A5C;
+
+    border-color: #fff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   SCROLLED / INNER PAGE
+========================================= */
+
+.nav.scrolled .nav-phone,
+.nav.inner-page .nav-phone {
+    color: #062A5C;
+
+    border-color: rgba(6, 42, 92, 0.3);
+}
+
+
+.nav.scrolled .nav-phone:hover,
+.nav.inner-page .nav-phone:hover {
+    background: #062A5C;
+
+    color: #fff;
+
+    border-color: #062A5C;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .nav-phone {
+        display: none !important;
+    }
+
+}
+</style>
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+
+    <a href="index.html" class="nav-logo">
+
+        <img
+            src="assets/img/logo.png"
+            id="logoText"
+            alt="OSM Design Engineering Consultancy"
+            class="nav-logo-text-img"
+        >
+
+    </a>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html" class="nav-link">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html" class="nav-link">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="projects.html" class="nav-link">
+                Projects
+            </a>
+        </li>
+
+        <li>
+            <a href="blogs.html" class="nav-link">
+                Blogs
+            </a>
+        </li>
+
+        <li>
+            <a href="contact.html" class="nav-link">
+                Contact
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- DESKTOP PHONE -->
+    <a
+        href="tel:+919113632576"
+        class="nav-phone"
+    >
+        <i class="bi bi-telephone"></i>
+        +91 9113632576
+    </a>
+
+
+    <!-- MOBILE MENU BUTTON -->
+    <div
+        class="nav-mobile-toggle"
+        id="mobileToggle"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+</nav>
+
+
+<!-- MOBILE MENU -->
+
+<div class="mobile-menu" id="mobileMenu">
+
+    <ul class="mobile-menu-links">
+
+        <li>
+            <a href="index.html"
+               onclick="closeMobileMenu()">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html"
+               onclick="closeMobileMenu()">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="projects.html"
+               onclick="closeMobileMenu()">
+                Projects
+            </a>
+        </li>
+
+        <li>
+            <a href="blogs.html"
+               onclick="closeMobileMenu()">
+                Blogs
+            </a>
+        </li>
+
+        <li>
+            <a href="contact.html"
+               onclick="closeMobileMenu()">
+                Contact
+            </a>
+        </li>
+
+    </ul>
+
+</div>

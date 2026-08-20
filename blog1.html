@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Building Design Matters | OSM Design & Engineering Consultancy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #062A5C;
+            --navy-dark: #041c3d;
+            --blue: #0B5CAD;
+            --blue-light: #EAF4FF;
+            --bg-light: #F5F9FD;
+            --white: #FFFFFF;
+            --text: #071A33;
+            --text-light: #3a5070;
+            --accent: #1a8cff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.5s var(--transition);
+        }
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(6, 42, 92, 0.08);
+            padding: 12px 40px;
+        }
+        .nav.scrolled .nav-link {
+            color: var(--text);
+        }
+        .nav.scrolled .nav-cta {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .nav.scrolled .nav-cta:hover {
+            background: var(--navy);
+            color: #fff;
+        }
+        .nav.scrolled .nav-mobile-toggle span {
+            background: var(--navy);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1001;
+        }
+        .nav-logo-text-img {
+            height: 60px;
+            object-fit: contain;
+        }
+        @media (max-width: 640px) {
+            .nav-logo-text-img {
+                height: 36px;
+            }
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--white);
+            transition: width 0.3s var(--transition);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            padding: 10px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+            white-space: nowrap;
+        }
+        .nav-cta:hover {
+            background: #fff;
+            color: var(--navy);
+            border-color: #fff;
+        }
+        .nav-mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .nav-mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(6, 42, 92, 0.97);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+        }
+        .mobile-menu-links li {
+            margin: 20px 0;
+        }
+        .mobile-menu-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .mobile-menu-links a:hover {
+            color: var(--blue-light);
+        }
+
+        /* ===== HERO (BLOG POST) ===== */
+        .blog-hero {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .blog-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: blur(2px);
+        }
+        .blog-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                rgba(6, 42, 92, 0.82) 0%,
+                rgba(6, 42, 92, 0.60) 50%,
+                rgba(6, 42, 92, 0.82) 100%);
+        }
+        .blog-hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .blog-hero-content {
+            position: relative;
+            z-index: 4;
+            padding: 0 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .blog-hero-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .blog-hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+            margin-bottom: 16px;
+        }
+        .blog-hero-meta {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .blog-hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== ARTICLE CONTENT ===== */
+        .article-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .article-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+        .article-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 40px 0 16px;
+            letter-spacing: -0.5px;
+        }
+        .article-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin: 30px 0 10px;
+        }
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        .article-content ul {
+            margin: 0 0 20px 20px;
+            list-style: disc;
+        }
+        .article-content li {
+            margin-bottom: 8px;
+        }
+        .article-content strong {
+            color: var(--navy);
+            font-weight: 700;
+        }
+        .article-divider {
+            height: 1px;
+            background: rgba(6, 42, 92, 0.1);
+            margin: 40px 0;
+        }
+        .article-cta {
+            background: var(--blue-light);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .article-cta h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .article-cta p {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        .article-cta .btn-outline {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1.5px solid var(--navy);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--navy);
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+        }
+        .article-cta .btn-outline:hover {
+            background: var(--navy);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 42, 92, 0.2);
+        }
+
+        /* ===== RELATED POSTS ===== */
+        .related-section {
+            padding: 60px 20px;
+            background: var(--bg-light);
+        }
+        .related-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .related-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .related-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(6, 42, 92, 0.08);
+            transition: all 0.4s var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .related-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(6, 42, 92, 0.15);
+        }
+        .related-card-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+        .related-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s var(--transition);
+        }
+        .related-card:hover .related-card-image img {
+            transform: scale(1.06);
+        }
+        .related-card-category {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+        .related-card-body {
+            padding: 16px;
+        }
+        .related-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+        .related-card-meta {
+            font-size: 0.65rem;
+            color: var(--text-light);
+        }
+
+        /* ===== FOOTER (reuse) ===== */
+        .footer {
+            background: var(--navy-dark);
+            color: #fff;
+            padding: 60px 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .footer-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        .footer h5 {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-mobile-toggle {
+                display: flex;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .blog-hero {
+                height: 50vh;
+            }
+        }
+        @media (max-width: 640px) {
+            .blog-hero {
+                height: 45vh;
+                min-height: 300px;
+            }
+            .blog-hero-title {
+                font-size: clamp(1.8rem, 8vw, 2.8rem);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .nav {
+                padding: 14px 16px;
+            }
+            .nav.scrolled {
+                padding: 10px 16px;
+            }
+            .article-section {
+                padding: 50px 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="osm-enhancements.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="assets/img/logo.png" id="logoText" alt="OSM Design Engineering Consultancy" class="nav-logo-text-img">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="blogs.html" class="nav-link">Blogs</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="contact.html#contact" class="nav-cta">Get a Quote</a>
+        <div class="nav-mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="projects.html" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="blogs.html" onclick="closeMobileMenu()">Blogs</a></li>
+            <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- BLOG HERO -->
+    <section class="blog-hero" id="blog-hero">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=2000&q=85"
+        alt="Why Building Design Matters"
+        class="blog-hero-bg">
+        <div class="blog-hero-overlay"></div>
+        <canvas class="blog-hero-canvas" id="blogHeroCanvas"></canvas>
+        <div class="blog-hero-content">
+            <p class="blog-hero-category">Architecture</p>
+            <h1 class="blog-hero-title">Why Building Design Matters: The Foundation of Every Project</h1>
+            <div class="blog-hero-meta">
+                <span>📅 January 12, 2026</span>
+                <span>⏱️ 7 min read</span>
+                <span>👤 OSM Design Team</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTICLE CONTENT -->
+    <section class="article-section">
+        <div class="article-container">
+            <div class="article-content">
+                <p>
+                    Building design is much more than creating attractive floor plans or impressive elevations. It is a structured
+                    process that combines creativity, engineering expertise, technology, and careful planning to transform an idea
+                    into a safe, functional, and sustainable structure. Whether you are planning a luxury villa, an apartment building,
+                    a commercial office, a hospital, a school, or an industrial warehouse, every successful project begins with a
+                    well-defined design process.
+                </p>
+                <p>
+                    At <strong>OSM Design Engineering Consultancy</strong>, we have spent more than 10 years helping clients across India,
+                    UAE, Oman, Kuwait, Qatar, Saudi Arabia, Bahrain, and the United Kingdom turn their ideas into construction-ready designs. In this article,
+                    we explore the critical importance of professional building design and the initial steps that lay the groundwork for success.
+                </p>
+
+                <div class="article-divider"></div>
+
+                <h2>Why Building Design Matters</h2>
+                <p>
+                    Building design is the foundation of every construction project. A well-designed building not only enhances visual appeal
+                    but also improves functionality, safety, energy efficiency, and long-term value. Investing in professional design services
+                    reduces construction errors, minimizes delays, controls costs, and ensures compliance with local building regulations.
+                </p>
+                <p>
+                    Design decisions made early in the project have a profound impact on everything that follows – from structural integrity
+                    and MEP coordination to interior comfort and overall operational costs. An integrated approach that considers architecture,
+                    structure, MEP, and interior design from the outset results in a building that performs as intended for decades.
+                </p>
+
+                <h2>Step 1: Understanding the Client's Vision</h2>
+                <p>
+                    Every project begins with a detailed consultation. During this stage, the design team gathers information about the client's
+                    goals, lifestyle, business requirements, budget, timeline, and site conditions. This collaborative process ensures that the
+                    final design reflects the client's aspirations while remaining practical and achievable.
+                </p>
+                <p>Key discussions include:</p>
+                <ul>
+                    <li>Purpose of the building</li>
+                    <li>Number of floors and rooms</li>
+                    <li>Space requirements</li>
+                    <li>Architectural style</li>
+                    <li>Budget expectations</li>
+                    <li>Local building regulations</li>
+                    <li>Future expansion plans</li>
+                </ul>
+                <p>
+                    This information forms the foundation for every design decision that follows. A clear brief prevents costly changes later
+                    and ensures that the project stays aligned with the client's vision.
+                </p>
+
+                <h2>Step 2: Site Analysis and Feasibility Study</h2>
+                <p>
+                    Before any drawings are prepared, the project site must be thoroughly evaluated. A site analysis helps identify opportunities
+                    and constraints that may influence the design. This step is essential for creating a building that responds to its environment
+                    and complies with all regulatory requirements.
+                </p>
+                <p>Typical assessments include:</p>
+                <ul>
+                    <li>Site dimensions</li>
+                    <li>Topography</li>
+                    <li>Soil conditions</li>
+                    <li>Climate and orientation</li>
+                    <li>Accessibility</li>
+                    <li>Utility availability</li>
+                    <li>Environmental considerations</li>
+                    <li>Local zoning regulations</li>
+                </ul>
+                <p>
+                    Understanding these factors ensures that the proposed design is practical, sustainable, and feasible. It also helps identify
+                    potential challenges early, saving time and money during later phases.
+                </p>
+
+                <div class="article-divider"></div>
+
+                <p>
+                    In the next article, we will explore the concept design phase and how architectural drawings evolve from initial sketches
+                    to detailed plans. Stay tuned for <a href="blog3.html" style="color: var(--blue); font-weight:600;">From Concept to Detailed Design: Architectural Development</a>.
+                </p>
+            </div>
+
+            <!-- Article CTA -->
+            <div class="article-cta">
+                <h3>Ready to start your own project?</h3>
+                <p>Our team of architects, engineers, and designers is ready to bring your vision to life.</p>
+                <a href="contact.html" class="btn-outline">Request Free Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- RELATED POSTS -->
+    <section class="related-section">
+        <div class="related-inner">
+            <h2 class="related-title">Continue Reading</h2>
+            <div class="related-grid">
+                <a href="blog2.html" class="related-card">
+                    <div class="related-card-image">
+                        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80" alt="Client Vision & Site Analysis" loading="lazy">
+                        <span class="related-card-category">Planning</span>
+                    </div>
+                    <div class="related-card-body">
+                        <div class="related-card-title">Client Vision & Site Analysis: Laying the Groundwork</div>
+                        <div class="related-card-meta">📅 Jan 8, 2026 · 8 min read</div>
+                    </div>
+                </a>
+                <a href="blog3.html" class="related-card">
+                    <div class="related-card-image">
+                        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80" alt="Architectural Design Development" loading="lazy">
+                        <span class="related-card-category">Architecture</span>
+                    </div>
+                    <div class="related-card-body">
+                        <div class="related-card-title">From Concept to Detailed Design: Architectural Development</div>
+                        <div class="related-card-meta">📅 Jan 5, 2026 · 10 min read</div>
+                    </div>
+                </a>
+                <a href="blog4.html" class="related-card">
+                    <div class="related-card-image">
+                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80" alt="Structural Engineering Design" loading="lazy">
+                        <span class="related-card-category">Structural</span>
+                    </div>
+                    <div class="related-card-body">
+                        <div class="related-card-title">Structural Engineering: The Backbone of Safe Buildings</div>
+                        <div class="related-card-meta">📅 Dec 30, 2025 · 12 min read</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    
+<!-- FOOTER -->
+    <div id="footer"></div>
+    <!-- FOOTER -->
+      <script>
+    // Header
+    fetch("header.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("header").innerHTML = data;
+        });
+
+
+    // Footer
+    fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer").innerHTML = data;
+        });
+    </script>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ===== BLOG HERO 3D BACKGROUND =====
+        class BlogHeroBackground {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.0;
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(50, this.canvas.parentElement.offsetWidth / Math.max(this.canvas.parentElement.offsetHeight, 400), 0.1, 100);
+                this.camera.position.set(0, 5, 15);
+                this.camera.lookAt(0, 0, 0);
+                this.objects = [];
+                this.clock = new THREE.Clock();
+                this.isVisible = false;
+                const ambient = new THREE.AmbientLight('#d0dce8', 1.5);
+                this.scene.add(ambient);
+                const dirLight = new THREE.DirectionalLight('#ffffff', 3);
+                dirLight.position.set(10, 15, 10);
+                this.scene.add(dirLight);
+                const backLight = new THREE.DirectionalLight('#8ab8d8', 2);
+                backLight.position.set(-5, 8, -8);
+                this.scene.add(backLight);
+                this.initObjects();
+                this.setupResize();
+                this.setupVisibilityObserver();
+                this.animate();
+            }
+            initObjects() {
+                // Wireframe buildings + particles
+                for (let i = 0; i < 5; i++) {
+                    const w = Math.random() * 2 + 1.5;
+                    const h = Math.random() * 6 + 3;
+                    const d = Math.random() * 2 + 1.5;
+                    const geo = new THREE.BoxGeometry(w, h, d);
+                    const mat = new THREE.MeshBasicMaterial({ color: '#8ab8d8', wireframe: true, transparent: true, opacity: 0.4 });
+                    const mesh = new THREE.Mesh(geo, mat);
+                    mesh.position.set(-8 + i * 4, h / 2 - 2, (Math.random() - 0.5) * 6);
+                    mesh.userData = { baseY: mesh.position.y, floatSpeed: 0.3, floatAmp: 0.4, rotSpeed: 0.002 };
+                    this.scene.add(mesh);
+                    this.objects.push(mesh);
+                }
+                const count = 80;
+                const positions = new Float32Array(count * 3);
+                for (let i = 0; i < count; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 24;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+                }
+                const particleGeo = new THREE.BufferGeometry();
+                particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                const particleMat = new THREE.PointsMaterial({ color: '#ffffff', size: 0.06, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false });
+                const particles = new THREE.Points(particleGeo, particleMat);
+                particles.userData = { baseY: 0, floatSpeed: 0.5, floatAmp: 1.5, rotSpeed: 0.003 };
+                this.scene.add(particles);
+                this.objects.push(particles);
+            }
+            setupResize() {
+                this.resizeHandler = () => {
+                    const parent = this.canvas.parentElement;
+                    const w = parent ? parent.offsetWidth : window.innerWidth;
+                    const h = parent ? parent.offsetHeight : 400;
+                    this.renderer.setSize(w, h, false);
+                    this.camera.aspect = w / Math.max(h, 100);
+                    this.camera.updateProjectionMatrix();
+                };
+                this.resizeHandler();
+                window.addEventListener('resize', this.resizeHandler);
+            }
+            setupVisibilityObserver() {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        this.isVisible = entry.isIntersecting;
+                    });
+                }, { threshold: 0.05 });
+                this.observer.observe(this.canvas.parentElement);
+            }
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                if (!this.isVisible) return;
+                const dt = Math.min(this.clock.getDelta(), 0.1);
+                const time = performance.now() * 0.001;
+                this.objects.forEach(obj => {
+                    if (obj.userData.floatSpeed > 0) {
+                        obj.position.y = obj.userData.baseY + Math.sin(time * obj.userData.floatSpeed * 2) * obj.userData.floatAmp;
+                    }
+                    if (obj.userData.rotSpeed > 0) {
+                        obj.rotation.y += obj.userData.rotSpeed;
+                    }
+                });
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+        new BlogHeroBackground('blogHeroCanvas');
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================================
+       LOAD COMMON HEADER
+    ========================================= */
+
+    fetch("header.html")
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error("Header could not be loaded");
+            }
+
+            return response.text();
+
+        })
+        .then(data => {
+
+            document.getElementById("header").innerHTML = data;
+
+            /* Header is now loaded */
+            initializeHeader();
+
+        })
+        .catch(error => {
+
+            console.error("Header loading error:", error);
+
+        });
+
+
+    /* =========================================
+       HEADER INITIALIZATION
+    ========================================= */
+
+    function initializeHeader() {
+
+        const nav = document.getElementById("nav");
+        const mobileToggle = document.getElementById("mobileToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const logoText = document.getElementById("logoText");
+
+        if (!nav) {
+            console.error("Navigation element #nav not found.");
+            return;
+        }
+
+
+        /* =====================================
+           LOGO CHANGE ON SCROLL
+        ===================================== */
+
+        function updateHeader() {
+
+            if (window.scrollY > 80) {
+
+                nav.classList.add("scrolled");
+
+                if (logoText) {
+                    logoText.src = "assets/img/logo5.png";
+                }
+
+            } else {
+
+                nav.classList.remove("scrolled");
+
+                if (logoText) {
+                    logoText.src = "assets/img/logo.png";
+                }
+
+            }
+
+        }
+
+
+        window.addEventListener(
+            "scroll",
+            updateHeader,
+            { passive: true }
+        );
+
+
+        /* Run once when page loads */
+
+        updateHeader();
+
+
+        /* =====================================
+           ACTIVE PAGE
+        ===================================== */
+
+        setActivePage();
+
+
+        /* =====================================
+           MOBILE MENU
+        ===================================== */
+
+        if (mobileToggle && mobileMenu) {
+
+            mobileToggle.addEventListener("click", function () {
+
+                mobileMenu.classList.toggle("open");
+
+                const spans =
+                    mobileToggle.querySelectorAll("span");
+
+                if (mobileMenu.classList.contains("open")) {
+
+                    spans[0].style.transform =
+                        "rotate(45deg) translate(6px,6px)";
+
+                    spans[1].style.opacity = "0";
+
+                    spans[2].style.transform =
+                        "rotate(-45deg) translate(6px,-6px)";
+
+                } else {
+
+                    resetMobileIcon();
+
+                }
+
+            });
+
+        }
+
+
+        /* =====================================
+           CLOSE MOBILE MENU
+        ===================================== */
+
+        window.closeMobileMenu = function () {
+
+            if (!mobileMenu || !mobileToggle) return;
+
+            mobileMenu.classList.remove("open");
+
+            resetMobileIcon();
+
+        };
+
+
+        function resetMobileIcon() {
+
+            const spans =
+                mobileToggle.querySelectorAll("span");
+
+            spans[0].style.transform = "";
+            spans[1].style.opacity = "";
+            spans[2].style.transform = "";
+
+        }
+
+
+        /* =====================================
+           ACTIVE PAGE FUNCTION
+        ===================================== */
+
+        function setActivePage() {
+
+            const currentPath =
+                window.location.pathname
+                    .split("/")
+                    .pop()
+                    .toLowerCase();
+
+
+            /* If URL is / then treat as index.html */
+
+            const currentPage =
+                currentPath === ""
+                    ? "index.html"
+                    : currentPath;
+
+
+            const navLinks =
+                document.querySelectorAll(
+                    ".nav-link"
+                );
+
+
+            navLinks.forEach(function (link) {
+
+                const linkUrl =
+                    link.getAttribute("href");
+
+                if (!linkUrl) return;
+
+
+                /*
+                    Remove query strings and hashes
+                */
+
+                const cleanUrl =
+                    linkUrl
+                        .split("?")[0]
+                        .split("#")[0]
+                        .toLowerCase();
+
+
+                /*
+                    Convert empty href to index
+                */
+
+                const linkPage =
+                    cleanUrl === ""
+                        ? "index.html"
+                        : cleanUrl;
+
+
+                /*
+                    Remove old active class
+                */
+
+                link.classList.remove("active");
+
+
+                /*
+                    Compare current page
+                */
+
+                if (linkPage === currentPage) {
+
+                    link.classList.add("active");
+
+                }
+
+            });
+
+        }
+
+
+        /* =====================================
+           MOBILE MENU LINKS
+        ===================================== */
+
+        document
+            .querySelectorAll(".mobile-menu a")
+            .forEach(function (link) {
+
+                link.addEventListener("click", function () {
+
+                    if (typeof closeMobileMenu === "function") {
+                        closeMobileMenu();
+                    }
+
+                });
+
+            });
+
+    }
+
+});
+</script>
+    <script src="osm-enhancements.js" defer></script>
+</body>
+</html>

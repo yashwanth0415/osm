@@ -1,0 +1,71 @@
+/* OSM final enhancement layer: scroll reveals + mobile responsiveness only */
+
+.osm-reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+.osm-reveal.osm-reveal-left { transform: translate3d(-28px, 0, 0); }
+.osm-reveal.osm-reveal-right { transform: translate3d(28px, 0, 0); }
+.osm-reveal.osm-reveal-scale { transform: scale(.96); }
+.osm-reveal.osm-visible { opacity: 1; transform: none; }
+.osm-reveal-delay-1 { transition-delay: .08s; }
+.osm-reveal-delay-2 { transition-delay: .16s; }
+.osm-reveal-delay-3 { transition-delay: .24s; }
+.osm-reveal-delay-4 { transition-delay: .32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .osm-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Mobile: preserve the existing design while preventing overflow and cramped layouts. */
+@media (max-width: 768px) {
+  html, body { max-width: 100%; overflow-x: hidden; }
+  img, video, canvas, iframe { max-width: 100%; }
+
+  .section, .section-inner, .hero, .article-section, .related-section { width: 100%; max-width: 100%; }
+  .section-inner { padding-left: 18px !important; padding-right: 18px !important; }
+
+  .hero-content, .hero-heading, .hero-sub { max-width: 100%; }
+  .hero-heading { font-size: clamp(2rem, 9vw, 3.2rem); line-height: 1.02; }
+  .hero-sub { font-size: .9rem; line-height: 1.55; }
+
+  .about-grid, .intro-grid, .story-grid, .projects-intro-grid, .contact-grid, .mv-grid, .philosophy-grid, .featured-project, .team-grid, .features-grid, .tech-grid, .process-timeline, .tools-grid, .blog-grid, .related-grid, .home-portfolio-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-grid, .intro-grid, .story-grid, .projects-intro-grid, .contact-grid, .featured-project { gap: 24px !important; }
+  .features-grid, .tech-grid, .tools-grid, .blog-grid, .related-grid, .team-grid, .home-portfolio-grid { gap: 18px !important; }
+
+  .project-filter { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; margin-bottom: 24px !important; }
+  .filter-btn { flex: 0 1 auto; min-height: 42px; padding: 10px 14px !important; font-size: 11px !important; }
+
+  .project-card, .home-portfolio-card, .blog-card, .related-card, .feature-card, .tech-card, .tool-card, .team-card, .mv-card, .philosophy-card, .service-summary-card { min-width: 0 !important; width: 100%; }
+  .project-card, .home-portfolio-card { aspect-ratio: 4 / 3; }
+
+  .project-card-title, .home-portfolio-title { font-size: 1rem; }
+  .project-card-desc, .home-portfolio-desc { font-size: .72rem; }
+
+  .projects-intro-image img, .featured-image-wrap img, .story-image-card img, .intro-image-wrap img, .mv-image, .blog-card-image img, .related-card-image img { width: 100%; height: auto; object-fit: cover; }
+
+  .hero-form-wrapper, .hero-form, .contact-form-wrapper, .newsletter-card { max-width: 100% !important; width: 100% !important; box-sizing: border-box; }
+  .hero-form-wrapper { position: relative !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; transform: none !important; margin: 18px auto 0; }
+  .hero-form { padding: 18px !important; }
+  .form-row { grid-template-columns: 1fr !important; }
+  .form-input, .form-select, .form-textarea, .form-submit, .hero-form-submit { width: 100% !important; max-width: 100% !important; box-sizing: border-box; }
+
+  .cta-section { padding-left: 18px !important; padding-right: 18px !important; }
+  .cta-section a, .cta-section button, .portfolio-view-more a, .form-submit, .hero-form-submit { min-height: 46px; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+  .footer-logo img { width: min(260px, 80vw) !important; height: auto; }
+}
+
+@media (max-width: 480px) {
+  .section-inner { padding-left: 14px !important; padding-right: 14px !important; }
+  .hero-heading { font-size: clamp(1.8rem, 11vw, 2.6rem); }
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .project-filter { justify-content: flex-start; }
+  .filter-btn { width: auto !important; }
+}
